@@ -1,3 +1,11 @@
+:root {
+  --orange: #FF6D00;
+  --gold: #FFB20D;
+  --white: #FFFFFF;
+  --white-sec: #F4F4F4;
+  --black: #000000;
+}
+
 html,
 body {
   padding: 0;
@@ -6,21 +14,50 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.h-100vh {
+  height: 100vh !important;
 }
 
-* {
-  box-sizing: border-box;
+.input {
+  display: block;
+  width: 100%;
+  background-color: var(--white);
+  border: none;
+  height: 40px;
+  border-radius: 12px;
+  color: var(--black);
+  padding: 10px;
 }
+
+.input:focus{
+  outline: #FFFFFF solid 2px; 
+}
+
+.btn-gold{
+  background-color: var(--gold);
+  width: 100%;
+  height: 40px;
+  border-radius: 12px;
+  color: var(--white);
+}
+
+.btn-gold:focus, .btn-gold:hover{
+  background-color: none;
+  border: 2px solid var(--gold);
+}
+
+.bg-white-sec{
+  background-color: var(--white-sec) !important;
+}
+
 
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+
   body {
     color: white;
-    background: black;
+    background: var(--orange);
   }
 }
