@@ -11,10 +11,19 @@ const EmployeesList = () => {
 
     let specialty = ['especialidade 1', 'especialidade 2']
 
-    const listEmployees =  (specialty: string) => {
+    const listEmployees = (specialty: string) => {
         return data.map((employee, index) => {
-            if(specialty === employee.specialty){
-                return <p className="text-black">{employee.name}</p>
+            if (specialty === employee.specialty) {
+                return (
+                    <div className="d-flex align-items-center justify-content-around bg-white gap-5 ps-2 pt-4 pb-4 rounded">
+                        <div className="d-flex gap-2">
+                            <img src="favicon.svg" alt="favicon.svg" />
+                            <span className="text-black">{employee.name}</span>
+                        </div>
+                        <span className="text-secondary">{employee.date}</span>
+                        <span className="text-secondary">{employee.hour}</span>
+                    </div>
+                )
             }
         })
     }

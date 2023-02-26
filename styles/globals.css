@@ -29,11 +29,11 @@ body {
   padding: 10px;
 }
 
-.input:focus{
-  outline: #FFFFFF solid 2px; 
+.input:focus {
+  outline: #FFFFFF solid 2px;
 }
 
-.btn-gold{
+.btn-gold {
   background-color: var(--gold);
   width: 100%;
   height: 40px;
@@ -41,15 +41,42 @@ body {
   color: var(--white);
 }
 
-.btn-gold:focus, .btn-gold:hover{
+.btn-gold:focus,
+.btn-gold:hover {
   background-color: none;
   border: 2px solid var(--gold);
 }
 
-.bg-white-sec{
+.btn-orange {
+  background-color: var(--orange);
+  height: 50px;
+  border-radius: 12px;
+  color: var(--white);
+}
+
+.btn-orange:focus,
+.btn-orange:hover {
+  background-color: none;
+  border: 2px solid var(--orange);
+  color: var(--orange);
+}
+
+.bg-white-sec {
   background-color: var(--white-sec) !important;
 }
 
+.banner-top {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.bottom-menu {
+  bottom: 0;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.05);
+}
 
 @media (prefers-color-scheme: dark) {
   html {
