@@ -75,7 +75,32 @@ body {
   bottom: 0;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-icon,
+.person-icon,
+.calendar-icon,
+.chart-icon{
+  background-color: rgba(0, 0, 0, 0.25);
+  width: 22px;
+}
+
+.dashboard-icon{
+  -webkit-mask: url("../public/icons/dashboard.svg") no-repeat center;
+  mask: url('../public/icons/chart.svg') no-repeat center;
+}
+.person-icon{
+  -webkit-mask: url("../public/icons/person.svg") no-repeat center;
+  mask: url('../public/icons/chart.svg') no-repeat center;
+}
+.calendar-icon{
+  -webkit-mask: url("../public/icons/calendar.svg") no-repeat center;
+  mask: url('../public/icons/chart.svg') no-repeat center;
+}
+.chart-icon{
+  -webkit-mask: url("../public/icons/chart.svg") no-repeat center;
+  mask: url('../public/icons/chart.svg') no-repeat center;
 }
 
 @media (prefers-color-scheme: dark) {

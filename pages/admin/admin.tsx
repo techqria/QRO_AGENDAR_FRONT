@@ -1,10 +1,14 @@
+import { useSelector } from "react-redux";
 import BannerTopMobile from "../../components/BannerTopMobile";
 import BottomMenuMobile from "../../components/BottomMenuMobile";
-import { AdminPagesEnum } from "../../dto/admin-pages.enum";
+import { IStore } from "../../store/types/types";
+import { ChangePage } from "../../hooks/ChangePage";
 
 const Admin = () => {
 
-    const CurrentPage = AdminPagesEnum.dashboardPage;
+    const { currentPage } = useSelector((store: IStore) => store.pages);
+
+    const CurrentPage = ChangePage(currentPage);
 
     return (
         <section className="bg-white-sec h-100vh">
