@@ -1,3 +1,5 @@
+import { useCallback } from "react"
+
 const EmployeesList = () => {
 
     let data = [
@@ -11,13 +13,13 @@ const EmployeesList = () => {
 
     let specialty = ['especialidade 1', 'especialidade 2']
 
-    const listEmployees = (specialty: string) => {
+    const listEmployees = useCallback((specialty: string) => {
         return data.map((employee, index) => {
             if (specialty === employee.specialty) {
                 return (
-                    <div className="d-flex align-items-center justify-content-around bg-white gap-5 ps-2 pt-4 pb-4 rounded">
+                    <div key={index} className="d-flex align-items-center justify-content-around bg-white gap-5 ps-2 pt-4 pb-4 rounded">
                         <div className="d-flex gap-2">
-                            <img src="favicon.svg" alt="favicon.svg" />
+                            <img src="/icons/person.svg" alt="favicon.svg" />
                             <span className="text-black">{employee.name}</span>
                         </div>
                         <span className="text-secondary">{employee.date}</span>
@@ -26,18 +28,18 @@ const EmployeesList = () => {
                 )
             }
         })
-    }
+    }, [data])
 
     const listSpecialty = specialty.map((specialty, index) => {
         return (
-            <div className={`${!index ? 'mt-0' : 'mt-5'}`}>
+            <div className={`${!index ? 'mt-0' : 'mt-5'}`} key={index}>
                 <p className="text-secondary text-capitalize text-start">{specialty}</p>
                 {listEmployees(specialty)}
             </div>
         )
     })
 
-    return <div className="mt-3 w-100">{listSpecialty}</div>
+    return <div className="mt-3 w-100 ">{listSpecialty}</div>
 }
 
 export default EmployeesList;

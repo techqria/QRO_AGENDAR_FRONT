@@ -11,7 +11,7 @@ const Admin = () => {
     const CurrentPage = ChangePage(currentPage);
 
     return (
-        <section className="bg-white-sec h-100vh">
+        <section className="bg-white-sec h-100vh mobile-padding">
             <BannerTopMobile />
             <CurrentPage />
             <BottomMenuMobile />

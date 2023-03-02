@@ -4,6 +4,9 @@
   --white: #FFFFFF;
   --white-sec: #F4F4F4;
   --black: #000000;
+  --orange-sec: #FFE5D3;
+  --beige: #FFDFBA;
+  --royal-blue: #D6E4FF;
 }
 
 html,
@@ -61,6 +64,20 @@ body {
   color: var(--orange);
 }
 
+.btn-orange-sec {
+  background-color: var(--orange-sec);
+  height: 50px;
+  border-radius: 12px;
+  color: var(--orange);
+}
+
+.btn-orange-sec:focus,
+.btn-orange-sec:hover {
+  background-color: none;
+  border: 2px solid var(--orange-sec);
+  color: var(--orange);
+}
+
 .bg-white-sec {
   background-color: var(--white-sec) !important;
 }
@@ -81,26 +98,46 @@ body {
 .dashboard-icon,
 .person-icon,
 .calendar-icon,
-.chart-icon{
+.chart-icon {
   background-color: rgba(0, 0, 0, 0.25);
   width: 22px;
 }
 
-.dashboard-icon{
+.dashboard-icon {
   -webkit-mask: url("../public/icons/dashboard.svg") no-repeat center;
   mask: url('../public/icons/chart.svg') no-repeat center;
 }
-.person-icon{
+
+.person-icon {
   -webkit-mask: url("../public/icons/person.svg") no-repeat center;
   mask: url('../public/icons/chart.svg') no-repeat center;
 }
-.calendar-icon{
+
+.calendar-icon {
   -webkit-mask: url("../public/icons/calendar.svg") no-repeat center;
   mask: url('../public/icons/chart.svg') no-repeat center;
 }
-.chart-icon{
+
+.chart-icon {
   -webkit-mask: url("../public/icons/chart.svg") no-repeat center;
   mask: url('../public/icons/chart.svg') no-repeat center;
+}
+
+.w-90 {
+  width: 90px;
+}
+
+.bg-beige {
+  background-color: var(--beige);
+}
+
+.bg-royal-blue {
+  background-color: var(--royal-blue);
+}
+
+.mobile-padding {
+  padding-top: 2em;
+  margin-bottom: 4rem;
 }
 
 @media (prefers-color-scheme: dark) {
