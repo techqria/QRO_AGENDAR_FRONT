@@ -3,6 +3,9 @@ import BannerTopMobile from "../../components/BannerTopMobile";
 import BottomMenuMobile from "../../components/BottomMenuMobile";
 import { IStore } from "../../store/types/types";
 import { ChangePage } from "../../hooks/ChangePage";
+import SidebarDesktop from "../../components/SidebarDesktop";
+import { useEffect } from "react";
+import BannerTopDesktop from "../../components/BannerTopDesktop";
 
 const Admin = () => {
 
@@ -10,10 +13,18 @@ const Admin = () => {
 
     const CurrentPage = ChangePage(currentPage);
 
+    useEffect(() => {
+        document.body.style.backgroundColor = '#F4F4F4'
+    }, []);
+
     return (
-        <section className="bg-white-sec h-100vh mobile-padding">
+        <section className="mobile-padding">
             <BannerTopMobile />
-            <CurrentPage />
+            <BannerTopDesktop />
+            <SidebarDesktop />
+            <div className="ps-md-5 pt-md-5">
+                <CurrentPage />
+            </div>
             <BottomMenuMobile />
         </section>
     );

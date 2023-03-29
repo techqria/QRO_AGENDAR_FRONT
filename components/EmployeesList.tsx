@@ -18,12 +18,13 @@ const EmployeesList = () => {
             if (specialty === employee.specialty) {
                 return (
                     <div key={index} className="d-flex align-items-center justify-content-around bg-white gap-5 ps-2 pt-4 pb-4 rounded">
-                        <div className="d-flex gap-2">
-                            <img src="/icons/person.svg" alt="favicon.svg" />
+                        <div className="d-flex gap-2 align-items-center">
+                            <img width={40} className="rounded-circle" src="/images/person.png" alt="favicon.svg" />
                             <span className="text-black">{employee.name}</span>
                         </div>
                         <span className="text-secondary">{employee.date}</span>
                         <span className="text-secondary">{employee.hour}</span>
+                        <img role="button" width={16} className="rounded-circle" src="/icons/edit-orange.svg" alt="edit-orange.svg" />
                     </div>
                 )
             }

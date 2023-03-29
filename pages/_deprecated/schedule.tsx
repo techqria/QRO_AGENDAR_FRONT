@@ -8,8 +8,8 @@ const Schedule = () => {
     const { periodicityToShow } = useSelector((store: IStore) => store.schedule)
 
     return (
-        <section className='container pt-5 pt-md-0 bg-white-sec h-100vh d-flex flex-column justify-content-center align-items-center'>
-            <h4 className="text-black">{periodicityToShow}</h4>
+        <section className='container pt-5 bg-white-sec d-flex flex-column justify-content-center align-items-center'>
+            <h4 className="text-black mt-4 pt-5">{periodicityToShow}</h4>
             <SwitchSchedule periodicityToShow={periodicityToShow} />
             <ScheduleList periodicityToShow={periodicityToShow}/>
             <button className="btn btn-orange mt-5 rounded-pill fw-bold">+ Adicionar Nova Agenda</button>

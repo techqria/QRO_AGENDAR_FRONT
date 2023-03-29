@@ -1,12 +1,16 @@
 const LoginForm = () => {
     return (
-        <div className="mt-5 pt-5 w-100">
+        <div className="mt-5 mt-md-0 pt-5 w-100 ps-md-5 pe-md-5">
             <h2 className="fw-bold text-start">Fazer login</h2>
 
-            <div className="mt-5">
+            <div className="mt-5 mt-md-4">
+                <div className="mb-3">
+                    <label htmlFor="">Clínica</label>
+                    <input className="input" type="text" />
+                </div>
                 <div className="mb-3">
                     <label htmlFor="">Email</label>
-                    <input className="input" type="text" />
+                    <input className="input" type="email" />
                 </div>
                 <div className="mb-5">
                     <label htmlFor="">Senha</label>
@@ -14,8 +18,8 @@ const LoginForm = () => {
                 </div>
                 <div className="mb-3 d-flex flex-column align-items-center">
                     <button className="btn btn-gold">ENTRAR</button>
-                    <img className="img-fluid mt-4" src="/images/divider-login.svg" alt="divider-login.svg" />
-                    <button className="btn btn-outline-light w-100 mt-4 ">Login com Google</button>
+                    <img className="img-fluid mt-4 mb-4 mt-md-3 mb-md-3" src="/images/divider-login.svg" alt="divider-login.svg" />
+                    <button className="btn btn-outline-light w-100">Login com Google</button>
                 </div>
             </div>
         </div>

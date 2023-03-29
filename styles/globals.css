@@ -82,6 +82,14 @@ body {
   background-color: var(--white-sec) !important;
 }
 
+.bg-orange {
+  background-color: var(--orange) !important;
+}
+
+.bg-gold {
+  background-color: var(--gold) !important;
+}
+
 .banner-top {
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -101,6 +109,14 @@ body {
 .chart-icon {
   background-color: rgba(0, 0, 0, 0.25);
   width: 22px;
+  height: 22px;
+}
+
+.settings-icon {
+  background-color: var(--orange);
+  width: 22px;
+  height: 22px;
+  transition: .4s ease-in;
 }
 
 .dashboard-icon {
@@ -123,6 +139,11 @@ body {
   mask: url('../public/icons/chart.svg') no-repeat center;
 }
 
+.settings-icon {
+  -webkit-mask: url("../public/icons/settings.svg") no-repeat center;
+  mask: url('../public/icons/settings.svg') no-repeat center;
+}
+
 .w-90 {
   width: 90px;
 }
@@ -136,8 +157,34 @@ body {
 }
 
 .mobile-padding {
-  padding-top: 2em;
   margin-bottom: 4rem;
+}
+
+.scale-01 {
+  transform: scale(1.1);
+}
+
+.border-orange {
+  border: 1px solid var(--orange);
+}
+
+.btn-setting {
+  width: 220px;
+}
+
+.text-orange {
+  color: var(--orange) !important;
+}
+
+.sidebar-menu {
+  left: 0;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.20);
+}
+
+.ps-6 {
+  padding-left: 6rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -147,6 +194,13 @@ body {
 
   body {
     color: white;
-    background: var(--orange);
+    background: var(--white);
   }
+}
+
+@media (min-width: 772px) {
+  .w-md-35 {
+    width: 35%;
+  }
+
 }

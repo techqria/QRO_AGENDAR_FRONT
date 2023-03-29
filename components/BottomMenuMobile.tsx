@@ -1,7 +1,6 @@
 import { PagesEnum } from "../dto/pages.enum";
 import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../store/types/types";
-import { useEffect } from "react";
 import { changePage } from "../store/slices/pagesSlice";
 
 const BottomMenuMobile = () => {
@@ -17,7 +16,7 @@ const BottomMenuMobile = () => {
             <i onClick={() => dispatch(changePage(PagesEnum.employeesPage))} role="button" className={`${currentPage === PagesEnum.employeesPage && 'bg-dark'} person-icon`}></i>
             <i onClick={() => dispatch(changePage(PagesEnum.schedulePage))} role="button" className={`${currentPage === PagesEnum.schedulePage && 'bg-dark'} calendar-icon`}></i>
             <i onClick={() => dispatch(changePage(PagesEnum.financePage))} role="button" className={`${currentPage === PagesEnum.financePage && 'bg-dark'} chart-icon`}></i>
-            <img src="/icons/settings.svg" alt="logo-orange-qro-agendar.svg" />
+            <i onClick={() => dispatch(changePage(PagesEnum.settingsPage))} role="button" className={`${currentPage === PagesEnum.settingsPage && 'scale-01'} settings-icon`}></i>
         </div>
     );
 }

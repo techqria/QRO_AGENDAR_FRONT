@@ -7,5 +7,6 @@ export const ChangePage = (page: string) => {
         case PagesEnum.employeesPage: return AdminPagesEnum.employeesPage
         case PagesEnum.financePage: return AdminPagesEnum.financePage
         case PagesEnum.schedulePage: return AdminPagesEnum.schedulePage
+        case PagesEnum.settingsPage: return AdminPagesEnum.settingsPage
     }
 }

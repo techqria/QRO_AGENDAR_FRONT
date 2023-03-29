@@ -3,4 +3,5 @@ export enum PagesEnum {
     employeesPage = 'employeesPage',
     schedulePage = 'schedulePage',
     financePage = 'financePage',
+    settingsPage = 'settingsPage',
 }
