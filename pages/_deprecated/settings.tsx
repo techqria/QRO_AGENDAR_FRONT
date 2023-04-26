@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import ModalChangePassword from "../../components/Modals/ModalChangePassword";
 
 const Settings = () => {
 
@@ -10,7 +11,6 @@ const Settings = () => {
         <section className='container pt-5 bg-white-sec d-flex flex-column align-items-center'>
             <h4 className="text-black mt-4 pt-5">Configurações</h4>
 
-
             <div className="d-flex flex-column flex-md-row gap-5 align-items-center">
 
                 <div className="mt-5 d-flex flex-column align-items-center me-md-5">
@@ -21,7 +21,8 @@ const Settings = () => {
 
 
                 <div className="mt-5 d-flex flex-column gap-2 ms-md-5">
-                    <button className="btn btn-orange bg-orange text-white btn-setting d-flex gap-2 align-items-center justify-content-center rounded-pill">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#changePasswordModal"
+                        className="btn btn-orange bg-orange text-white btn-setting d-flex gap-2 align-items-center justify-content-center rounded-pill">
                         <img src="/icons/locker.svg" alt="locker.svg" />
                         Alterar Senha
                     </button>
@@ -35,7 +36,8 @@ const Settings = () => {
                     </button>
                 </div>
             </div>
-
+        
+            <ModalChangePassword />
         </section>
     );
 }
