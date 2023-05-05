@@ -187,6 +187,10 @@ body {
   padding-left: 6rem;
 }
 
+.w-33{
+  width: 33% !important;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
