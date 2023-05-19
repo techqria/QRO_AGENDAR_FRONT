@@ -187,8 +187,14 @@ body {
   padding-left: 6rem;
 }
 
-.w-33{
+.w-33 {
   width: 33% !important;
+}
+
+.finance-chart-bar {
+  background-color: #4339F2;
+  width: 12px;
+  border-radius: 10px;
 }
 
 @media (prefers-color-scheme: dark) {
