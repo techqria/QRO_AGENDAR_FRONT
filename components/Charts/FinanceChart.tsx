@@ -9,28 +9,28 @@ const FinanceChart = () => {
     useEffect(() => {
         const newArray = [
             {
-                price: 1300,
+                price: Number(faker.commerce.price()),
                 date: faker.date.recent(20).getDate().toString().padStart(2, '0') + "/" + faker.date.recent(20).getMonth().toString().padStart(2, '0'),
             },
             {
-                price: 900,
+                price: Number(faker.commerce.price()),
                 date: faker.date.recent(20).getDate().toString().padStart(2, '0') + "/" + faker.date.recent(20).getMonth().toString().padStart(2, '0'),
             },
             {
-                price: 900,
+                price: Number(faker.commerce.price()),
                 date: faker.date.recent(20).getDate().toString().padStart(2, '0') + "/" + faker.date.recent(20).getMonth().toString().padStart(2, '0'),
             },
             {
-                price: 500,
+                price: Number(faker.commerce.price()),
                 date: faker.date.recent(20).getDate().toString().padStart(2, '0') + "/" + faker.date.recent(20).getMonth().toString().padStart(2, '0'),
             },
             {
-                price: 230,
+                price: Number(faker.commerce.price()),
                 date: faker.date.recent(20).getDate().toString().padStart(2, '0') + "/" + faker.date.recent(20).getMonth().toString().padStart(2, '0'),
             },
         ]
 
-        setHighestPrice(newArray.sort((a, b) => a.price - b.price).reverse()[0].price)
+        setHighestPrice([...newArray].sort((a, b) => a.price - b.price).reverse()[0].price)
         setMoneyArray(newArray)
     }, []);
 

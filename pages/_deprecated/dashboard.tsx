@@ -1,5 +1,7 @@
 import FinanceChart from "../../components/Charts/FinanceChart";
+import PaymentMethodChart from "../../components/Charts/PaymentMethodChart";
 import SpecialtyChart from "../../components/Charts/SpecialtyChart";
+import TimeChart from "../../components/Charts/TimeChart";
 
 const Dashboard = () => {
     return (
@@ -8,8 +10,9 @@ const Dashboard = () => {
 
             <section className='row mt-5 justify-content-between'>
                 <FinanceChart />
-                <FinanceChart />
+                <PaymentMethodChart />
                 <SpecialtyChart />
+                <TimeChart />
             </section>
         </div>
     );

@@ -31,9 +31,9 @@ const SpecialtyChart = () => {
         })
 
         const highest = [
-            newArrayOne.sort((a, b) => a.price - b.price).reverse()[0].price,
-            newArrayTwo.sort((a, b) => a.price - b.price).reverse()[0].price,
-            newArrayThree.sort((a, b) => a.price - b.price).reverse()[0].price,
+            [...newArrayOne].sort((a, b) => a.price - b.price).reverse()[0].price,
+            [...newArrayTwo].sort((a, b) => a.price - b.price).reverse()[0].price,
+            [...newArrayThree].sort((a, b) => a.price - b.price).reverse()[0].price,
         ].sort((a, b) => a - b).reverse()[0]
 
         setHighestSpecialty(highest)
@@ -62,11 +62,25 @@ const SpecialtyChart = () => {
 
                 <h5>Especialidades por semana</h5>
 
-                <div className="d-flex mt-3">
-                    <svg width={30} height={30}>
-                        <circle cx={15} cy={12} r="10" fill="#4339F2" />
-                    </svg>
-                    <span>Quanto entrou</span>
+                <div className="d-flex gap-3">
+                    <div className="d-flex mt-3">
+                        <svg width={30} height={30}>
+                            <circle cx={15} cy={12} r="10" fill="#4339F2" />
+                        </svg>
+                        <span>Especialidade 1</span>
+                    </div>
+                    <div className="d-flex mt-3">
+                        <svg width={30} height={30}>
+                            <circle cx={15} cy={12} r="10" fill="#FF6D00" />
+                        </svg>
+                        <span>Especialidade 2</span>
+                    </div>
+                    <div className="d-flex mt-3">
+                        <svg width={30} height={30}>
+                            <circle cx={15} cy={12} r="10" fill="#FFC107" />
+                        </svg>
+                        <span>Especialidade 3</span>
+                    </div>
                 </div>
 
                 <div className="finance-chart d-flex mt-3 gap-4">
@@ -77,7 +91,7 @@ const SpecialtyChart = () => {
                         <span>{Math.round(highestSpecialty / 4)}</span>
                         <span>0</span>
                     </div>
-                    <div className="d-flex gap-5 overflow-auto">
+                    <div className="d-flex gap-5 overflow-auto specialty-chart">
                         {
                             SpecialtyOne.map((item, index) => (
                                 <div className="d-flex gap-1 align-items-end">
