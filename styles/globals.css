@@ -82,6 +82,19 @@ body {
   border: 2px solid var(--orange);
   color: var(--orange);
 }
+.btn-orange-outline {
+  background-color: none;
+  height: 50px;
+  border-radius: 12px;
+  border: 2px solid var(--orange);
+  color: var(--orange);
+}
+
+.btn-orange-outline:focus,
+.btn-orange-outline:hover {
+  background-color: var(--orange);
+  color: var(--white);
+}
 
 .btn-orange-sec {
   background-color: var(--orange-sec);
@@ -266,6 +279,11 @@ body {
 
 .specialty-chart::-webkit-scrollbar-thumb {
   background-color: #929292;
+}
+
+.square-calendar {
+  width: 200px;
+  height: 150px;
 }
 
 @media (prefers-color-scheme: dark) {

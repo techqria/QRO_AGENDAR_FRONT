@@ -11,8 +11,14 @@ const scheduleSlice = createSlice({
                 state.periodicityToShow = SchedulePeriodicityEnum.weekSchedule
             } else state.periodicityToShow = SchedulePeriodicityEnum.monthSchedule
         },
+        changeMonthDate(state, action) {
+            state.monthDate = action.payload
+        },
+        changeWeekDate(state, action) {
+            state.weekDate = action.payload
+        },
     }
 });
 
-export const { changeSchedule } = scheduleSlice.actions;
+export const { changeSchedule, changeMonthDate, changeWeekDate } = scheduleSlice.actions;
 export const scheduleReducer = scheduleSlice.reducer;

@@ -9,5 +9,7 @@ export interface IStore {
     schedule: ISchedule,
 }
 export interface ISchedule {
-    periodicityToShow: SchedulePeriodicityEnum
+    periodicityToShow: SchedulePeriodicityEnum;
+    monthDate: number;
+    weekDate: number;
 }
