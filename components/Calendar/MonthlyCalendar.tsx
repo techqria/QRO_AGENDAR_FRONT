@@ -1,12 +1,12 @@
 import { faker } from "@faker-js/faker";
 import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { IStore } from "../store/types/types";
+import { IStore } from "../../store/types/types";
+import { FormatBgColor } from "../../hooks/FomatBgColor";
 
 export const MonthlyCalendar = () => {
 
     const { monthDate } = useSelector((store: IStore) => store.schedule);
-
 
     const [datesArray, setDatesArray] = useState([]);
 
@@ -14,7 +14,8 @@ export const MonthlyCalendar = () => {
         const newArray = new Array(40).fill({}).map(_ => {
             return {
                 date: faker.date.recent(totalMonthDays, new Date(new Date(monthDate).getFullYear(), new Date(monthDate).getMonth() + 1, 0)).toISOString(),
-                service: faker.commerce.department()
+                service: faker.commerce.department(),
+                color: faker.color.rgb()
             }
         })
 
@@ -35,12 +36,10 @@ export const MonthlyCalendar = () => {
         const filtered = datesArray.filter(el => new Date(el.date).getDate() == day)
         if (filtered.length) {
             return <div className="d-flex flex-column">
-                {filtered.map((filter, index) => index <= 1 && <p role="button" className="text-secondary m-0">{filter.service}</p>)}
+                {filtered.map((filter, index) => index <= 1 && <p className="ps-1" role="button" style={{ color: filter.color, backgroundColor: FormatBgColor(filter.color) }} >{filter.service}</p>)}
 
                 {(filtered.length != 2 && filtered.length > 1) &&
-                    <div className="d-flex justify-content-end mt-2">
-                        <button className="btn btn-orange-outline rounded-circle m-0">+{Math.abs(filtered.length - 2)}</button>
-                    </div>
+                    <p role="button" className="fit-content text-orange border-orange rounded m-0 p-1 pb-0">+{Math.abs(filtered.length - 2)}</p>
                 }
             </div>
         }

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { SchedulePeriodicityEnum } from "../dto/schedule-periodicity.enum";
-import { changeMonthDate, changeSchedule } from "../store/slices/scheduleSlice";
+import { changeMonthDate, changeSchedule, changeWeekDate } from "../store/slices/scheduleSlice";
 import { useCallback, useEffect, useState } from "react";
 import { IStore } from "../store/types/types";
 
@@ -11,6 +11,7 @@ const SwitchSchedule = ({ periodicityToShow }) => {
     const { monthDate, weekDate } = useSelector((store: IStore) => store.schedule);
 
     const [monthDateFormatted, setMonthDateFormatted] = useState(new Date(monthDate));
+    const [weekDateFormatted, setWeekDateFormatted] = useState(new Date(weekDate));
 
     const [currentMonth, setCurrentMonth] = useState(monthDateFormatted.toLocaleString('default', { month: 'long' }));
     const [currentYear, setCurrentYear] = useState(monthDateFormatted.getFullYear());
@@ -20,6 +21,10 @@ const SwitchSchedule = ({ periodicityToShow }) => {
         setCurrentMonth(new Date(monthDate).toLocaleString('default', { month: 'long' }));
         setCurrentYear(new Date(monthDate).getFullYear());
     }, [monthDate]);
+
+    useEffect(() => {
+        setWeekDateFormatted(new Date(weekDate))
+    }, [weekDate]);
 
     const changeDateText = useCallback(() => {
         if (periodicityToShow === SchedulePeriodicityEnum.monthSchedule)
@@ -42,7 +47,10 @@ const SwitchSchedule = ({ periodicityToShow }) => {
     }
 
     const newWeekDate = (direction: string) => {
-  
+        switch (direction) {
+            case 'previous': return dispatch(changeWeekDate(new Date(weekDateFormatted.setDate(weekDateFormatted.getDate() - 7)).getTime()))
+            case 'next': return dispatch(changeWeekDate(new Date(weekDateFormatted.setDate(weekDateFormatted.getDate() + 7)).getTime()))
+        }
     }
 
     return (
