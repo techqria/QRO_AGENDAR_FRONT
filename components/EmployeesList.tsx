@@ -24,7 +24,7 @@ const EmployeesList = () => {
                         </div>
                         <span className="text-secondary">{employee.date}</span>
                         <span className="text-secondary">{employee.hour}</span>
-                        <img role="button" width={16} className="rounded-circle" src="/icons/edit-orange.svg" alt="edit-orange.svg" />
+                        <img data-bs-toggle="modal" data-bs-target="#editEmployeeModal" role="button" width={16} className="rounded-circle" src="/icons/edit-orange.svg" alt="edit-orange.svg" />
                     </div>
                 )
             }

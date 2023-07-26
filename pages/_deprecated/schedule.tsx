@@ -7,6 +7,7 @@ import { useCallback } from "react";
 import { SchedulePeriodicityEnum } from "../../dto/schedule-periodicity.enum";
 import { WeekCalendar } from "../../components/Calendar/WeekCalendar";
 import { EmployeesSchedule } from "../../components/EmployeesSchedule";
+import ModalRegisterSchedule from "../../components/Modals/ModalRegisterSchedule";
 
 const Schedule = () => {
 
@@ -25,7 +26,8 @@ const Schedule = () => {
             <SwitchSchedule periodicityToShow={periodicityToShow} />
             <EmployeesSchedule />
             {chooseCalendar()}
-            <button className="btn btn-orange mt-5 rounded-pill fw-bold">+ Adicionar Nova Agenda</button>
+            <button data-bs-toggle="modal" data-bs-target="#registerScheduleModal" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Adicionar Nova Agenda</button>
+            <ModalRegisterSchedule />
         </section>
     );
 }
