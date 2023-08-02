@@ -1,0 +1,1 @@
+export const ErrorGQL = (message: string) => message.replace("GraphQL error: ", " ")

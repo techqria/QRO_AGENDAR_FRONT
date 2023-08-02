@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Script from "next/script";
+import Toast from "./Toast";
 
 const MainContainer = ({ children }) => {
     return (
@@ -12,9 +13,12 @@ const MainContainer = ({ children }) => {
             </Head>
             <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" />
 
-            <main>{children}</main>
+            <main>
+                <Toast />
+                {children}
+            </main>
 
-            
+
         </>
     );
 }

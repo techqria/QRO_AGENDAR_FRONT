@@ -1,4 +1,13 @@
+import loginService from "../graphql/services/login.service";
+
 const LoginForm = () => {
+
+    async function callApi() {
+        const data = await loginService.login("aenamartinelli@gmail.com", "12345")
+        console.log(data)
+    }
+    callApi()
+
     return (
         <div className="mt-5 mt-md-0 pt-5 w-100 ps-md-5 pe-md-5">
             <h2 className="fw-bold text-start">Fazer login</h2>
