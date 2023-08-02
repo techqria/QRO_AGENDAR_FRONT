@@ -27,7 +27,7 @@ class LoginService {
 
             return data
         } catch (error) {
-            return ToastMessage(ToastEnum.success, error.message)
+            return ToastMessage(ToastEnum.error, error.message)
         }
     }
 }

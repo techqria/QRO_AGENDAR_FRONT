@@ -8,6 +8,7 @@ export const ToastMessage = (type: ToastEnum, message: string) => {
     store.dispatch(changeVisible(true))
     store.dispatch(changeType(type))
     store.dispatch(changeMessage(message))
+    setTimeout(() => store.dispatch(changeVisible(false)), 4000)
 }
 
  
