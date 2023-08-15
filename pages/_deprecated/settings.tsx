@@ -5,7 +5,10 @@ const Settings = () => {
 
     const route = useRouter()
 
-    const logout = () => route.push("/login");
+    const logout = () => {
+        route.push("/login")
+        window.localStorage.removeItem("token")
+    };
 
     return (
         <section className='container pt-5 bg-white-sec d-flex flex-column align-items-center'>
@@ -36,7 +39,7 @@ const Settings = () => {
                     </button>
                 </div>
             </div>
-        
+
             <ModalChangePassword />
         </section>
     );

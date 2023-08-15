@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
-import BannerTopMobile from "../../components/BannerTopMobile";
-import BottomMenuMobile from "../../components/BottomMenuMobile";
-import { IStore } from "../../store/types/types";
-import { ChangePage } from "../../hooks/ChangePage";
-import SidebarDesktop from "../../components/SidebarDesktop";
+import BannerTopMobile from "../components/BannerTopMobile";
+import BottomMenuMobile from "../components/BottomMenuMobile";
+import { IStore } from "../store/types/types";
+import { ChangePage } from "../hooks/ChangePage";
+import SidebarDesktop from "../components/SidebarDesktop";
 import { useEffect } from "react";
-import BannerTopDesktop from "../../components/BannerTopDesktop";
+import BannerTopDesktop from "../components/BannerTopDesktop";
 
 const Admin = () => {
 

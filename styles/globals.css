@@ -318,6 +318,10 @@ body {
   font-size: 1em;
 }
 
+input::placeholder{
+  opacity: 0.5 !important;
+}
+
 @keyframes showCard {
   to {
     opacity: 1;

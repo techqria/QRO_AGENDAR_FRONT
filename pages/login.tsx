@@ -13,7 +13,7 @@ const Login = () => {
             <div className="d-none d-md-flex w-75 flex-column justify-content-center align-items-center">
                 <img width={100} className='mt-5' src="/images/logo-orange-qro-agendar.svg" alt="logo-qro-agendar.svg" />
                 <h1 className='text-orange mt-3'>Confira nossas atualizações</h1>
-                <video height={"70%"} src=""></video>
+                <video height={"50%"} src=""></video>
             </div>
         </section>
     );

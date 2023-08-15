@@ -1,10 +1,24 @@
-import loginService from "../graphql/services/login.service";
+import { useState } from "react";
+import { ILoginUser } from "../interfaces";
+import { useRouter } from "next/router";
+import authService from "../graphql/services/auth.service";
+import { useDispatch } from "react-redux";
+import { changeRole } from "../store/slices/user.slice";
 
 const LoginForm = () => {
 
+    const router = useRouter()
+
+    const dispatch = useDispatch()
+
+    const [user, setUser] = useState<ILoginUser>();
+
     async function callApi() {
-        const data = await loginService.login("aenamartinelli@gmail.com", "123456")
-        console.log(data)
+        const result = await authService.login(user.email, user.password)
+        if (result.success) {
+            dispatch(changeRole(result.user.role))
+            router.push(`${result.user.role}`)
+        }
     }
 
     return (
@@ -12,17 +26,17 @@ const LoginForm = () => {
             <h2 className="fw-bold text-start">Fazer login</h2>
 
             <div className="mt-5 mt-md-4">
-                <div className="mb-3">
+                {/* <div className="mb-3">
                     <label htmlFor="">Clínica</label>
                     <input className="input" type="text" />
-                </div>
+                </div> */}
                 <div className="mb-3">
                     <label htmlFor="">Email</label>
-                    <input className="input" type="email" />
+                    <input onChange={(e) => setUser({ ...user, email: e.target.value })} className="input" type="email" />
                 </div>
                 <div className="mb-5">
                     <label htmlFor="">Senha</label>
-                    <input className="input" type="password" />
+                    <input onChange={(e) => setUser({ ...user, password: e.target.value })} className="input" type="password" />
                 </div>
                 <div className="mb-3 d-flex flex-column align-items-center">
                     <button className="btn btn-gold" onClick={callApi}>ENTRAR</button>
