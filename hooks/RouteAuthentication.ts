@@ -10,6 +10,7 @@ export const RouteAuthentication = async (router) => {
 
     const result = await authService.verifyToken(token)
     if (!result.userId) return router.push("/login")
+    console.log(token)
 
     store.dispatch(changeRole(result.userRole))
     router.push(`/${result.userRole}`)

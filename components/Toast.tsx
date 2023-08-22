@@ -15,7 +15,6 @@ const Toast = () => {
             case ToastEnum.warning: return "bg-warning"
         }
     }
-
     return (
         visible &&
         <div className={`toast-card d-flex position-absolute end-0 m-5 ${checkBackground()}`}>

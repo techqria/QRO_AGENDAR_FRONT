@@ -1,6 +1,6 @@
 import { RoleEnum } from "./dto/role.enum";
 
-export interface IMenuOptions{
+export interface IMenuOptions {
     Component: () => JSX.Element
 }
 
@@ -40,4 +40,20 @@ export interface IApolloVerifyToken {
 
 export interface IDataVerifyToken {
     verifyToken: IVerifyToken
+}
+
+export interface IManager {
+    name: string
+    email: string
+    phone: string
+    password: string
+}
+
+export interface IDataCreateManager {
+    manager: IManager
+}
+
+export interface IApolloCreateManager {
+    data: IDataCreateManager;
+    loading: boolean;
 }

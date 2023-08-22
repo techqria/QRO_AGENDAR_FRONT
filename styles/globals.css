@@ -304,6 +304,7 @@ body {
 }
 
 .toast-card {
+  z-index: 2;
   opacity: 0;
   width: 0;
   height: 50px;
