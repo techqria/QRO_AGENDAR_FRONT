@@ -1,6 +1,6 @@
 import authService from "../graphql/services/auth.service"
 import { store } from "../store"
-import { changeRole } from "../store/slices/user.slice"
+import { changeRole, changeUserId } from "../store/slices/user.slice"
 
 export const RouteAuthentication = async (router) => {
  
@@ -10,8 +10,9 @@ export const RouteAuthentication = async (router) => {
 
     const result = await authService.verifyToken(token)
     if (!result.userId) return router.push("/login")
-    console.log(token)
 
     store.dispatch(changeRole(result.userRole))
+    store.dispatch(changeUserId(result.userId))
+
     router.push(`/${result.userRole}`)
 }

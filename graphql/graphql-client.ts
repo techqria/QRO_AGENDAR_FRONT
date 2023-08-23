@@ -6,7 +6,7 @@ export const apolloClient = new ApolloClient({
     link: new HttpLink({
         uri: 'http://localhost:2069/graphql',
         headers: {
-            "Authorization": "Bearer " + window.localStorage.getItem("token")
+            "Authorization": "Bearer " + (typeof window !== 'undefined' ? window.localStorage.getItem("token") : null)
         }
     }),
     cache: new InMemoryCache(),

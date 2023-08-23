@@ -9,6 +9,7 @@ const RegisterManagerForm = () => {
     async function registerManager(e) {
         e.preventDefault()
         userService.createManager(manager)
+        document.getElementById("close-register-modal").click()
     }
 
     return (

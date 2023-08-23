@@ -25,14 +25,14 @@ const ModalRegisterEmployee = () => {
                                 <label className="text-dark" htmlFor="employee">Empregado</label>
                             </div>
                         }
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button id="close-register-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
                         <h1 className="modal-title fs-5 text-orange text-center" >Cadastrar Novo Funcionário</h1>
                         {
-                            showEmployeeForm
-                                ? <RegisterEmployeeForm />
-                                : <RegisterManagerForm />
+                            showEmployeeForm && userRole === RoleEnum.admin
+                                ? <RegisterManagerForm />
+                                : <RegisterEmployeeForm />
                         }
                     </div>
                 </div>

@@ -1,14 +1,33 @@
 import { useRouter } from "next/router";
 import ModalChangePassword from "../../components/Modals/ModalChangePassword";
+import { useEffect, useState } from "react"
+import authService from "../../graphql/services/auth.service";
+import { useSelector } from "react-redux";
+import { IStore } from "../../store/types/types";
+import { ICurrentUser } from "../../interfaces";
 
 const Settings = () => {
 
-    const route = useRouter()
+    const route = useRouter();
+
+    const { userId: currentUserId } = useSelector((store: IStore) => store.user);
+
+    const [currentUser, setCurrentUser] = useState<ICurrentUser>();
 
     const logout = () => {
         route.push("/login")
         window.localStorage.removeItem("token")
     };
+
+    async function getCurrentUser() {
+        console.log(currentUserId)
+        console.log(await authService.getCurrentUser(currentUserId))
+        setCurrentUser(await authService.getCurrentUser(currentUserId))
+    }
+
+    useEffect(() => {
+        getCurrentUser()
+    }, []);
 
     return (
         <section className='container pt-5 bg-white-sec d-flex flex-column align-items-center'>
@@ -18,7 +37,7 @@ const Settings = () => {
 
                 <div className="mt-5 d-flex flex-column align-items-center me-md-5">
                     <img className="border-orange rounded-circle" src="/images/person.png" alt="" />
-                    <h3 className="text-black mt-2">Rodrigo Abreu</h3>
+                    <h3 className="text-black mt-2">{currentUser?.name}</h3>
                     <p className="text-secondary mt-1">Administrador</p>
                 </div>
 

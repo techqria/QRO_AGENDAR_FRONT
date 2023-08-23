@@ -3,6 +3,8 @@ import { apolloClient } from "../graphql-client";
 import { ToastEnum } from "../../dto/toast.enum";
 import { ToastMessage } from "../../hooks/ToastMessage";
 import { IApolloLogin, IApolloVerifyToken, ILogin, IVerifyToken } from "../../interfaces";
+import { store } from "../../store";
+import { changeRole, changeUserId } from "../../store/slices/user.slice";
 
 class AuthService {
   async login(email: string, password: string): Promise<ILogin> {
@@ -24,6 +26,11 @@ class AuthService {
       });
 
       window.localStorage.setItem("token", data.login.token)
+      console.log(data.login)
+
+      const result = this.verifyToken(data.login.token)
+      store.dispatch(changeRole((await result).userRole))
+      store.dispatch(changeUserId((await result).userId))
 
       return data.login
     } catch (error) {
@@ -46,6 +53,24 @@ class AuthService {
       });
 
       return data.verifyToken
+    } catch (error) {
+      return error
+    }
+  }
+
+  async getCurrentUser(userId: string): Promise<any> {
+    const query = gql`query getUserById($userId: String!) {
+      getUserById(id: $userId) {
+       name
+      }
+    }`
+    try {
+      const { data } = await apolloClient.query({
+        query,
+        variables: { userId },
+      });
+
+      return data.getUserById
     } catch (error) {
       return error
     }

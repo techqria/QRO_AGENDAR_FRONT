@@ -57,3 +57,31 @@ export interface IApolloCreateManager {
     data: IDataCreateManager;
     loading: boolean;
 }
+
+export interface IEmployee {
+    name: string;
+    email: string;
+    phone: string;
+    password: string;
+    specialty: string;
+    color: string;
+    imageUrl?: string;
+}
+
+export interface ISpecialties {
+    title: string;
+    id: string;
+    qtt_employees?: number;
+}
+
+export interface IApolloGetAllSpecialties {
+    data: IDataGetAllSpecialties;
+    loading: boolean;
+}
+
+export interface IDataGetAllSpecialties {
+    getAllSpecialties: ISpecialties[]
+}
+export interface ICurrentUser {
+    name: string
+}
