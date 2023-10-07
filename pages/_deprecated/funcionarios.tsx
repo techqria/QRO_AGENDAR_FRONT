@@ -3,6 +3,8 @@ import EmployeesList from "../../components/EmployeesList";
 import ModalEditEmployee from "../../components/Modals/ModalEditEmployee";
 import ModalRegisterEmployee from "../../components/Modals/ModalRegisterEmployee";
 import { IStore } from "../../store/types/types";
+import ModalRegisterSpecialty from "../../components/Modals/ModalRegisterSpecialty";
+import ModalEditSpecialty from "../../components/Modals/ModalEditSpecialty";
 
 const Employees = () => {
 
@@ -11,10 +13,15 @@ const Employees = () => {
             <div className="pt-md-5 d-flex flex-column justify-content-center align-items-center">
                 <h4 className="text-black mt-4 pt-5 pt-md-0">Funcionários</h4>
                 <EmployeesList />
-                <button data-bs-toggle="modal" data-bs-target="#registerEmployeeModal" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Adicionar Novo Funcionário</button>
+                <div className="d-flex gap-4">
+                    <button data-bs-toggle="modal" data-bs-target="#registerEmployeeModal" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Adicionar Novo Funcionário</button>
+                    <button data-bs-toggle="modal" data-bs-target="#registerSpecialtyModal" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Adicionar Nova Especialidade</button>
+                </div>
             </div>
             <ModalRegisterEmployee />
+            <ModalRegisterSpecialty />
             <ModalEditEmployee />
+            <ModalEditSpecialty />
         </section>
     );
 }

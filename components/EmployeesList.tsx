@@ -1,41 +1,64 @@
-import { useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { IEmployee, ISpecialties, IVets } from "../interfaces";
+import specialtyService from "../graphql/services/specialty.service";
+import userService from "../graphql/services/user.service";
+import { useDispatch } from "react-redux";
+import { changeEmployee } from "../store/slices/employee.slice";
+import { changeSpecialyId } from "../store/slices/specialty.slice";
 
 const EmployeesList = () => {
 
-    let data = [
-        { name: 'Nome', date: '12/07/2002', hour: '08:30', specialty: 'especialidade 1' },
-        { name: 'Nome', date: '12/07/2002', hour: '08:30', specialty: 'especialidade 1' },
-        { name: 'Nome', date: '12/07/2002', hour: '08:30', specialty: 'especialidade 1' },
-        { name: 'Segundo', date: '12/07/2002', hour: '08:30', specialty: 'especialidade 2' },
-        { name: 'Segundo', date: '12/07/2002', hour: '08:30', specialty: 'especialidade 2' },
-        { name: 'Segundo', date: '12/07/2002', hour: '08:30', specialty: 'especialidade 2' },
-    ]
+    const dispatch = useDispatch()
 
-    let specialty = ['especialidade 1', 'especialidade 2']
+    const [specialties, setSpecialties] = useState<ISpecialties[]>([]);
+    const [vets, setVets] = useState<IVets[]>([])
 
-    const listEmployees = useCallback((specialty: string) => {
-        return data.map((employee, index) => {
-            if (specialty === employee.specialty) {
+    useEffect(() => {
+        async function getData() {
+            const result = await specialtyService.getAllSpecialties()
+            setSpecialties(result)
+
+            const resultVets = await userService.getAllEmployees()
+            setVets(resultVets)
+        }
+
+        getData()
+    }, [])
+
+    const setEpecialty = (id: string) => dispatch(changeSpecialyId(id))
+
+    const setEmployee = (employee: IVets) => dispatch(changeEmployee(employee))
+
+    const listEmployees = useCallback((specialtyId: string) => {
+        if (vets?.find(el => el.specialty_id == specialtyId) == undefined) {
+            return <p className="text-black">Nenhum veterinário cadastrado nessa especialidade</p>
+        }
+
+        return vets?.map((employee, index) => {
+            if (specialtyId === employee.specialty_id) {
                 return (
                     <div key={index} className="d-flex align-items-center justify-content-around bg-white gap-5 ps-2 pt-4 pb-4 rounded">
                         <div className="d-flex gap-2 align-items-center">
-                            <img width={40} className="rounded-circle" src="/images/person.png" alt="favicon.svg" />
-                            <span className="text-black">{employee.name}</span>
+                            {/* <img width={40} className="rounded-circle" src="/images/person.png" alt="favicon.svg" /> */}
+                            <span className="text-black text-capitalize">{employee.name}</span>
                         </div>
-                        <span className="text-secondary">{employee.date}</span>
-                        <span className="text-secondary">{employee.hour}</span>
-                        <img data-bs-toggle="modal" data-bs-target="#editEmployeeModal" role="button" width={16} className="rounded-circle" src="/icons/edit-orange.svg" alt="edit-orange.svg" />
+                        <span className="text-secondary">{employee.email}</span>
+                        <span className="text-secondary">{employee.phone}</span>
+                        <img onClick={_ => setEmployee(employee)} data-bs-toggle="modal" data-bs-target="#editEmployeeModal" role="button" width={16} className="rounded-circle" src="/icons/edit-orange.svg" alt="edit-orange.svg" />
                     </div>
                 )
             }
         })
-    }, [data])
+    }, [vets])
 
-    const listSpecialty = specialty.map((specialty, index) => {
+    const listSpecialty = specialties?.map((specialty, index) => {
         return (
             <div className={`${!index ? 'mt-0' : 'mt-5'}`} key={index}>
-                <p className="text-secondary text-capitalize text-start">{specialty}</p>
-                {listEmployees(specialty)}
+                <div className="d-flex gap-2 mb-2">
+                    <p className="text-secondary mb-0 text-capitalize text-start">{specialty.title}</p>
+                    <img onClick={_ => setEpecialty(specialty.id)} data-bs-toggle="modal" data-bs-target="#editSpecialtyModal" role="button" width={16} className="rounded-circle" src="/icons/edit-orange.svg" alt="edit-orange.svg" />
+                </div>
+                {listEmployees(specialty.id)}
             </div>
         )
     })

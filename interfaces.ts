@@ -1,3 +1,4 @@
+import { paymentMethodEnum } from "./dto/payment-method.enum";
 import { RoleEnum } from "./dto/role.enum";
 
 export interface IMenuOptions {
@@ -66,6 +67,7 @@ export interface IEmployee {
     specialty: string;
     color: string;
     imageUrl?: string;
+    id?: string
 }
 
 export interface ISpecialties {
@@ -84,4 +86,53 @@ export interface IDataGetAllSpecialties {
 }
 export interface ICurrentUser {
     name: string
+}
+
+export interface IApolloGetAllVets {
+    data: IDataGetAllVets;
+    loading: boolean;
+}
+
+export interface IDataGetAllVets {
+    getAllVets: IVets[]
+}
+
+export interface IVets {
+    name: string
+    email: string
+    phone: string
+    password?: string
+    specialty_id: string
+    color: string;
+    id?: string
+}
+
+export interface ISchedule {
+    employee_id: string;
+    specialty_id: string;
+    date: string;
+    hour: string;
+    pet_name: string;
+    customer_name: string;
+    customer_phone: string;
+    pet_breed: string;
+    pet_type: string;
+    payment: IPayment
+}
+
+export interface IScheduleRegister {
+    employee_id: string;
+    specialty_id: string;
+    date: string;
+    pet_name: string;
+    customer_name: string;
+    customer_phone: string;
+    pet_breed: string;
+    pet_type: string;
+    payment: IPayment
+}
+
+export interface IPayment {
+    price: number;
+    method: paymentMethodEnum;
 }

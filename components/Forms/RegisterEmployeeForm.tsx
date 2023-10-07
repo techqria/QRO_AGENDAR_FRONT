@@ -6,7 +6,7 @@ import specialtyService from "../../graphql/services/specialty.service";
 const RegisterEmployeeForm = () => {
 
     const [employee, setEmployee] = useState<IEmployee>();
-    const [specialties, setSpecialties] = useState<ISpecialties[]>();
+    const [specialties, setSpecialties] = useState<ISpecialties[]>([]);
 
     async function registerEmployee(e) {
         e.preventDefault()
@@ -56,10 +56,10 @@ const RegisterEmployeeForm = () => {
                 <label className="w-20 text-black">Cor</label>
                 <input onChange={(e) => setEmployee({ ...employee, color: e.target.value })} required className="border-orange form-control mw-400" type="color" />
             </div>
-            <div className="mb-3 d-flex justify-content-evenly">
+            {/* <div className="mb-3 d-flex justify-content-evenly">
                 <label className="w-20 text-black">Imagem</label>
                 <input onChange={(e) => setEmployee({ ...employee, imageUrl: e.target.value })} className="border-orange form-control mw-400" type="file" />
-            </div>
+            </div> */}
             <div className="mb-3 d-flex justify-content-center">
                 <button type="submit" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Adicionar Novo Funcionário</button>
             </div>
