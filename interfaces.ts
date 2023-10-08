@@ -143,3 +143,16 @@ export interface IScheduleCalendar {
     date: Date
     employee_color: string
 }
+
+export interface IFinanceList {
+    employee_id: string
+    employee_name: string
+    qtt_schedules: number
+    revenue_generated: number
+}
+
+export interface IFinanceListByUser {
+    customer_name: string;
+    date: Date;
+    payment: IPayment;
+}

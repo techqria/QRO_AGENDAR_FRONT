@@ -2,6 +2,9 @@ import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { useCallback, useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
+import { IScheduleCalendar } from "../../interfaces";
+import scheduleService from "../../graphql/services/schedule.service";
+import { FormatBgColor } from "../../hooks/FomatBgColor";
 
 const nameDaysWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
 
@@ -9,21 +12,16 @@ export const WeekCalendar = () => {
 
     const { weekDate } = useSelector((store: IStore) => store.schedule);
 
-    const [datesArray, setDatesArray] = useState([]);
     const [startWeekDate, setStartWeekDate] = useState<Date>(new Date());
     const [datesOfWeek, setDatesOfWeek] = useState([]);
 
-    useEffect(() => {
-        const newArray = new Array(20).fill({}).map(_ => {
-            return {
-                date: faker.date.recent(100, new Date(new Date(weekDate).getFullYear(), new Date(weekDate).getMonth() + 2, 0)).toISOString(),
-                service: faker.commerce.department(),
-                hour: faker.date.recent(10).getHours() + ':' + faker.date.recent(10).getMinutes(),
-                color: faker.color.rgb()
-            }
-        })
+    const [schedules, setSchedules] = useState<IScheduleCalendar[]>([]);
 
-        setDatesArray(newArray)
+    useEffect(() => {
+        async function getData() {
+            setSchedules(await scheduleService.getSchedulesCalendar())
+        }
+        getData()
 
         discoverFirstWeekDate()
     }, []);
@@ -57,16 +55,16 @@ export const WeekCalendar = () => {
     }
 
     const checkScheduleDate = useCallback((date: Date) => {
-        const filtered = datesArray.filter(el =>
+        const filtered = schedules.filter(el =>
             new Date(el.date).getMonth() == date.getMonth() &&
             new Date(el.date).getDate() == date.getDate()
         )
         if (filtered.length) {
             return <div className="d-flex flex-column">
                 {filtered.map((filter, index) => index <= 1 &&
-                    <div className="d-flex gap-2 flex-column mt-4 bg-white rounded p-2">
-                        <p role="button" style={{color: filter.color}} className="m-0 fs-5">{filter.hour}</p>
-                        <p role="button" style={{color: filter.color}} className="m-0">{filter.service}</p>
+                    <div className="d-flex gap-2 flex-column mt-4 rounded p-2" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }}>
+                        <p role="button" className="m-0 fs-5">{new Date(filter.date).toLocaleTimeString('pt-BR', { hour: "2-digit", minute: "2-digit" })}</p>
+                        <p role="button" className="m-0 text-capitalize">{filter.specialty_name}</p>
                     </div>
                 )}
 

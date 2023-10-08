@@ -28,6 +28,9 @@ const employeeSlice = createSlice({
         },
         changeEmployeeSpecialtyId(state, action) {
             state.specialty_id = action.payload
+        },
+        changeEmployeeId(state, action) {
+            state.id = action.payload
         }
     },
     extraReducers(builder) {
@@ -43,5 +46,9 @@ const employeeSlice = createSlice({
     },
 })
 
-export const { changeEmployee, changeEmployeeColor, changeEmployeeName, changeEmployeeEmail, changeEmployeePhone, changeEmployeeSpecialtyId } = employeeSlice.actions
+export const {
+    changeEmployee, changeEmployeeColor, changeEmployeeName,
+    changeEmployeeEmail, changeEmployeePhone, changeEmployeeSpecialtyId,
+    changeEmployeeId
+} = employeeSlice.actions
 export const employeeReducer = employeeSlice.reducer
