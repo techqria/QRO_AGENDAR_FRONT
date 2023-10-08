@@ -156,3 +156,8 @@ export interface IFinanceListByUser {
     date: Date;
     payment: IPayment;
 }
+
+export interface IWeekScheduleHours {
+    hour: string 
+    qtt_schedules: number
+}

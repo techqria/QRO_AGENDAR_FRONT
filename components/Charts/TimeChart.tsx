@@ -1,37 +1,31 @@
-import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
+import dashboardService from "../../graphql/services/dashboard.service";
+import { IWeekScheduleHours } from "../../interfaces";
 
 const TimeChart = () => {
 
-    const [timeArray, setTimeArray] = useState([]);
+    const [timeArray, setTimeArray] = useState<IWeekScheduleHours[]>([]);
     const [highestTime, setHighestTime] = useState(0);
 
+
     useEffect(() => {
-        const newArray = [
-            {
-                time: faker.date.recent(7).getHours(),
-            },
-            {
-                time: faker.date.recent(7).getHours(),
-            },
-            {
-                time: faker.date.recent(7).getHours(),
-            },
-            {
-                time: faker.date.recent(7).getHours(),
-            },
-            {
-                time: faker.date.recent(7).getHours(),
-            },
-            {
-                time: faker.date.recent(7).getHours(),
-            },
-        ]
-        setTimeArray(newArray)
+        async function getData() {
+            const times = await dashboardService.getDashboardTimeChart()
+            let arr = Object.values(times)
+            arr = arr.slice(0, arr.length - 1)
+            console.log(arr)
+            setTimeArray(arr as any)
+        }
+        getData()
     }, []);
 
     useEffect(() => {
-        setHighestTime([...timeArray].sort((a,b) => a.time - b.time).reverse()[0]?.time)
+        let arr = Object.values(timeArray)
+        arr = arr.slice(0, arr.length - 1)
+        let sorted = arr.sort((a: any, b: any) => a.qtt_schedules - b.qtt_schedules)
+
+        let highest = sorted.reverse()[0]?.qtt_schedules
+        setHighestTime(Number(highest))
     }, [timeArray]);
 
 
@@ -57,10 +51,10 @@ const TimeChart = () => {
                 <div className="finance-chart d-flex flex-column mt-3 gap-3 h-90 align-items-center">
                     <div className="d-flex gap-4 align-items-end h-100">
                         {
-                            timeArray.map((item, index) => (
+                            timeArray?.map((item, index) => (
                                 <div className="d-flex flex-column justify-content-end gap-2 h-100">
-                                    <div style={{ height: `${checkPercentage(item.time)}%` }} className={`${item.time === highestTime ? "bg-info time-chart-bar" : 'time-chart-bar'}`}></div>
-                                    <span className="text-secondary text-center">{Math.round(item.time)}</span>
+                                    <div style={{ height: `${checkPercentage(item.qtt_schedules)}%` }} className={`${item.qtt_schedules === highestTime ? "bg-info time-chart-bar" : 'time-chart-bar'}`}></div>
+                                    <span className="text-secondary text-center">{item.hour.slice(0,5)}</span>
                                 </div>
                             ))
                         }

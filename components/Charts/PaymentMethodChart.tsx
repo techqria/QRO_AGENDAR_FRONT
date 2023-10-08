@@ -1,65 +1,25 @@
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
+import dashboardService from "../../graphql/services/dashboard.service";
 
 const PaymentMethodChart = () => {
 
-    const [PaymentMethod, setPaymentMethod] = useState({
-        pix: 0,
-        debit: 0,
-        credit: 0,
-        money: 0
-    });
-
-    const [MoneyPercentage, setMoneyPercentage] = useState<Number>();
-    const [PixPercentage, setPixPercentage] = useState<Number>();
-    const [CreditPercentage, setCreditPercentage] = useState<Number>();
-    const [DebitPercentage, setDebitPercentage] = useState<Number>();
+    const [MoneyPercentage, setMoneyPercentage] = useState<number>(0);
+    const [PixPercentage, setPixPercentage] = useState<number>(0);
+    const [CreditPercentage, setCreditPercentage] = useState<number>(0);
+    const [DebitPercentage, setDebitPercentage] = useState<number>(0);
 
     useEffect(() => {
-        const newArray = new Array(21).fill({}).map(() => {
-            return {
-                paymentMethod: ['Pix', 'Débito', 'Dinheiro', 'Crédito'][Math.round(Math.random() * 3)]
-            }
-        })
+        async function getData() {
+            const paymentMethods = await dashboardService.getDashboardPaymentMethodChart()
 
-        const paymentMethods = {
-            pix: 0,
-            debit: 0,
-            credit: 0,
-            money: 0
+            setMoneyPercentage(paymentMethods.money)
+            setPixPercentage(paymentMethods.pix)
+            setCreditPercentage(paymentMethods.credit)
+            setDebitPercentage(paymentMethods.debit)
         }
 
-        newArray.forEach((item) => {
-            switch (item.paymentMethod) {
-                case 'Pix':
-                    paymentMethods.pix++
-                    break;
-                case 'Débito':
-                    paymentMethods.debit++
-
-                    break;
-                case 'Dinheiro':
-                    paymentMethods.money++
-
-                    break;
-                case 'Crédito':
-                    paymentMethods.credit++
-
-                    break;
-            }
-        })
-
-        setPaymentMethod(paymentMethods)
-
-        const moneyPercentage = (paymentMethods.money / 21);
-        const pixPercentage = (paymentMethods.pix / 21);
-        const creditPercentage = (paymentMethods.credit / 21);
-        const debitPercentage = (paymentMethods.debit / 21);
-
-        setMoneyPercentage(Math.round(moneyPercentage * 100))
-        setPixPercentage(Math.round(pixPercentage * 100))
-        setCreditPercentage(Math.round(creditPercentage * 100))
-        setDebitPercentage(Math.round(debitPercentage * 100))
+        getData()
     }, []);
 
     function checkPercentage(method: 'pix' | 'debit' | 'credit' | 'money') {
@@ -68,20 +28,16 @@ const PaymentMethodChart = () => {
 
         switch (method) {
             case 'money':
-                const moneyPercentage = (PaymentMethod.money / 21);
-                strokeDashoffset = 630 - (630 * moneyPercentage)
+                strokeDashoffset = MoneyPercentage == 100 ? 0 : 630 - (630 * MoneyPercentage)
                 break;
             case 'pix':
-                const pixPercentage = (PaymentMethod.pix / 21);
-                strokeDashoffset = 630 - (630 * pixPercentage)
+                strokeDashoffset = PixPercentage == 100 ? 0 : 630 - (630 * PixPercentage)
                 break;
             case 'credit':
-                const creditPercentage = (PaymentMethod.credit / 21);
-                strokeDashoffset = 630 - (630 * creditPercentage)
+                strokeDashoffset = CreditPercentage == 100 ? 0 : 630 - (630 * CreditPercentage)
                 break;
             case 'debit':
-                const debitPercentage = (PaymentMethod.debit / 21);
-                strokeDashoffset = 630 - (630 * debitPercentage)
+                strokeDashoffset = DebitPercentage == 100 ? 0 : 630 - (630 * DebitPercentage)
                 break;
         }
 

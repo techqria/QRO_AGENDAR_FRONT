@@ -1,37 +1,23 @@
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
+import dashboardService from "../../graphql/services/dashboard.service";
 
 const FinanceChart = () => {
 
-    const [moneyArray, setMoneyArray] = useState([]);
+    const [annualRevenue, setAnnualRevenue] = useState([]);
     const [highestPrice, setHighestPrice] = useState(0);
 
     useEffect(() => {
-        const newArray = [
-            {
-                price: Number(faker.commerce.price()),
-                date: faker.date.recent(20).getDate().toString().padStart(2, '0') + "/" + faker.date.recent(20).getMonth().toString().padStart(2, '0'),
-            },
-            {
-                price: Number(faker.commerce.price()),
-                date: faker.date.recent(20).getDate().toString().padStart(2, '0') + "/" + faker.date.recent(20).getMonth().toString().padStart(2, '0'),
-            },
-            {
-                price: Number(faker.commerce.price()),
-                date: faker.date.recent(20).getDate().toString().padStart(2, '0') + "/" + faker.date.recent(20).getMonth().toString().padStart(2, '0'),
-            },
-            {
-                price: Number(faker.commerce.price()),
-                date: faker.date.recent(20).getDate().toString().padStart(2, '0') + "/" + faker.date.recent(20).getMonth().toString().padStart(2, '0'),
-            },
-            {
-                price: Number(faker.commerce.price()),
-                date: faker.date.recent(20).getDate().toString().padStart(2, '0') + "/" + faker.date.recent(20).getMonth().toString().padStart(2, '0'),
-            },
-        ]
+        async function getData() {
+            const financeValues = await dashboardService.getDashboardFinanceChart()
+            
+            let arr = Object.values(financeValues)
+            arr = arr.slice(0, arr.length - 1)
 
-        setHighestPrice([...newArray].sort((a, b) => a.price - b.price).reverse()[0].price)
-        setMoneyArray(newArray)
+            setAnnualRevenue(arr)
+            setHighestPrice(arr.sort((a: any, b: any) => a - b).reverse()[0] as number)
+        }
+        getData()
     }, []);
 
     function checkPercentage(price: number) {
@@ -71,8 +57,8 @@ const FinanceChart = () => {
                     </div>
                     <div className="d-flex gap-2 align-items-end">
                         {
-                            moneyArray.map((item, index) => (
-                                <div style={{ height: `${checkPercentage(item.price)}%` }} className="finance-chart-bar"></div>
+                            annualRevenue?.map((item, index) => (
+                                <div style={{ height: `${checkPercentage(item)}%` }} className="finance-chart-bar"></div>
                             ))
                         }
                     </div>
