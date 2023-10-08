@@ -136,3 +136,10 @@ export interface IPayment {
     price: number;
     method: paymentMethodEnum;
 }
+
+export interface IScheduleCalendar {
+    specialty_name: string
+    employee_name: string
+    date: Date
+    employee_color: string
+}

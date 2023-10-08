@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import SwitchSchedule from "../../components/SwitchSchedule";
-import ScheduleList from "../../components/ScheduleList";
 import { MonthlyCalendar } from "../../components/Calendar/MonthlyCalendar";
 import { useCallback } from "react";
 import { SchedulePeriodicityEnum } from "../../dto/schedule-periodicity.enum";

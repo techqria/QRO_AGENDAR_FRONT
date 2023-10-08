@@ -3,25 +3,22 @@ import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { FormatBgColor } from "../../hooks/FomatBgColor";
+import { IScheduleCalendar } from "../../interfaces";
+import scheduleService from "../../graphql/services/schedule.service";
 
 export const MonthlyCalendar = () => {
 
     const { monthDate } = useSelector((store: IStore) => store.schedule);
 
-    const [datesArray, setDatesArray] = useState([]);
+    const [schedules, setSchedules] = useState<IScheduleCalendar[]>([]);
 
     useEffect(() => {
-        const newArray = new Array(40).fill({}).map(_ => {
-            return {
-                date: faker.date.recent(totalMonthDays, new Date(new Date(monthDate).getFullYear(), new Date(monthDate).getMonth() + 1, 0)).toISOString(),
-                service: faker.commerce.department(),
-                color: faker.color.rgb()
-            }
-        })
+        async function getData(){
+            setSchedules(await scheduleService.getSchedulesCalendar())
+        }
+        getData()
 
-        setDatesArray(newArray)
-
-        setTotalMonthDays(handleTotalMonthDays)
+            setTotalMonthDays(handleTotalMonthDays)
     }, [, monthDate]);
 
 
@@ -33,10 +30,11 @@ export const MonthlyCalendar = () => {
     const [totalMonthDays, setTotalMonthDays] = useState(handleTotalMonthDays);
 
     const checkScheduleDate = useCallback((day: number) => {
-        const filtered = datesArray.filter(el => new Date(el.date).getDate() == day)
+        const filtered = schedules?.filter(el => new Date(el.date).getDate() == day && new Date(el.date).getMonth() + 1 == new Date(monthDate).getMonth() + 1)
         if (filtered.length) {
+            console.log(filtered)
             return <div className="d-flex flex-column">
-                {filtered.map((filter, index) => index <= 1 && <p className="ps-1" role="button" style={{ color: filter.color, backgroundColor: FormatBgColor(filter.color) }} >{filter.service}</p>)}
+                {filtered.map((filter, index) => index <= 1 && <p className="ps-1" role="button" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }} >{filter.specialty_name}</p>)}
 
                 {(filtered.length != 2 && filtered.length > 1) &&
                     <p role="button" className="fit-content text-orange border-orange rounded m-0 p-1 pb-0">+{Math.abs(filtered.length - 2)}</p>
@@ -44,7 +42,7 @@ export const MonthlyCalendar = () => {
             </div>
         }
         return ''
-    }, [datesArray])
+    }, [schedules, monthDate])
 
     return (
         <div className="pt-5 text-black w-100 d-flex flex-wrap justify-content-center">

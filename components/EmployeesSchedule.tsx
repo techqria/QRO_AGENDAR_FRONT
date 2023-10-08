@@ -1,24 +1,22 @@
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
+import userService from "../graphql/services/user.service";
 
 export const EmployeesSchedule = () => {
 
     const [EmployeesList, setEmployeesList] = useState([]);
 
     useEffect(() => {
-        const newArray = new Array(4).fill({}).map(_ => {
-            return {
-                name: faker.name.firstName(),
-                color: faker.color.rgb()
-            }
-        })
+        async function getData() {
+            setEmployeesList(await userService.getAllEmployees())
+        }
 
-        setEmployeesList(newArray)
+        getData()
+
     }, []);
 
     return (
         <div className="mt-4 d-flex gap-2 align-items-center">
-            <img role="button" width={30} src="/icons/arrow-left.svg" alt="arrow-left.svg" />
             <div className="d-flex gap-5">
                 {
                     EmployeesList.map(el => (
@@ -29,7 +27,6 @@ export const EmployeesSchedule = () => {
                     ))
                 }
             </div>
-            <img role="button" width={30} src="/icons/arrow-right.svg" alt="arrow-left.svg" />
         </div>
     );
 }

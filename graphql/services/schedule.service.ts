@@ -6,18 +6,41 @@ import { IApolloGetAllSpecialties, IScheduleRegister } from "../../interfaces";
 
 class ScheduleService {
     async getAllSchedules(): Promise<any> {
-        const query = gql`query getAllSpecialties {
-            getAllSpecialties {
-                title
-                id
+        const query = gql`query getSchedules {
+            getSchedules {
+                date
+                payment{
+                  price
+                  method
+                }
             }
           }`
         try {
-            const { data }: IApolloGetAllSpecialties = await apolloClient.query({
+            const { data }: any = await apolloClient.query({
                 query
             });
 
-            return data.getAllSpecialties
+            return data.getSchedules
+        } catch (error) {
+            ToastMessage(ToastEnum.error, error.message)
+            return error
+        }
+    }
+    async getSchedulesCalendar(): Promise<any> {
+        const query = gql`query getSchedulesCalendar {
+            getSchedulesCalendar {
+                specialty_name
+                employee_name
+                date
+                employee_color
+            }
+          }`
+        try {
+            const { data }: any = await apolloClient.query({
+                query
+            });
+
+            return data.getSchedulesCalendar
         } catch (error) {
             ToastMessage(ToastEnum.error, error.message)
             return error
