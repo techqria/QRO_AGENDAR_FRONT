@@ -58,7 +58,7 @@ const FinanceChart = () => {
                     <div className="d-flex gap-2 align-items-end">
                         {
                             annualRevenue?.map((item, index) => (
-                                <div style={{ height: `${checkPercentage(item)}%` }} className="finance-chart-bar"></div>
+                                <div key={index} style={{ height: `${checkPercentage(item)}%` }} className="finance-chart-bar"></div>
                             ))
                         }
                     </div>

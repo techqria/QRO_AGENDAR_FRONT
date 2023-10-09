@@ -19,8 +19,8 @@ export const EmployeesSchedule = () => {
         <div className="mt-4 d-flex gap-2 align-items-center">
             <div className="d-flex gap-5">
                 {
-                    EmployeesList.map(el => (
-                        <div className="d-flex gap-1 align-items-center">
+                    EmployeesList.map((el, index) => (
+                        <div key={index} className="d-flex gap-1 align-items-center">
                             <img style={{ borderStyle: 'solid', borderWidth: 3, borderColor: el.color }} className="rounded-circle" width={60} src="/images/person.png" alt="" />
                             <h6 style={{ color: el.color }} className="m-0 text-capitalize">{el.name}</h6>
                         </div>

@@ -94,7 +94,7 @@ const SpecialtyChart = () => {
                     <div className="d-flex gap-5 overflow-auto specialty-chart">
                         {
                             SpecialtyOne.map((item, index) => (
-                                <div className="d-flex gap-1 align-items-end">
+                                <div key={index} className="d-flex gap-1 align-items-end">
                                     <div style={{ height: `${checkPercentage(item.price)}%` }} className="finance-chart-bar"></div>
                                     <div style={{ height: `${checkPercentage(SpecialtyTwo[index].price)}%` }} className="bg-orange finance-chart-bar"></div>
                                     <div style={{ height: `${checkPercentage(SpecialtyThree[index].price)}%` }} className="bg-warning finance-chart-bar"></div>

@@ -62,7 +62,7 @@ export const WeekCalendar = () => {
         if (filtered.length) {
             return <div className="d-flex flex-column">
                 {filtered.map((filter, index) => index <= 1 &&
-                    <div className="d-flex gap-2 flex-column mt-4 rounded p-2" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }}>
+                    <div key={index} className="d-flex gap-2 flex-column mt-4 rounded p-2" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }}>
                         <p role="button" className="m-0 fs-5">{new Date(filter.date).toLocaleTimeString('pt-BR', { hour: "2-digit", minute: "2-digit" })}</p>
                         <p role="button" className="m-0 text-capitalize">{filter.specialty_name}</p>
                     </div>
@@ -83,7 +83,7 @@ export const WeekCalendar = () => {
         <div className="pt-5 text-black w-100 d-flex flex-wrap justify-content-center">
             {
                 nameDaysWeek.map((el, index) => (
-                    <div className="week-calendar border p-2 overflow-hidden">
+                    <div key={index} className="week-calendar border p-2 overflow-hidden">
                         <p className="text-center mb-0 fs-5">{datesOfWeek[index]?.getDate()}</p>
                         <p className="text-center mb-0 fs-5">{el}</p>
                         {checkScheduleDate(datesOfWeek[index])}

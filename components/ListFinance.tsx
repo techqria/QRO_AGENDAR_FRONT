@@ -24,7 +24,7 @@ const ListFinance = () => {
         <div className="w-100 d-flex flex-column gap-3 mt-5">
             {
                 financeList.map(el => (
-                    <div className="d-flex justify-content-between bg-white p-3">
+                    <div key={el.employee_id} className="d-flex justify-content-between bg-white p-3">
                         <div className="d-flex flex-column">
                             <h5 className="text-black fw-bold">{el.employee_name}</h5>
                         </div>

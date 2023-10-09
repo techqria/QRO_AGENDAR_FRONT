@@ -26,8 +26,8 @@ const ModalListFinances = () => {
                     </div>
                     <div className="modal-body">
                         {
-                            financeData?.map(el => (
-                                <div className="d-flex justify-content-between bg-white p-3">
+                            financeData?.map((el, index) => (
+                                <div key={index} className="d-flex justify-content-between bg-white p-3">
                                     <div className="d-flex flex-column w-100">
                                         <h5 className="text-black fw-bold mb-0">{el.customer_name}</h5>
                                     </div>
