@@ -16,6 +16,7 @@ const ModalEditSpecialty = () => {
 
     return (
         <div className="modal fade" id="editSpecialtyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            {/* @ts-ignore */}
             <div className="modal-dialog modal-dialog-centered" style={{ '--bs-modal-width': '60%' }} >
                 <div className="modal-content">
                     <div className="modal-header border-0">
