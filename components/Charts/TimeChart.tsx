@@ -54,7 +54,7 @@ const TimeChart = () => {
                             timeArray?.map((item, index) => (
                                 <div key={index} className="d-flex flex-column justify-content-end gap-2 h-100">
                                     <div style={{ height: `${checkPercentage(item.qtt_schedules)}%` }} className={`${item.qtt_schedules === highestTime ? "bg-info time-chart-bar" : 'time-chart-bar'}`}></div>
-                                    <span className="text-secondary text-center">{item.hour.slice(0,5)}</span>
+                                    <span className="text-secondary text-center">{item.hour?.slice(0,5)}</span>
                                 </div>
                             ))
                         }
