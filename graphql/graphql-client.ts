@@ -4,7 +4,7 @@ import { HttpLink } from "apollo-link-http";
 
 export const apolloClient = new ApolloClient({
     link: new HttpLink({
-        uri: 'http://localhost:2069/graphql',
+        uri: 'https://qro-agendar-back.vercel.app',
         headers: {
             "Authorization": "Bearer " + (typeof window !== 'undefined' ? window.localStorage.getItem("token") : null)
         }
