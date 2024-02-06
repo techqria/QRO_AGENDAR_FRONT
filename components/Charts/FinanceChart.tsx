@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 import dashboardService from "../../graphql/services/dashboard.service";
 
@@ -10,7 +9,6 @@ const FinanceChart = () => {
     useEffect(() => {
         async function getData() {
             const financeValues = await dashboardService.getDashboardFinanceChart()
-            
             let arr = Object.values(financeValues)
             arr = arr.slice(0, arr.length - 1)
 
@@ -47,22 +45,26 @@ const FinanceChart = () => {
                     <span>Quanto entrou</span>
                 </div>
 
-                <div className="finance-chart d-flex mt-3 gap-3">
-                    <div className="d-flex flex-column text-secondary gap-5">
-                        <span>{highestPrice}</span>
-                        <span>{Math.round(highestPrice / 2)}</span>
-                        <span>{Math.round(highestPrice / 3)}</span>
-                        <span>{Math.round(highestPrice / 4)}</span>
-                        <span>0</span>
+                {highestPrice == 0 ? <p className="text-danger mt-5 ">Nenhum valor entrou nessa semana</p>
+                    :
+
+                    <div className="finance-chart d-flex mt-3 gap-3">
+                        <div className="d-flex flex-column text-secondary gap-5">
+                            <span>{highestPrice}</span>
+                            <span>{Math.round(highestPrice / 2)}</span>
+                            <span>{Math.round(highestPrice / 3)}</span>
+                            <span>{Math.round(highestPrice / 4)}</span>
+                            <span>0</span>
+                        </div>
+                        <div className="d-flex gap-2 align-items-end">
+                            {
+                                annualRevenue?.map((item, index) => (
+                                    <div key={index} style={{ height: `${checkPercentage(item)}%` }} className="finance-chart-bar"></div>
+                                ))
+                            }
+                        </div>
                     </div>
-                    <div className="d-flex gap-2 align-items-end">
-                        {
-                            annualRevenue?.map((item, index) => (
-                                <div key={index} style={{ height: `${checkPercentage(item)}%` }} className="finance-chart-bar"></div>
-                            ))
-                        }
-                    </div>
-                </div>
+                }
             </div>
 
         </div>

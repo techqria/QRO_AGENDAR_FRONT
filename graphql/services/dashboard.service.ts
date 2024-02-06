@@ -90,6 +90,8 @@ class DashboardService {
                 query
             });
 
+            console.log(data.getDashboard.weekScheduleHours)
+
             return data.getDashboard.weekScheduleHours
         } catch (error) {
             ToastMessage(ToastEnum.error, error.message)
