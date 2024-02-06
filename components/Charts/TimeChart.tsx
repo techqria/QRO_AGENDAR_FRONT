@@ -20,7 +20,7 @@ const TimeChart = () => {
         getData()
     }, []);
 
-    function getHighestTime(array){
+    function getHighestTime(array) {
         let arr = Object.values(array)
         arr = arr.slice(0, arr.length - 1)
         let sorted = arr.sort((a: any, b: any) => a.qtt_schedules - b.qtt_schedules)
@@ -50,21 +50,21 @@ const TimeChart = () => {
                 <h5>Horários mais atendidos na semana</h5>
 
                 {highestTime == 0 ? <p className="text-danger mt-5 ">Nenhum horário nessa semana</p>
-                :     
+                    :
 
-                <div className="finance-chart d-flex flex-column mt-3 gap-3 h-90 align-items-center">
-                    <div className="d-flex gap-4 align-items-end h-100">
-                        {
-                            timeArray?.map((item, index) => (
-                                <div key={index} className="d-flex flex-column justify-content-end gap-2 h-100">
-                                    <div style={{ height: `${checkPercentage(item?.qtt_schedules)}%` }} className={`${item.qtt_schedules === highestTime ? "bg-info time-chart-bar" : 'time-chart-bar'}`}></div>
-                                    <span className="text-secondary text-center">{item.hour?.slice(0,5)}</span>
-                                </div>
-                            ))
-                        }
+                    <div className="finance-chart d-flex flex-column mt-3 gap-3 h-90 align-items-center">
+                        <div className="d-flex gap-4 align-items-end h-100">
+                            {
+                                timeArray?.map((item, index) => (
+                                    <div key={index} className="d-flex flex-column justify-content-end gap-2 h-100">
+                                        <div style={{ height: `${checkPercentage(item?.qtt_schedules)}%` }} className={`${item.qtt_schedules === highestTime ? "bg-info time-chart-bar" : 'time-chart-bar'}`}></div>
+                                        <span className="text-secondary text-center">{item.hour?.slice(0, 5)}</span>
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </div>
-                </div>
-                        }
+                }
             </div>
         </div>
     );

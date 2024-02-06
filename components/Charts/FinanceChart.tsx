@@ -42,20 +42,20 @@ const FinanceChart = () => {
                     <svg width={30} height={30}>
                         <circle cx={15} cy={12} r="10" fill="#4339F2" />
                     </svg>
-                    <span>Quanto entrou</span>
+                    <span>Quanto entrou{highestPrice == 0 && <span className="text-danger">&nbsp;(Nenhum valor entrou nessa semana)</span>}</span>
                 </div>
 
-                {highestPrice == 0 ? <p className="text-danger mt-5 ">Nenhum valor entrou nessa semana</p>
-                    :
 
-                    <div className="finance-chart d-flex mt-3 gap-3">
-                        <div className="d-flex flex-column text-secondary gap-5">
-                            <span>{highestPrice}</span>
-                            <span>{Math.round(highestPrice / 2)}</span>
-                            <span>{Math.round(highestPrice / 3)}</span>
-                            <span>{Math.round(highestPrice / 4)}</span>
-                            <span>0</span>
-                        </div>
+                <div className="finance-chart d-flex mt-3 gap-3">
+                    <div className="d-flex flex-column text-secondary gap-5">
+                        <span>{highestPrice}</span>
+                        <span>{Math.round(highestPrice / 2)}</span>
+                        <span>{Math.round(highestPrice / 3)}</span>
+                        <span>{Math.round(highestPrice / 4)}</span>
+                        <span>0</span>
+                    </div>
+                    {highestPrice > 0 && 
+                        
                         <div className="d-flex gap-2 align-items-end">
                             {
                                 annualRevenue?.map((item, index) => (
@@ -63,8 +63,8 @@ const FinanceChart = () => {
                                 ))
                             }
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
 
         </div>
