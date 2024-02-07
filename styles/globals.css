@@ -161,17 +161,17 @@ body {
 
 .dashboard-icon {
   -webkit-mask: url("../public/icons/dashboard.svg") no-repeat center;
-  mask: url('../public/icons/chart.svg') no-repeat center;
+  mask: url('../public/icons/dashboard.svg') no-repeat center;
 }
 
 .person-icon {
   -webkit-mask: url("../public/icons/person.svg") no-repeat center;
-  mask: url('../public/icons/chart.svg') no-repeat center;
+  mask: url('../public/icons/person.svg') no-repeat center;
 }
 
 .calendar-icon {
   -webkit-mask: url("../public/icons/calendar.svg") no-repeat center;
-  mask: url('../public/icons/chart.svg') no-repeat center;
+  mask: url('../public/icons/calendar.svg') no-repeat center;
 }
 
 .chart-icon {
