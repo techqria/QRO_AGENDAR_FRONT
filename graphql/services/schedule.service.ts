@@ -39,8 +39,7 @@ class ScheduleService {
             const { data }: any = await apolloClient.query({
                 query
             });
-            console.log(data)
-            return data
+            return data.getSchedulesCalendar
         } catch (error) {
             ToastMessage(ToastEnum.error, error.message)
             return error

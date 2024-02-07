@@ -18,7 +18,7 @@ const RegisterSpecialtyForm = () => {
                 <input onChange={(e) => setTitle(e.target.value)} required placeholder="Cardiologista" className="border-orange form-control mw-400" type="text" />
             </div>
             <div className="mb-3 d-flex justify-content-center">
-                <button type="submit" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Adicionar Nova Especialidade</button>
+                <button type="submit" className="btn btn-orange mt-5 rounded-pill fw-bold">Salvar</button>
             </div>
         </form>
     );

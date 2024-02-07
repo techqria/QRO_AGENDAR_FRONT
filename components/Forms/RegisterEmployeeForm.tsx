@@ -61,7 +61,7 @@ const RegisterEmployeeForm = () => {
                 <input onChange={(e) => setEmployee({ ...employee, imageUrl: e.target.value })} className="border-orange form-control mw-400" type="file" />
             </div> */}
             <div className="mb-3 d-flex justify-content-center">
-                <button type="submit" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Adicionar Novo Funcionário</button>
+                <button type="submit" className="btn btn-orange mt-5 rounded-pill fw-bold">Salvar</button>
             </div>
         </form>
     );

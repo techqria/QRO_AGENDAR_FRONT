@@ -12,7 +12,6 @@ const TimeChart = () => {
         async function getData() {
             const times = await dashboardService.getDashboardTimeChart()
             let arr = Object.values(times)
-            console.log(arr)
             arr = arr.slice(0, arr.length - 1)
             setTimeArray(arr as any)
             getHighestTime(arr)

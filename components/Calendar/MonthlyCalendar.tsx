@@ -13,12 +13,12 @@ export const MonthlyCalendar = () => {
     const [schedules, setSchedules] = useState<IScheduleCalendar[]>([]);
 
     useEffect(() => {
-        async function getData(){
+        async function getData() {
             setSchedules(await scheduleService.getSchedulesCalendar())
         }
         getData()
 
-            setTotalMonthDays(handleTotalMonthDays)
+        setTotalMonthDays(handleTotalMonthDays)
     }, [, monthDate]);
 
 
