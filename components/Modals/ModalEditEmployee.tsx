@@ -20,11 +20,7 @@ const ModalEditEmployee = () => {
         console.log(employee)
         await userService.updateEmployee(employee)
     }
-    async function deleteEmployee(e) {
-        e.preventDefault()
-        const { id } = employee
-        await userService.removeEmployee(id)
-    }
+
 
     useEffect(() => {
         async function getSpecialty() {
@@ -77,10 +73,6 @@ const ModalEditEmployee = () => {
                                 <button type="submit" className="btn btn-orange mt-5 rounded-pill fw-bold"> Atualizar Funcionário</button>
                             </div>
                         </form>
-
-                        <div className="d-flex justify-content-center">
-                            <button onClick={deleteEmployee} className="btn btn-danger rounded-pill fw-bold">Remover Funcionário</button>
-                        </div>
 
                     </div>
                 </div>

@@ -2,32 +2,38 @@ import { useCallback, useEffect, useState } from "react"
 import { IEmployee, ISpecialties, IVets } from "../interfaces";
 import specialtyService from "../graphql/services/specialty.service";
 import userService from "../graphql/services/user.service";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeEmployee } from "../store/slices/employee.slice";
 import { changeSpecialyId } from "../store/slices/specialty.slice";
+import { IStore } from "../store/types/types";
+import Tooltip from "./Tooltip";
 
 const EmployeesList = () => {
 
     const dispatch = useDispatch()
 
+    const { employee } = useSelector((store: IStore) => store)
+
     const [specialties, setSpecialties] = useState<ISpecialties[]>([]);
     const [vets, setVets] = useState<IVets[]>([])
 
     useEffect(() => {
-        async function getData() {
-            const result = await specialtyService.getAllSpecialties()
-            setSpecialties(result)
-
-            const resultVets = await userService.getAllEmployees()
-            setVets(resultVets)
-        }
-
         getData()
     }, [])
+
+    async function getData() {
+        const result = await specialtyService.getAllSpecialties()
+        setSpecialties(result)
+
+        const resultVets = await userService.getAllEmployees()
+        setVets(resultVets)
+    }
 
     const setEpecialty = (id: string) => dispatch(changeSpecialyId(id))
 
     const setEmployee = (employee: IVets) => dispatch(changeEmployee(employee))
+
+    const removeEmployee = async (employeeId) => { await userService.removeEmployee(employeeId); getData() }
 
     const listEmployees = useCallback((specialtyId: string) => {
         if (vets?.find(el => el.specialty_id == specialtyId) == undefined) {
@@ -44,7 +50,14 @@ const EmployeesList = () => {
                         </div>
                         <span className="text-secondary">{employee.email}</span>
                         <span className="text-secondary">{employee.phone}</span>
-                        <img onClick={_ => setEmployee(employee)} data-bs-toggle="modal" data-bs-target="#editEmployeeModal" role="button" width={16} className="rounded-circle" src="/icons/edit-orange.svg" alt="edit-orange.svg" />
+                        <div className="d-flex gap-2">
+                            <Tooltip description="Editar usuário" >
+                                <img onClick={_ => setEmployee(employee)} data-bs-toggle="modal" data-bs-target="#editEmployeeModal" role="button" width={16} className="rounded-circle" src="/icons/edit-orange.svg" alt="edit-orange.svg" />
+                            </Tooltip>
+                            <Tooltip description="Remover usuário" >
+                                <img onClick={_ => removeEmployee(employee.id)} data-bs-toggle="modal" data-bs-target="#removeEmployee" role="button" width={16} src="/icons/trash.svg" alt="edit-orange.svg" />
+                            </Tooltip>
+                        </div>
                     </div>
                 )
             }
@@ -56,7 +69,9 @@ const EmployeesList = () => {
             <div className={`${!index ? 'mt-0' : 'mt-5'}`} key={index}>
                 <div className="d-flex gap-2 mb-2">
                     <p className="text-secondary mb-0 text-capitalize text-start">{specialty.title}</p>
-                    <img onClick={_ => setEpecialty(specialty.id)} data-bs-toggle="modal" data-bs-target="#editSpecialtyModal" role="button" width={16} className="rounded-circle" src="/icons/edit-orange.svg" alt="edit-orange.svg" />
+                    <Tooltip description="Editar Especialidade" >
+                        <img onClick={_ => setEpecialty(specialty.id)} data-bs-toggle="modal" data-bs-target="#editSpecialtyModal" role="button" width={16} className="rounded-circle" src="/icons/edit-orange.svg" alt="edit-orange.svg" />
+                    </Tooltip>
                 </div>
                 {listEmployees(specialty.id)}
             </div>

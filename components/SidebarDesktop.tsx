@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../store/types/types";
 import { changePage } from "../store/slices/pagesSlice";
 import { RoleEnum } from "../dto/role.enum";
+import Tooltip from "./Tooltip";
 
 const SidebarDesktop = () => {
 
@@ -23,14 +24,26 @@ const SidebarDesktop = () => {
         switch (userRole) {
             case RoleEnum.admin:
                 return <>
-                    <i onClick={() => dispatch(changePage(PagesEnum.dashboardPage))} role="button" className={`${currentPage === PagesEnum.dashboardPage && 'bg-dark'} dashboard-icon`}></i>
-                    <i onClick={() => dispatch(changePage(PagesEnum.employeesPage))} role="button" className={`${currentPage === PagesEnum.employeesPage && 'bg-dark'} person-icon`}></i>
-                    <i onClick={() => dispatch(changePage(PagesEnum.schedulePage))} role="button" className={`${currentPage === PagesEnum.schedulePage && 'bg-dark'} calendar-icon`}></i>
-                    <i onClick={() => dispatch(changePage(PagesEnum.financePage))} role="button" className={`${currentPage === PagesEnum.financePage && 'bg-dark'} chart-icon`}></i>
+                    <Tooltip description="Dashboard" >
+                        <i onClick={() => dispatch(changePage(PagesEnum.dashboardPage))} role="button" className={`${currentPage === PagesEnum.dashboardPage && 'bg-dark'} dashboard-icon`}></i>
+                    </Tooltip>
+                    <Tooltip description="Funcionários" >
+                        <i onClick={() => dispatch(changePage(PagesEnum.employeesPage))} role="button" className={`${currentPage === PagesEnum.employeesPage && 'bg-dark'} person-icon`}></i>
+                    </Tooltip>
+                    <Tooltip description="Agendamentos" >
+                        <i onClick={() => dispatch(changePage(PagesEnum.schedulePage))} role="button" className={`${currentPage === PagesEnum.schedulePage && 'bg-dark'} calendar-icon`}></i>
+                    </Tooltip>
+                    <Tooltip description="Finanças" >
+                        <i onClick={() => dispatch(changePage(PagesEnum.financePage))} role="button" className={`${currentPage === PagesEnum.financePage && 'bg-dark'} chart-icon`}></i>
+                    </Tooltip>
                 </>
             case RoleEnum.manager: return <>
-                <i onClick={() => dispatch(changePage(PagesEnum.employeesPage))} role="button" className={`${currentPage === PagesEnum.employeesPage && 'bg-dark'} person-icon`}></i>
-                <i onClick={() => dispatch(changePage(PagesEnum.schedulePage))} role="button" className={`${currentPage === PagesEnum.schedulePage && 'bg-dark'} calendar-icon`}></i>
+                <Tooltip description="Funcionários" >
+                    <i onClick={() => dispatch(changePage(PagesEnum.employeesPage))} role="button" className={`${currentPage === PagesEnum.employeesPage && 'bg-dark'} person-icon`}></i>
+                </Tooltip>
+                <Tooltip description="Agendamentos" >
+                    <i onClick={() => dispatch(changePage(PagesEnum.schedulePage))} role="button" className={`${currentPage === PagesEnum.schedulePage && 'bg-dark'} calendar-icon`}></i>
+                </Tooltip>
             </>
         }
     }
@@ -41,8 +54,9 @@ const SidebarDesktop = () => {
                 <img role={userRole === RoleEnum.employee && "button"} onClick={employeeSchedule} width={30} className="mb-5" src="/favicon.svg" alt="logo-orange-qro-agendar.svg" />
                 {renderSidebarIcons()}
             </div>
-
-            <i onClick={() => dispatch(changePage(PagesEnum.settingsPage))} role="button" className={`${currentPage === PagesEnum.settingsPage && 'scale-01'} settings-icon`}></i>
+            <Tooltip description="Configurações" >
+                <i onClick={() => dispatch(changePage(PagesEnum.settingsPage))} role="button" className={`${currentPage === PagesEnum.settingsPage && 'scale-01'} settings-icon`}></i>
+            </Tooltip>
         </div>
     );
 }
