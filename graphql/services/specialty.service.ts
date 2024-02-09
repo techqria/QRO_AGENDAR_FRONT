@@ -31,6 +31,7 @@ class SpecialtyService {
             })
             {
                 title
+                id
             }
         }`
         try {
@@ -43,7 +44,7 @@ class SpecialtyService {
             ToastMessage(ToastEnum.success, "Especialidade criada com sucesso")
 
             console.log(data)
-            return data
+            return data.createSpecialty
         } catch (error) {
             ToastMessage(ToastEnum.error, error.message)
             return error
