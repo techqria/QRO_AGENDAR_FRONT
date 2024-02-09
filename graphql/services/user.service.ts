@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import { apolloClient } from "../graphql-client";
 import { ToastEnum } from "../../dto/toast.enum";
 import { ToastMessage } from "../../hooks/ToastMessage";
-import { IApolloCreateManager, IApolloGetAllVets, IEmployee, IManager, IVets } from "../../interfaces";
+import { IApolloCreateManager, IApolloGetAllVets, ICustomer, IEmployee, IManager, IVets } from "../../interfaces";
 
 class UserService {
     async createManager({ name, email, phone, password }: IManager): Promise<any> {
@@ -58,6 +58,35 @@ class UserService {
 
             ToastMessage(ToastEnum.success, "Funcionário criado com sucesso")
 
+            return data
+        } catch (error) {
+            ToastMessage(ToastEnum.error, error.message)
+            return error
+        }
+    }
+    async createCustomer({ name, email, phone, password, imageUrl = "" }: ICustomer): Promise<any> {
+        const mutation = gql`mutation createCustomer(
+            $name: String!, $email: String!, $phone: String!, 
+            $password: String!, $imageUrl: String!) {
+            createCustomer(customer: { 
+                name: $name
+                email: $email 
+                phone: $phone
+                password: $password
+                image_url: $imageUrl
+            }) {
+                name
+            }
+          }`
+        try {
+            const { data }: any = await apolloClient.mutate({
+                mutation,
+                variables: { name, email, phone, password, imageUrl },
+
+            });
+
+            ToastMessage(ToastEnum.success, "Cliente criado com sucesso")
+            console.log(data)
             return data
         } catch (error) {
             ToastMessage(ToastEnum.error, error.message)

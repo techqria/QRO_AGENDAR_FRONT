@@ -69,6 +69,14 @@ export interface IEmployee {
     imageUrl?: string;
     id?: string
 }
+export interface ICustomer {
+    name: string;
+    email: string;
+    phone: string;
+    password: string;
+    imageUrl?: string;
+    id?: string
+}
 
 export interface ISpecialties {
     title: string;

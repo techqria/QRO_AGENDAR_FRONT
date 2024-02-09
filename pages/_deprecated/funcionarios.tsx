@@ -5,6 +5,7 @@ import ModalRegisterEmployee from "../../components/Modals/ModalRegisterEmployee
 import { IStore } from "../../store/types/types";
 import ModalRegisterSpecialty from "../../components/Modals/ModalRegisterSpecialty";
 import ModalEditSpecialty from "../../components/Modals/ModalEditSpecialty";
+import ModalRegisterCustomer from "../../components/Modals/ModalRegisterCustomer";
 
 const Employees = () => {
 
@@ -16,10 +17,12 @@ const Employees = () => {
                 <div className="d-flex gap-4">
                     <button data-bs-toggle="modal" data-bs-target="#registerEmployeeModal" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Cadastrar Novo Funcionário</button>
                     <button data-bs-toggle="modal" data-bs-target="#registerSpecialtyModal" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Cadastrar Nova Especialidade</button>
+                    <button data-bs-toggle="modal" data-bs-target="#registerCustomerModal" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Cadastrar Novo Cliente</button>
                 </div>
             </div>
             <ModalRegisterEmployee />
             <ModalRegisterSpecialty />
+            <ModalRegisterCustomer />
             <ModalEditEmployee />
             <ModalEditSpecialty />
         </section>
