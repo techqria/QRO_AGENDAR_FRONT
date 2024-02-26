@@ -12,6 +12,7 @@ const ModalEditSpecialty = () => {
         e.preventDefault()
 
         await specialtyService.removeSpecialty(specialtyId)
+        document.getElementById("close-edit-specialty-modal").click();
     }
 
     return (
@@ -20,7 +21,7 @@ const ModalEditSpecialty = () => {
             <div className="modal-dialog modal-dialog-centered" style={{ '--bs-modal-width': '60%' }} >
                 <div className="modal-content">
                     <div className="modal-header border-0">
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button id="close-edit-specialty-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
                         <h1 className="modal-title fs-5 text-orange text-center">Atualizar Especialidade</h1>

@@ -17,8 +17,8 @@ const ModalEditEmployee = () => {
     async function updateEmployee(e) {
         e.preventDefault()
 
-        console.log(employee)
         await userService.updateEmployee(employee)
+        document.getElementById("close-edit-employee-modal").click();
     }
 
 
@@ -37,7 +37,7 @@ const ModalEditEmployee = () => {
             <div className="modal-dialog modal-dialog-centered" style={{ '--bs-modal-width': '60%' }} >
                 <div className="modal-content">
                     <div className="modal-header border-0">
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button id="close-edit-employee-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
                         <h1 className="modal-title fs-5 text-orange text-center" >Atualizar Funcionário</h1>

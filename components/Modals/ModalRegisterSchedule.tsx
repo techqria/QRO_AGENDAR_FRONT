@@ -25,6 +25,7 @@ const ModalRegisterSchedule = () => {
         delete formattedSchedule.hour
         console.log(formattedSchedule)
         await scheduleService.createSchedule(formattedSchedule)
+        document.getElementById('close-register-schedule-modal').click()
     }
 
     function formatPriceToRegister(payment) {
@@ -96,7 +97,7 @@ const ModalRegisterSchedule = () => {
             <div className="modal-dialog modal-dialog-centered" style={{ '--bs-modal-width': '60%' }} >
                 <div className="modal-content">
                     <div className="modal-header border-0">
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button id="close-register-schedule-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
                         <h1 className="modal-title fs-5 text-orange text-center" >Cadastrar Nova Agenda</h1>

@@ -23,7 +23,7 @@ const ModalRegisterEmployee = () => {
                                 <input checked={showEmployeeForm} type="radio" name="type" id="manager" onClick={() => setShowEmployeeForm(!showEmployeeForm)}/>
                                 <label className="text-dark" htmlFor="manager">Gerente</label>
                                 <input type="radio" name="type" id="employee" onClick={() => setShowEmployeeForm(!showEmployeeForm)}/>
-                                <label className="text-dark" htmlFor="employee">Empregado</label>
+                                <label className="text-dark" htmlFor="employee">Funcionário</label>
                             </div>
                         }
                         <button id="close-register-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

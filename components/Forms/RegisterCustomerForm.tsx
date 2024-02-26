@@ -9,7 +9,7 @@ const RegisterCustomerForm = () => {
     async function registerCustomer(e) {
         e.preventDefault()
         userService.createCustomer(customer)
-        document.getElementById("close-register-modal").click();
+        document.getElementById("close-register-customer-modal").click();
     }
 
     return (
