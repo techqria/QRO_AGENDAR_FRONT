@@ -13,7 +13,7 @@ const Schedule = () => {
     const { periodicityToShow } = useSelector((store: IStore) => store.schedule)
 
     const chooseCalendar = useCallback(() => {
-        switch(periodicityToShow){
+        switch (periodicityToShow) {
             case SchedulePeriodicityEnum.monthSchedule: return <MonthlyCalendar />
             case SchedulePeriodicityEnum.weekSchedule: return <WeekCalendar />
         }
@@ -22,10 +22,12 @@ const Schedule = () => {
     return (
         <section className='container pt-5 bg-white-sec d-flex flex-column justify-content-center align-items-center'>
             <h4 className="text-black mt-4 pt-5">{periodicityToShow}</h4>
-            <SwitchSchedule periodicityToShow={periodicityToShow} />
+            <div className="d-flex justify-content-between align-items-center w-100 mx-5 px-5">
+                <button data-bs-toggle="modal" data-bs-target="#registerScheduleModal" className="btn btn-orange mt-5 rounded fw-bold">+ Cadastrar Nova Agenda</button>
+                <SwitchSchedule periodicityToShow={periodicityToShow} />
+            </div>
             <EmployeesSchedule />
             {chooseCalendar()}
-            <button data-bs-toggle="modal" data-bs-target="#registerScheduleModal" className="btn btn-orange mt-5 rounded fw-bold">+ Cadastrar Nova Agenda</button>
             <ModalRegisterSchedule />
         </section>
     );
