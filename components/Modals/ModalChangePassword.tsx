@@ -17,7 +17,7 @@ const ModalChangePassword = () => {
                         </div>
                     </div>
                     <div className="d-flex justify-content-center mb-4">
-                        <button type="button" className="btn btn-orange ps-5 pe-5 rounded-pill">Alterar senha</button>
+                        <button type="button" className="btn btn-orange ps-5 pe-5 rounded">Alterar senha</button>
                     </div>
                 </div>
             </div>

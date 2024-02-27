@@ -25,7 +25,7 @@ const Schedule = () => {
             <SwitchSchedule periodicityToShow={periodicityToShow} />
             <EmployeesSchedule />
             {chooseCalendar()}
-            <button data-bs-toggle="modal" data-bs-target="#registerScheduleModal" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Cadastrar Nova Agenda</button>
+            <button data-bs-toggle="modal" data-bs-target="#registerScheduleModal" className="btn btn-orange mt-5 rounded fw-bold">+ Cadastrar Nova Agenda</button>
             <ModalRegisterSchedule />
         </section>
     );

@@ -27,7 +27,7 @@ const ModalEditSpecialty = () => {
                         <h1 className="modal-title fs-5 text-orange text-center">Atualizar Especialidade</h1>
 
                         <div className="d-flex justify-content-center mt-5 mb-5">
-                            <button onClick={deleteSpecialty} className="btn btn-danger rounded-pill fw-bold">Remover Especialidade</button>
+                            <button onClick={deleteSpecialty} className="btn btn-danger rounded fw-bold">Remover Especialidade</button>
                         </div>
 
                     </div>

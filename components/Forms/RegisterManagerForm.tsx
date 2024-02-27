@@ -36,7 +36,7 @@ const RegisterManagerForm = () => {
                 <input onChange={(e) => setManager({ ...manager, password: e.target.value })} placeholder="Insira sua senha" required className="border-orange form-control mw-400" type="password" />
             </div>
             <div className="mb-3 d-flex justify-content-center">
-                <button type="submit" className="btn btn-orange mt-5 rounded-pill fw-bold">Salvar</button>
+                <button type="submit" className="btn btn-orange mt-5 rounded fw-bold">Salvar</button>
             </div>
         </form>
     );

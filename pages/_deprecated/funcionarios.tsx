@@ -15,9 +15,9 @@ const Employees = () => {
                 <h4 className="text-black mt-4 pt-5 pt-md-0">Funcionários</h4>
                 <EmployeesList />
                 <div className="d-flex gap-4">
-                    <button data-bs-toggle="modal" data-bs-target="#registerEmployeeModal" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Cadastrar Novo Funcionário</button>
-                    <button data-bs-toggle="modal" data-bs-target="#registerSpecialtyModal" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Cadastrar Nova Especialidade</button>
-                    <button data-bs-toggle="modal" data-bs-target="#registerCustomerModal" className="btn btn-orange mt-5 rounded-pill fw-bold">+ Cadastrar Novo Cliente</button>
+                    <button data-bs-toggle="modal" data-bs-target="#registerEmployeeModal" className="btn btn-orange mt-5 rounded fw-bold">+ Cadastrar Novo Funcionário</button>
+                    <button data-bs-toggle="modal" data-bs-target="#registerSpecialtyModal" className="btn btn-orange mt-5 rounded fw-bold">+ Cadastrar Nova Especialidade</button>
+                    <button data-bs-toggle="modal" data-bs-target="#registerCustomerModal" className="btn btn-orange mt-5 rounded fw-bold">+ Cadastrar Novo Cliente</button>
                 </div>
             </div>
             <ModalRegisterEmployee />

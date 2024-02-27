@@ -68,7 +68,7 @@ const ModalEditEmployee = () => {
                                 <input required onChange={(e) => dispatch(changeEmployeePhone(e.target.value))} value={employee.phone} className="border-orange form-control mw-400" type="text" />
                             </div>
                             <div className="mb-3 d-flex justify-content-center">
-                                <button type="submit" className="btn btn-orange mt-5 rounded-pill fw-bold"> Atualizar Funcionário</button>
+                                <button type="submit" className="btn btn-orange mt-5 rounded fw-bold"> Atualizar Funcionário</button>
                             </div>
                         </form>
 
