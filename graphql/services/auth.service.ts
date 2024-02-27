@@ -9,15 +9,7 @@ import { changeRole, changeUserId } from "../../store/slices/user.slice";
 class AuthService {
   async login(email: string, password: string): Promise<ILogin> {
 
-    const query = gql`query login($email: String!, $password: String!) {
-      login(email: $email, password: $password) {
-        user {
-          role
-        }
-        token,
-        success
-      }
-    }`
+    const query = LOGIN_QUERY
 
     try {
       const { data }: IApolloLogin = await apolloClient.query({
@@ -26,7 +18,6 @@ class AuthService {
       });
 
       window.localStorage.setItem("token", data.login.token)
-      console.log(data.login)
 
       const result = this.verifyToken(data.login.token)
       store.dispatch(changeRole((await result).userRole))
@@ -40,12 +31,7 @@ class AuthService {
   }
 
   async verifyToken(token: string): Promise<IVerifyToken> {
-    const query = gql`query verifyToken($token: String!) {
-      verifyToken(token: $token) {
-       userId
-       userRole
-      }
-    }`
+    const query = VERIFY_TOKEN_QUERY
     try {
       const { data }: IApolloVerifyToken = await apolloClient.query({
         query,
@@ -79,3 +65,20 @@ class AuthService {
 
 const authService = new AuthService();
 export default authService;
+
+export const LOGIN_QUERY = gql`query login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    user {
+      role
+    }
+    token,
+    success
+  }
+}`
+
+export const VERIFY_TOKEN_QUERY = gql`query verifyToken($token: String!) {
+  verifyToken(token: $token) {
+   userId
+   userRole
+  }
+}`

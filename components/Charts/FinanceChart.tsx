@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
-import dashboardService from "../../graphql/services/dashboard.service";
+import dashboardService, { GET_DASH_FINANCE } from "../../graphql/services/dashboard.service";
+import { useQuery } from "@apollo/client";
 
 const FinanceChart = () => {
 
     const [annualRevenue, setAnnualRevenue] = useState([]);
     const [highestPrice, setHighestPrice] = useState(0);
 
+    const { data, loading } = useQuery(GET_DASH_FINANCE)
+
     useEffect(() => {
-        async function getData() {
-            const financeValues = await dashboardService.getDashboardFinanceChart()
+        if (data) {
+            const financeValues = data.getDashboard.annualRevenue
             let arr = Object.values(financeValues)
             arr = arr.slice(0, arr.length - 1)
 
             setAnnualRevenue(arr)
             setHighestPrice(arr.sort((a: any, b: any) => a - b).reverse()[0] as number)
         }
-        getData()
-    }, []);
+    }, [data]);
+
 
     function checkPercentage(price: number) {
 
@@ -31,6 +34,8 @@ const FinanceChart = () => {
         }
         return percentage;
     }
+
+    if (loading) return <p>Carregando</p>
 
     return (
         <div className="col-md-6 text-black ">
@@ -54,8 +59,8 @@ const FinanceChart = () => {
                         <span>{Math.round(highestPrice / 4)}</span>
                         <span>0</span>
                     </div>
-                    {highestPrice > 0 && 
-                        
+                    {highestPrice > 0 &&
+
                         <div className="d-flex gap-2 align-items-end">
                             {
                                 annualRevenue?.map((item, index) => (

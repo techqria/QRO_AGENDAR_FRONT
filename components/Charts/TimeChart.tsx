@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
-import dashboardService from "../../graphql/services/dashboard.service";
+import dashboardService, { GET_DASHBOARD_TIME } from "../../graphql/services/dashboard.service";
 import { IWeekScheduleHours } from "../../interfaces";
+import { useQuery } from "@apollo/client";
 
 const TimeChart = () => {
 
     const [timeArray, setTimeArray] = useState<IWeekScheduleHours[]>();
     const [highestTime, setHighestTime] = useState(0);
 
+    const { data, loading } = useQuery(GET_DASHBOARD_TIME)
+
 
     useEffect(() => {
-        async function getData() {
-            const times = await dashboardService.getDashboardTimeChart()
+        if (data) {
+            const times = data.getDashboard.weekScheduleHours
             let arr = Object.values(times)
             arr = arr.slice(0, arr.length - 1)
             setTimeArray(arr as any)
             getHighestTime(arr)
         }
-        getData()
-    }, []);
+    }, [data]);
+
 
     function getHighestTime(array) {
         let arr = Object.values(array)
@@ -41,6 +44,9 @@ const TimeChart = () => {
         }
         return percentage;
     }
+
+    if (loading) return <p>Carregando</p>
+
 
     return (
         <div className="col-md-6 text-black mt-4">

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { IEmployee, ISpecialties } from "../../interfaces";
-import userService from "../../graphql/services/user.service";
-import specialtyService from "../../graphql/services/specialty.service";
+import userService, { CREATE_VET, GET_ALL_VETS } from "../../graphql/services/user.service";
+import specialtyService, { CREATE_SPECIALTY, GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
 import Tooltip from "../Tooltip";
+import { useMutation, useQuery } from "@apollo/client";
 
 const RegisterEmployeeForm = () => {
 
@@ -11,25 +12,37 @@ const RegisterEmployeeForm = () => {
     const [newSpecialty, setNewSpecialty] = useState("");
     const [showNewSpecialty, setShowNewSpecialty] = useState(false);
 
+    const [createEmployeeMutation] = useMutation(CREATE_VET)
+    const [createSpecialtyMutation] = useMutation(CREATE_SPECIALTY)
+
     async function registerEmployee(e) {
         e.preventDefault()
         if (showNewSpecialty && newSpecialty.length > 0) {
-            employee.specialty = (await specialtyService.createSpecialty(newSpecialty)).id
+            employee.specialty = (await createSpecialtyMutation({ variables: { title: newSpecialty } })).id
         }
 
-        userService.createEmployee(employee)
+        await createEmployeeMutation({
+            variables: { name: employee.name, email: employee.email, phone: employee.phone, password: employee.password, specialty: employee.specialty, color: employee.color ?? "#000000", imageUrl: employee.imageUrl ?? "" },
+            refetchQueries: [{ query: GET_ALL_VETS }]
+        })
+
         document.getElementById("close-register-modal").click();
     }
 
-    async function getSpecialties() {
-        const result = await specialtyService.getAllSpecialties()
-        setSpecialties(result)
-        setEmployee({ ...employee, specialty: result[0].id })
-    }
+    const { data, loading } = useQuery(GET_ALL_SPECIALTIES);
+
 
     useEffect(() => {
-        getSpecialties()
-    }, []);
+        if (data) {
+            console.log(data)
+            const result = data.getAllSpecialties
+            setSpecialties(result)
+            setEmployee({ ...employee, specialty: result[0].id })
+        }
+    }, [data]);
+
+    if(loading) return <p>Carregando</p>
+
 
     return (
         <form onSubmit={registerEmployee} className="mt-3">

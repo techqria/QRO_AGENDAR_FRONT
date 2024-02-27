@@ -6,15 +6,7 @@ import { IApolloGetAllSpecialties, IScheduleRegister } from "../../interfaces";
 
 class ScheduleService {
     async getAllSchedules(): Promise<any> {
-        const query = gql`query getSchedules {
-            getSchedules {
-                date
-                payment{
-                  price
-                  method
-                }
-            }
-          }`
+        const query = GET_ALL_SCHEDULES
         try {
             const { data }: any = await apolloClient.query({
                 query
@@ -27,14 +19,7 @@ class ScheduleService {
         }
     }
     async getSchedulesCalendar(): Promise<any> {
-        const query = gql`query getSchedulesCalendar {
-            getSchedulesCalendar {
-                specialty_name
-                employee_name
-                date
-                employee_color
-            }
-          }`
+        const query = GET_SCHEDULES_CALENDAR
         try {
             const { data }: any = await apolloClient.query({
                 query
@@ -47,29 +32,7 @@ class ScheduleService {
     }
 
     async createSchedule({ specialty_id, employee_id, date, customer_name, customer_phone, payment, pet_breed, pet_name, pet_type }: IScheduleRegister): Promise<any> {
-        const mutation = gql`mutation createSchedule (
-            $specialty_id: String!,$employee_id: String!,$date: DateTime!,
-            $customer_name: String!,$customer_phone: String!,
-            $method: String!,$price: Float!,$pet_breed: String!,
-            $pet_name: String!,$pet_type: String!){
-            createSchedule(schedule: {
-                specialty_id: $specialty_id
-                employee_id: $employee_id
-                date: $date
-                customer_name: $customer_name
-                customer_phone: $customer_phone
-                pet_breed: $pet_breed
-                pet_name: $pet_name
-                pet_type: $pet_type
-                payment: {
-                    price: $price
-                    method: $method
-                }
-            })
-            {
-                pet_name
-            }
-        }`
+        const mutation = CREATE_SCHEDULE
         try {
 
             const { method, price } = payment
@@ -90,11 +53,7 @@ class ScheduleService {
     }
 
     async removeSchedule(id: string): Promise<any> {
-        const mutation = gql`mutation removeSchedule($id: String!) {
-            removeSchedule(id: $id) {
-                title
-            }
-          }`
+        const mutation = REMOVE_SCHEDULE
         try {
             const { data }: any = await apolloClient.mutate({
                 mutation,
@@ -113,3 +72,52 @@ class ScheduleService {
 
 const scheduleService = new ScheduleService();
 export default scheduleService;
+
+export const GET_ALL_SCHEDULES = gql`query getSchedules {
+    getSchedules {
+        date
+        payment{
+          price
+          method
+        }
+    }
+  }`
+
+export const GET_SCHEDULES_CALENDAR = gql`query getSchedulesCalendar {
+    getSchedulesCalendar {
+        specialty_name
+        employee_name
+        date
+        employee_color
+    }
+  }`
+
+export const REMOVE_SCHEDULE = gql`mutation removeSchedule($id: String!) {
+    removeSchedule(id: $id) {
+        title
+    }
+  }`
+
+export const CREATE_SCHEDULE = gql`mutation createSchedule (
+    $specialty_id: String!,$employee_id: String!,$date: DateTime!,
+    $customer_name: String!,$customer_phone: String!,
+    $method: String!,$price: Float!,$pet_breed: String!,
+    $pet_name: String!,$pet_type: String!){
+    createSchedule(schedule: {
+        specialty_id: $specialty_id
+        employee_id: $employee_id
+        date: $date
+        customer_name: $customer_name
+        customer_phone: $customer_phone
+        pet_breed: $pet_breed
+        pet_name: $pet_name
+        pet_type: $pet_type
+        payment: {
+            price: $price
+            method: $method
+        }
+    })
+    {
+        pet_name
+    }
+}`

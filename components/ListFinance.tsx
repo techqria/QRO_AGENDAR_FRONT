@@ -1,29 +1,22 @@
-import { useState, useEffect } from "react"
-import { IFinanceList } from "../interfaces";
-import financeService from "../graphql/services/finance.service";
+import { GET_FINANCES } from "../graphql/services/finance.service";
 import { useDispatch } from "react-redux";
 import { changeEmployeeId } from "../store/slices/employee.slice";
+import { useQuery } from "@apollo/client";
 
 const ListFinance = () => {
 
     const dispatch = useDispatch()
 
-    const [financeList, setFinanceList] = useState<IFinanceList[]>([]);
-
-    useEffect(() => {
-        async function getData() {
-            setFinanceList(await financeService.getFinanceList())
-        }
-
-        getData()
-    }, []);
+    const { data, loading } = useQuery(GET_FINANCES)
 
     const setEmployeeId = (id: string) => dispatch(changeEmployeeId(id))
+
+    if (loading) return <p>Carregando</p>
 
     return (
         <div className="w-100 d-flex flex-column gap-3 mt-5">
             {
-                financeList.map(el => (
+                data.getFinanceList.map(el => (
                     <div key={el.employee_id} className="d-flex justify-content-between bg-white p-3">
                         <div className="d-flex flex-column">
                             <h5 className="text-black fw-bold">{el.employee_name}</h5>

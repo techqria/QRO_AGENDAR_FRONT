@@ -3,8 +3,9 @@ import { IStore } from "../../store/types/types";
 import { useCallback, useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
 import { IScheduleCalendar } from "../../interfaces";
-import scheduleService from "../../graphql/services/schedule.service";
+import scheduleService, { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
 import { FormatBgColor } from "../../hooks/FomatBgColor";
+import { useLazyQuery } from "@apollo/client";
 
 const nameDaysWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
 
@@ -16,10 +17,11 @@ export const WeekCalendar = () => {
     const [datesOfWeek, setDatesOfWeek] = useState([]);
 
     const [schedules, setSchedules] = useState<IScheduleCalendar[]>([]);
+    const [schedulesQuery, {loading}] = useLazyQuery(GET_SCHEDULES_CALENDAR)
 
     useEffect(() => {
         async function getData() {
-            setSchedules(await scheduleService.getSchedulesCalendar())
+            setSchedules((await schedulesQuery()).data.getSchedulesCalendar)
         }
         getData()
 

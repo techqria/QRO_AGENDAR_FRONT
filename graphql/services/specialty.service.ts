@@ -6,12 +6,7 @@ import { IApolloGetAllSpecialties } from "../../interfaces";
 
 class SpecialtyService {
     async getAllSpecialties(): Promise<any> {
-        const query = gql`query getAllSpecialties {
-            getAllSpecialties {
-                title
-                id
-            }
-          }`
+        const query = GET_ALL_SPECIALTIES
         try {
             const { data }: IApolloGetAllSpecialties = await apolloClient.query({
                 query
@@ -25,15 +20,7 @@ class SpecialtyService {
     }
 
     async createSpecialty(title: string): Promise<any> {
-        const mutation = gql`mutation createSpecialty ($title: String!){
-            createSpecialty(specialty: {
-                title: $title
-            })
-            {
-                title
-                id
-            }
-        }`
+        const mutation = CREATE_SPECIALTY
         try {
             const { data }: any = await apolloClient.mutate({
                 mutation,
@@ -43,7 +30,6 @@ class SpecialtyService {
 
             ToastMessage(ToastEnum.success, "Especialidade criada com sucesso")
 
-            console.log(data)
             return data.createSpecialty
         } catch (error) {
             ToastMessage(ToastEnum.error, error.message)
@@ -52,11 +38,7 @@ class SpecialtyService {
     }
 
     async removeSpecialty(id: string): Promise<any> {
-        const mutation = gql`mutation removeSpecialty($id: String!) {
-            removeSpecialty(id: $id) {
-                title
-            }
-          }`
+        const mutation = REMOVE_SPECIALTY
         try {
             const { data }: any = await apolloClient.mutate({
                 mutation,
@@ -75,3 +57,26 @@ class SpecialtyService {
 
 const specialtyService = new SpecialtyService();
 export default specialtyService;
+
+export const GET_ALL_SPECIALTIES = gql`query getAllSpecialties {
+    getAllSpecialties {
+        title
+        id
+    }
+  }`
+
+export const CREATE_SPECIALTY = gql`mutation createSpecialty ($title: String!){
+    createSpecialty(specialty: {
+        title: $title
+    })
+    {
+        title
+        id
+    }
+}`
+
+export const REMOVE_SPECIALTY = gql`mutation removeSpecialty($id: String!) {
+    removeSpecialty(id: $id) {
+        title
+    }
+  }`

@@ -1,17 +1,17 @@
 import { useSelector } from "react-redux";
-import specialtyService from "../../graphql/services/specialty.service";
+import specialtyService, { REMOVE_SPECIALTY } from "../../graphql/services/specialty.service";
 import { IStore } from "../../store/types/types";
+import { useMutation } from "@apollo/client";
 
 const ModalEditSpecialty = () => {
 
     const { id: specialtyId } = useSelector((store: IStore) => store.specialty)
 
-    console.log(specialtyId, '9')
-    
+    const [removeSpecialtyMutation] = useMutation(REMOVE_SPECIALTY)
     async function deleteSpecialty(e) {
         e.preventDefault()
 
-        await specialtyService.removeSpecialty(specialtyId)
+        await removeSpecialtyMutation({ variables: { id: specialtyId } })
         document.getElementById("close-edit-specialty-modal").click();
     }
 

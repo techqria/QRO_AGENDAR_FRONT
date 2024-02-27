@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
-import dashboardService from "../../graphql/services/dashboard.service";
+import dashboardService, { GET_DASH_PAYMENT_METHOD } from "../../graphql/services/dashboard.service";
+import { useQuery } from "@apollo/client";
 
 const PaymentMethodChart = () => {
 
@@ -9,18 +10,18 @@ const PaymentMethodChart = () => {
     const [CreditPercentage, setCreditPercentage] = useState<number>(0);
     const [DebitPercentage, setDebitPercentage] = useState<number>(0);
 
+    const { data, loading } = useQuery(GET_DASH_PAYMENT_METHOD)
+
     useEffect(() => {
-        async function getData() {
-            const paymentMethods = await dashboardService.getDashboardPaymentMethodChart()
+        if (data) {
+            const paymentMethods = data.getDashboard.paymentMethodsPercentage
 
             setMoneyPercentage(paymentMethods.money)
             setPixPercentage(paymentMethods.pix)
             setCreditPercentage(paymentMethods.credit)
             setDebitPercentage(paymentMethods.debit)
         }
-
-        getData()
-    }, []);
+    }, [data]);
 
     function checkPercentage(method: 'pix' | 'debit' | 'credit' | 'money') {
 
@@ -44,6 +45,8 @@ const PaymentMethodChart = () => {
         return strokeDashoffset
 
     }
+
+    if (loading) return <p>Carregando</p>
 
     return (
         <div className="col-md-6 text-black mt-md-0 mt-4">

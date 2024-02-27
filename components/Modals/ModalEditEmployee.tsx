@@ -2,9 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { IEmployee, ISpecialties } from "../../interfaces";
 import { useEffect, useState } from "react";
-import specialtyService from "../../graphql/services/specialty.service";
+import specialtyService, { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
 import { changeEmployeeColor, changeEmployeeEmail, changeEmployeeName, changeEmployeePhone, changeEmployeeSpecialtyId } from "../../store/slices/employee.slice";
-import userService from "../../graphql/services/user.service";
+import userService, { GET_ALL_VETS, UPDATE_VET } from "../../graphql/services/user.service";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 
 const ModalEditEmployee = () => {
 
@@ -12,24 +13,21 @@ const ModalEditEmployee = () => {
 
     const { employee } = useSelector((store: IStore) => store)
 
-    const [specialties, setSpecialties] = useState<ISpecialties[]>([]);
+    const [updateMutation, { error, loading, data }] = useMutation(UPDATE_VET)
+    const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES);
 
     async function updateEmployee(e) {
         e.preventDefault()
 
-        await userService.updateEmployee(employee)
+        await updateMutation({
+            variables: { color: employee.color, email: employee.email, name: employee.name, phone: employee.phone, specialty_id: employee.specialty_id, id: employee.id },
+            refetchQueries: [{ query: GET_ALL_VETS }]
+        })
+
         document.getElementById("close-edit-employee-modal").click();
     }
 
-
-    useEffect(() => {
-        async function getSpecialty() {
-            const result = await specialtyService.getAllSpecialties()
-            setSpecialties(result)
-        }
-
-        getSpecialty()
-    }, [employee]);
+    if (loadingSpecialties) return <p>Carregando</p>
 
     return (
         <div className="modal fade" id="editEmployeeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -51,7 +49,7 @@ const ModalEditEmployee = () => {
                                 <label className="w-20 text-black">Especialidade</label>
                                 <select className="border-orange form-control mw-400" required onChange={(e) => dispatch(changeEmployeeSpecialtyId(e.target.value))}>
                                     {
-                                        specialties?.map(specialty => (
+                                        specialties?.getAllSpecialties?.map(specialty => (
                                             <option selected={specialty.id == employee.specialty_id} key={specialty.id} value={specialty.id}>{specialty.title}</option>
                                         ))
                                     }

@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { FormatBgColor } from "../../hooks/FomatBgColor";
 import { IScheduleCalendar } from "../../interfaces";
-import scheduleService from "../../graphql/services/schedule.service";
+import scheduleService, { GET_ALL_SCHEDULES, GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
+import { useLazyQuery, useQuery } from "@apollo/client";
 
 export const MonthlyCalendar = () => {
 
@@ -12,9 +13,11 @@ export const MonthlyCalendar = () => {
 
     const [schedules, setSchedules] = useState<IScheduleCalendar[]>([]);
 
+    const [schedulesQuery, {loading}] = useLazyQuery(GET_SCHEDULES_CALENDAR)
+
     useEffect(() => {
         async function getData() {
-            setSchedules(await scheduleService.getSchedulesCalendar())
+            setSchedules((await schedulesQuery()).data.getSchedulesCalendar)
         }
         getData()
 

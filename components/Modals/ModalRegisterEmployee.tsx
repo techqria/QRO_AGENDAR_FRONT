@@ -20,9 +20,9 @@ const ModalRegisterEmployee = () => {
                         {
                             userRole === RoleEnum.admin &&
                             <div className="d-flex gap-2">
-                                <input checked={showEmployeeForm} type="radio" name="type" id="manager" onClick={() => setShowEmployeeForm(!showEmployeeForm)}/>
+                                <input checked={showEmployeeForm} type="radio" name="type" id="manager" onChange={() => setShowEmployeeForm(!showEmployeeForm)}/>
                                 <label className="text-dark" htmlFor="manager">Gerente</label>
-                                <input type="radio" name="type" id="employee" onClick={() => setShowEmployeeForm(!showEmployeeForm)}/>
+                                <input type="radio" name="type" id="employee" onChange={() => setShowEmployeeForm(!showEmployeeForm)}/>
                                 <label className="text-dark" htmlFor="employee">Funcionário</label>
                             </div>
                         }

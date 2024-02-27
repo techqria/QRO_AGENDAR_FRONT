@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { ISchedule, ISpecialties, IVets } from "../../interfaces";
-import specialtyService from "../../graphql/services/specialty.service";
-import userService from "../../graphql/services/user.service";
+import specialtyService, { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
+import userService, { GET_ALL_VETS } from "../../graphql/services/user.service";
 import { paymentMethodEnum } from "../../dto/payment-method.enum";
-import scheduleService from "../../graphql/services/schedule.service";
+import scheduleService, { CREATE_SCHEDULE, GET_ALL_SCHEDULES } from "../../graphql/services/schedule.service";
+import { useMutation, useQuery } from "@apollo/client";
 
 const ModalRegisterSchedule = () => {
 
-    const [specialties, setSpecialties] = useState<ISpecialties[]>([]);
-    const [employees, setEmployees] = useState<IVets[]>([]);
     const [schedule, setSchedule] = useState<ISchedule>();
+
+    const [createScheduleMutation] = useMutation(CREATE_SCHEDULE)
 
     async function registerSchedule(e) {
         e.preventDefault()
@@ -23,8 +24,16 @@ const ModalRegisterSchedule = () => {
             payment
         }
         delete formattedSchedule.hour
-        console.log(formattedSchedule)
-        await scheduleService.createSchedule(formattedSchedule)
+
+        await createScheduleMutation({
+            variables: { 
+                specialty_id: schedule.specialty_id, employee_id: schedule.employee_id, 
+                date: schedule.date, customer_name: schedule.customer_name, 
+                customer_phone: schedule.customer_phone, method: schedule.payment.method, 
+                price: schedule.payment.price, pet_breed: schedule.pet_breed, pet_name: schedule.pet_name, 
+                pet_type: schedule.pet_type },
+            refetchQueries: [{query: GET_ALL_SCHEDULES}]
+        })
         document.getElementById('close-register-schedule-modal').click()
     }
 
@@ -81,15 +90,10 @@ const ModalRegisterSchedule = () => {
         setSchedule({ ...schedule, payment: { ...schedule?.payment, price: value } })
     }
 
+    const { data: vets, loading: loadingVets } = useQuery(GET_ALL_VETS);
+    const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES);
 
-    useEffect(() => {
-        async function getData() {
-            setSpecialties(await specialtyService.getAllSpecialties())
-            setEmployees(await userService.getAllEmployees())
-        }
-
-        getData()
-    }, []);
+    if (loadingVets || loadingSpecialties) return <p>Carregando</p>
 
     return (
         <div className="modal fade" id="registerScheduleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -108,7 +112,7 @@ const ModalRegisterSchedule = () => {
                                 <select className="border-orange form-control mw-400" required onChange={(e) => setSchedule({ ...schedule, employee_id: e.target.value })} name="" id="">
                                     <option value="">Clique para escolher um funcionário</option>
                                     {
-                                        employees?.map(employee => (
+                                        vets.getAllVets?.map(employee => (
                                             <option key={employee.id} value={employee.id}>{employee.name}</option>
                                         ))
                                     }
@@ -119,7 +123,7 @@ const ModalRegisterSchedule = () => {
                                 <select className="border-orange form-control mw-400" required onChange={(e) => setSchedule({ ...schedule, specialty_id: e.target.value })} name="" id="">
                                     <option value="">Clique para escolher uma especialidade</option>
                                     {
-                                        specialties?.map(specialty => (
+                                        specialties?.getAllSpecialties?.map(specialty => (
                                             <option key={specialty.id} value={specialty.id}>{specialty.title}</option>
                                         ))
                                     }
