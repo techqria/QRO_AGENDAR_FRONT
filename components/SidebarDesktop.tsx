@@ -30,6 +30,9 @@ const SidebarDesktop = () => {
                     <Tooltip description="Funcionários" >
                         <i onClick={() => dispatch(changePage(PagesEnum.employeesPage))} role="button" className={`${currentPage === PagesEnum.employeesPage && 'bg-dark'} person-icon`}></i>
                     </Tooltip>
+                    <Tooltip description="Clientes" >
+                        <i onClick={() => dispatch(changePage(PagesEnum.customerPage))} role="button" className={`${currentPage === PagesEnum.customerPage && 'bg-dark'} customer-icon`}></i>
+                    </Tooltip>
                     <Tooltip description="Agendamentos" >
                         <i onClick={() => dispatch(changePage(PagesEnum.schedulePage))} role="button" className={`${currentPage === PagesEnum.schedulePage && 'bg-dark'} calendar-icon`}></i>
                     </Tooltip>

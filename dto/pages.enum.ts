@@ -4,5 +4,6 @@ export enum PagesEnum {
     schedulePage = 'schedulePage',
     financePage = 'financePage',
     settingsPage = 'settingsPage',
-    employeeOwnSchedulePage = 'employeeOwnSchedulePage'
+    employeeOwnSchedulePage = 'employeeOwnSchedulePage',
+    customerPage = 'customerPage',
 }

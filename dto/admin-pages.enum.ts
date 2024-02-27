@@ -1,3 +1,4 @@
+import Customers from "../pages/_deprecated/customers";
 import Dashboard from "../pages/_deprecated/dashboard";
 import Finance from "../pages/_deprecated/financas";
 import Employees from "../pages/_deprecated/funcionarios";
@@ -10,4 +11,5 @@ export const AdminPagesEnum =  {
     financePage: Finance,
     schedulePage: Schedule,
     settingsPage: Settings,
+    customerPage: Customers,
 }
