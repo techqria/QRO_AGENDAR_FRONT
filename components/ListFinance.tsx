@@ -1,7 +1,8 @@
 import { GET_FINANCES } from "../graphql/services/finance.service";
 import { useDispatch } from "react-redux";
-import { changeEmployeeId } from "../store/slices/employee.slice";
+import { changeEmployeeId, changeEmployeeName } from "../store/slices/employee.slice";
 import { useQuery } from "@apollo/client";
+import { IEmployee, IFinanceList } from "../interfaces";
 
 const ListFinance = () => {
 
@@ -9,7 +10,10 @@ const ListFinance = () => {
 
     const { data, loading } = useQuery(GET_FINANCES)
 
-    const setEmployeeId = (id: string) => dispatch(changeEmployeeId(id))
+    const setEmployeeId = (employee: IFinanceList) => {
+        dispatch(changeEmployeeId(employee.employee_id))
+        dispatch(changeEmployeeName(employee.employee_name))
+    }
 
     if (loading) return <p>Carregando</p>
 
@@ -32,7 +36,7 @@ const ListFinance = () => {
                             <span className="text-black">Valor total</span>
                         </div>
 
-                        <button onClick={_ => setEmployeeId(el.employee_id)} data-bs-toggle="modal" data-bs-target="#listFinancesModal" className="d-flex align-items-center p-0 m-0 btn btn-transparent">
+                        <button onClick={_ => setEmployeeId(el)} data-bs-toggle="modal" data-bs-target="#listFinancesModal" className="d-flex align-items-center p-0 m-0 btn btn-transparent">
                             <img role="button" src="https://raw.githubusercontent.com/gist/Aenewsss/fbe5368d795b9aececfdef9fa3c1edc9/raw/ab991ac12aa87c5ad47f3a8a2998415561c6b74e/modal-expand-qro-agendar.svg" alt="" />
                         </button>
                     </div>
