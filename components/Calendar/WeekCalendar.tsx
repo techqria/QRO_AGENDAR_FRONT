@@ -71,8 +71,9 @@ export const WeekCalendar = () => {
                 )}
 
                 {(filtered.length > 2) &&
-                    <button className="btn btn-default d-flex align-self-start bg-orange text-white rounded mt-2 m-0 py-0 px-1">Ver mais</button>
+                    <button className="btn btn-default d-flex align-self-end text-black fw-semibold fs-14 rounded m-0 p-0">Ver mais</button>
                 }
+
             </div>
         }
         return
