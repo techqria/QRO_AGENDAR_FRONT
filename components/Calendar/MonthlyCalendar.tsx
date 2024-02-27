@@ -13,7 +13,7 @@ export const MonthlyCalendar = () => {
 
     const [schedules, setSchedules] = useState<IScheduleCalendar[]>([]);
 
-    const [schedulesQuery, {loading}] = useLazyQuery(GET_SCHEDULES_CALENDAR)
+    const [schedulesQuery, { loading }] = useLazyQuery(GET_SCHEDULES_CALENDAR)
 
     useEffect(() => {
         async function getData() {
@@ -35,12 +35,15 @@ export const MonthlyCalendar = () => {
     const checkScheduleDate = useCallback((day: number) => {
         const filtered = schedules?.filter(el => new Date(el.date).getDate() == day && new Date(el.date).getMonth() + 1 == new Date(monthDate).getMonth() + 1)
         if (filtered.length) {
-            console.log(filtered)
-            return <div className="d-flex flex-column">
-                {filtered.map((filter, index) => index <= 1 && <p key={index} className="ps-1" role="button" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }} >{filter.specialty_name}</p>)}
+            return <div className="d-flex flex-column gap-1">
+                {filtered.map((filter, index) => index <= 2 &&
+                    <p key={index} className="ps-1 my-0 rounded " role="button" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }} >
+                        {filter.specialty_name}
+                    </p>
+                )}
 
-                {(filtered.length != 2 && filtered.length > 1) &&
-                    <p role="button" className="fit-content text-orange border-orange rounded m-0 p-1 pb-0">+{Math.abs(filtered.length - 2)}</p>
+                {(filtered.length > 2) &&
+                    <button className="btn btn-default d-flex align-self-end bg-orange text-white rounded m-0 py-0 px-1">Ver mais</button>
                 }
             </div>
         }
@@ -51,7 +54,7 @@ export const MonthlyCalendar = () => {
         <div className="pt-5 text-black w-100 d-flex flex-wrap justify-content-center">
             {
                 new Array(totalMonthDays).fill(0).map((el, index) => (
-                    <div key={index} className="square-calendar border p-2 overflow-hidden">
+                    <div key={index} className="square-calendar border p-1 overflow-hidden">
                         <p className="text-end mb-0 fs-5">{index + 1}</p>
                         {checkScheduleDate(index + 1)}
                     </div>

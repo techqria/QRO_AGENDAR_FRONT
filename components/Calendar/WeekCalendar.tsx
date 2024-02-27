@@ -17,7 +17,7 @@ export const WeekCalendar = () => {
     const [datesOfWeek, setDatesOfWeek] = useState([]);
 
     const [schedules, setSchedules] = useState<IScheduleCalendar[]>([]);
-    const [schedulesQuery, {loading}] = useLazyQuery(GET_SCHEDULES_CALENDAR)
+    const [schedulesQuery, { loading }] = useLazyQuery(GET_SCHEDULES_CALENDAR)
 
     useEffect(() => {
         async function getData() {
@@ -62,18 +62,16 @@ export const WeekCalendar = () => {
             new Date(el.date).getDate() == date.getDate()
         )
         if (filtered.length) {
-            return <div className="d-flex flex-column">
-                {filtered.map((filter, index) => index <= 1 &&
-                    <div key={index} className="d-flex gap-2 flex-column mt-4 rounded p-2" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }}>
+            return <div className="d-flex flex-column gap-2 mt-2">
+                {filtered.map((filter, index) => index <= 2 &&
+                    <div key={index} className="d-flex gap-2 flex-column rounded p-2" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }}>
                         <p role="button" className="m-0 fs-5">{new Date(filter.date).toLocaleTimeString('pt-BR', { hour: "2-digit", minute: "2-digit" })}</p>
                         <p role="button" className="m-0 text-capitalize">{filter.specialty_name}</p>
                     </div>
                 )}
 
-                {(filtered.length != 2 && filtered.length > 1) &&
-                    <div className="d-flex justify-content-end mt-2">
-                        <button className="btn btn-orange-outline rounded-circle m-0">+{Math.abs(filtered.length - 2)}</button>
-                    </div>
+                {(filtered.length > 2) &&
+                    <button className="btn btn-default d-flex align-self-start bg-orange text-white rounded mt-2 m-0 py-0 px-1">Ver mais</button>
                 }
             </div>
         }
