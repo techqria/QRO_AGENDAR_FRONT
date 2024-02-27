@@ -32,8 +32,14 @@ export const MonthlyCalendar = () => {
 
     const [totalMonthDays, setTotalMonthDays] = useState(handleTotalMonthDays);
 
+    function checkSameDate(schedule: IScheduleCalendar, day:number) {
+        const daysMatch = new Date(schedule.date).getDate() == day
+        const monthsMatch = new Date(schedule.date).getMonth() + 1 == new Date(monthDate).getMonth() + 1
+        return daysMatch && monthsMatch
+    }
+
     const checkScheduleDate = useCallback((day: number) => {
-        const filtered = schedules?.filter(el => new Date(el.date).getDate() == day && new Date(el.date).getMonth() + 1 == new Date(monthDate).getMonth() + 1)
+        const filtered = schedules?.filter(el => checkSameDate(el, day)).sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime())
         if (filtered.length) {
             return <div className="d-flex flex-column gap-1">
                 {filtered.map((filter, index) => index <= 2 &&

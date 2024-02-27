@@ -60,7 +60,7 @@ export const WeekCalendar = () => {
         const filtered = schedules.filter(el =>
             new Date(el.date).getMonth() == date.getMonth() &&
             new Date(el.date).getDate() == date.getDate()
-        )
+        ).sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime())
         if (filtered.length) {
             return <div className="d-flex flex-column gap-2 mt-2">
                 {filtered.map((filter, index) => index <= 2 &&
