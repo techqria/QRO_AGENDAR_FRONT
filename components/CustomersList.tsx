@@ -20,7 +20,7 @@ const CustomersList = () => {
         <section className="mt-3 text-black w-100 mb-5">
             {
                 data?.getAllCustomers.map((customer: ICustomer, index: number) =>
-                    <>
+                    <div key={index}>
                         <div onClick={() => setCustomerIndexToShow(checkSameIndex(index) ? -1 : index)} role="button" key={index} className="rounded bg-white p-3 d-flex justify-content-between align-items-center">
                             <div className="d-flex flex-column gap-2">
                                 <span className="fw-bold">{customer.name}</span>
@@ -83,7 +83,7 @@ const CustomersList = () => {
                                 </div>
                             </div>
                         }
-                    </>
+                    </div>
                 )
             }
         </section>

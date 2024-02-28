@@ -134,7 +134,7 @@ const RegisterCustomerForm = () => {
             }
             {
                 animals?.map((animal, index) =>
-                    <>
+                    <div key={index}>
                         <div className="mb-3 d-flex justify-content-end ">
                             <button onClick={() => removeAnimal(index)} className="btn btn-default text-danger fw-semibold mt-1 ">X Remover pet</button>
                         </div>
@@ -222,7 +222,7 @@ const RegisterCustomerForm = () => {
                                 </div>
                             </div>
                         </div>
-                    </>
+                    </div>
                 )
             }
             <div className="mb-3 d-flex justify-content-center">
