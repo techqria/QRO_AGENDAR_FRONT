@@ -5,8 +5,9 @@ import { store } from '../store'
 import { useRouter } from 'next/router'
 import { RouteAuthentication } from "../hooks/RouteAuthentication"
 import { useEffect } from 'react'
-import { ApolloProvider } from '@apollo/client'
+import { ApolloProvider, useLazyQuery } from '@apollo/client'
 import { useApollo } from '../graphql/graphql-client'
+import { VERIFY_TOKEN_QUERY } from '../graphql/services/auth.service'
 
 function MyApp({ Component, pageProps }) {
 

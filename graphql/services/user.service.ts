@@ -195,7 +195,18 @@ export const GET_ALL_VETS = gql`query getAllVets {
   query getAllCustomers{
     getAllCustomers{
         name
-        animals
+        phone
+        email
+        birthdate
+        animals{
+            name
+            typeAnimalId
+            avatar
+        }
+        adress{
+            city
+            neighborhood
+        }
     }
   }
   `

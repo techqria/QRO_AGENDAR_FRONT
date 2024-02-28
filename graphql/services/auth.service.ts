@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { apolloClient } from "../graphql-client";
+import { useApollo } from "../graphql-client";
 import { ToastEnum } from "../../enum/toast.enum";
 import { ToastMessage } from "../../hooks/ToastMessage";
 import { IApolloLogin, IApolloVerifyToken, ILogin, IVerifyToken } from "../../interfaces";
@@ -32,8 +32,9 @@ class AuthService {
 
   async verifyToken(token: string): Promise<IVerifyToken> {
     const query = VERIFY_TOKEN_QUERY
+    
     try {
-      const { data }: IApolloVerifyToken = await apolloClient.query({
+      const { data }: IApolloVerifyToken = await client.query({
         query,
         variables: { token },
       });

@@ -25,6 +25,11 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+ul {
+  padding: unset !important;
+  list-style: none !important;
+}
+
 .mw-400 {
   max-width: 400px;
 }

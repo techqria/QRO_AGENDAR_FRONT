@@ -18,3 +18,10 @@ export const GET_ANIMAL_TYPES = gql`query getAllAnimalTypes {
         }
     }
 `
+
+export const GET_ANIMAL_TYPE_BY_ID = gql`query getAnimalTypeById($id: String!){
+  getAnimalTypeById(id: $id) {
+    name
+  }
+}
+`
