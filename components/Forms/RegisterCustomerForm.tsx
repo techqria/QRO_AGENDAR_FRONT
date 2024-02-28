@@ -172,8 +172,8 @@ const RegisterCustomerForm = () => {
                             </label>
                             <select onChange={(e) => updateAnimal("typeAnimalId", index, e.target.value)} className="form-control mw-400 border-orange" name="" id="">
                                 {
-                                    data?.getAllAnimalTypes?.map(animalType =>
-                                        <option value={animalType.id}>{animalType.name}</option>
+                                    data?.getAllAnimalTypes?.map((animalType, index) =>
+                                        <option key={index} value={animalType.id}>{animalType.name}</option>
                                     )
                                 }
                             </select>

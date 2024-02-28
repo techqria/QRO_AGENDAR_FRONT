@@ -56,7 +56,7 @@ const CustomersList = () => {
                                     <h2 className="text-orange">Animais</h2>
                                     {
                                         customer.animals.map((animal, index) =>
-                                            <div className="d-flex flex-column">
+                                            <div key={index} className="d-flex flex-column">
                                                 <table className="table">
                                                     <thead>
                                                         <tr>
