@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { useEffect, useState } from "react"
-import financeService, { GET_FINANCE_BY_USER } from "../../graphql/services/finance.service";
+import  { GET_FINANCE_BY_USER } from "../../graphql/services/finance.service";
 import { IFinanceListByUser } from "../../interfaces";
 import { useLazyQuery } from "@apollo/client";
 

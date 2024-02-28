@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { IEmployee, ISpecialties } from "../../interfaces";
 import { useEffect, useState } from "react";
-import specialtyService, { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
+import  { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
 import { changeEmployeeColor, changeEmployeeEmail, changeEmployeeName, changeEmployeePhone, changeEmployeeSpecialtyId } from "../../store/slices/employee.slice";
-import userService, { GET_ALL_VETS, UPDATE_VET } from "../../graphql/services/user.service";
+import  { GET_ALL_VETS, UPDATE_VET } from "../../graphql/services/user.service";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 
 const ModalEditEmployee = () => {

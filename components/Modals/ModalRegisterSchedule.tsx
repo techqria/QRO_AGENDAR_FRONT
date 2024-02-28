@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { ISchedule, ISpecialties, IVets } from "../../interfaces";
-import specialtyService, { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
-import userService, { GET_ALL_VETS, GET_CUSTOMERS, GET_VET_BY_ID } from "../../graphql/services/user.service";
+import { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
+import { GET_ALL_VETS, GET_CUSTOMERS, GET_VET_BY_ID } from "../../graphql/services/user.service";
 import { paymentMethodEnum } from "../../enum/payment-method.enum";
-import scheduleService, { CREATE_SCHEDULE, GET_ALL_SCHEDULES } from "../../graphql/services/schedule.service";
+import { CREATE_SCHEDULE, GET_ALL_SCHEDULES } from "../../graphql/services/schedule.service";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 
 const ModalRegisterSchedule = () => {

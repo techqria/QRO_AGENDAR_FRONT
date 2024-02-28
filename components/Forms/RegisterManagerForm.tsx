@@ -1,5 +1,5 @@
 import { useState } from "react";
-import userService, { CREATE_MANAGER, GET_ALL_VETS } from "../../graphql/services/user.service";
+import  { CREATE_MANAGER, GET_ALL_VETS } from "../../graphql/services/user.service";
 import { IManager } from "../../interfaces";
 import { useMutation } from "@apollo/client";
 

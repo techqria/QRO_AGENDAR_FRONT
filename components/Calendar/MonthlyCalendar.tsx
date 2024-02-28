@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { FormatBgColor } from "../../hooks/FomatBgColor";
 import { IScheduleCalendar } from "../../interfaces";
-import scheduleService, { GET_ALL_SCHEDULES, GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
+import { GET_ALL_SCHEDULES, GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
 import { useLazyQuery, useQuery } from "@apollo/client";
 
 export const MonthlyCalendar = () => {

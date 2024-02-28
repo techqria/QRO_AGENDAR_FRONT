@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import dashboardService, { GET_DASH_FINANCE } from "../../graphql/services/dashboard.service";
+import  { GET_DASH_FINANCE } from "../../graphql/services/dashboard.service";
 import { useQuery } from "@apollo/client";
 
 const FinanceChart = () => {

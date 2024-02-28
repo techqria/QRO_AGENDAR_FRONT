@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
-import userService, { GET_ALL_VETS } from "../graphql/services/user.service";
+import  { GET_ALL_VETS } from "../graphql/services/user.service";
 import { useQuery } from "@apollo/client";
 
 export const EmployeesSchedule = () => {

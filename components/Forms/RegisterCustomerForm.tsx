@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import userService, { CREATE_CUSTOMER, GET_CUSTOMERS } from "../../graphql/services/user.service";
+import  { CREATE_CUSTOMER, GET_CUSTOMERS } from "../../graphql/services/user.service";
 import { IAdress, IAnimal, ICustomer } from "../../interfaces";
 import { GenderEnum } from "../../enum/gender.enum";
 import Tooltip from "../Tooltip";

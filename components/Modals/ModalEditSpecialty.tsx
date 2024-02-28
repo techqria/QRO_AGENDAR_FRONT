@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import specialtyService, { REMOVE_SPECIALTY } from "../../graphql/services/specialty.service";
+import  { REMOVE_SPECIALTY } from "../../graphql/services/specialty.service";
 import { IStore } from "../../store/types/types";
 import { useMutation } from "@apollo/client";
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import specialtyService from "../../graphql/services/specialty.service";
 
 const RegisterSpecialtyForm = () => {
 
@@ -7,7 +6,7 @@ const RegisterSpecialtyForm = () => {
 
     async function registerSpecialty(e) {
         e.preventDefault()
-        await specialtyService.createSpecialty(title)
+        // await specialtyService.createSpecialty(title)
         document.getElementById("close-register-modal").click()
     }
 

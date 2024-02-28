@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 import { IEmployee, ISpecialties, IVets } from "../interfaces";
-import specialtyService, { GET_ALL_SPECIALTIES } from "../graphql/services/specialty.service";
-import userService, { GET_ALL_VETS, REMOVE_VET } from "../graphql/services/user.service";
+import  { GET_ALL_SPECIALTIES } from "../graphql/services/specialty.service";
+import  { GET_ALL_VETS, REMOVE_VET } from "../graphql/services/user.service";
 import { useDispatch, useSelector } from "react-redux";
 import { changeEmployee } from "../store/slices/employee.slice";
 import { changeSpecialyId } from "../store/slices/specialty.slice";

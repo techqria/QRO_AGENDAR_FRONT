@@ -3,7 +3,7 @@ import { IStore } from "../../store/types/types";
 import { useCallback, useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
 import { IScheduleCalendar } from "../../interfaces";
-import scheduleService, { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
+import  { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
 import { FormatBgColor } from "../../hooks/FomatBgColor";
 import { useLazyQuery } from "@apollo/client";
 

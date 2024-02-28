@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IEmployee, ISpecialties } from "../../interfaces";
-import userService, { CREATE_VET, GET_ALL_VETS } from "../../graphql/services/user.service";
-import specialtyService, { CREATE_SPECIALTY, GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
+import  { CREATE_VET, GET_ALL_VETS } from "../../graphql/services/user.service";
+import  { CREATE_SPECIALTY, GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
 import Tooltip from "../Tooltip";
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -18,7 +18,7 @@ const RegisterEmployeeForm = () => {
     async function registerEmployee(e) {
         e.preventDefault()
         if (showNewSpecialty && newSpecialty.length > 0) {
-            employee.specialty = (await createSpecialtyMutation({ variables: { title: newSpecialty } })).id
+            employee.specialty = (await createSpecialtyMutation({ variables: { title: newSpecialty } }) as any).id 
         }
 
         await createEmployeeMutation({

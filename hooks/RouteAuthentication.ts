@@ -2,7 +2,7 @@ import authService from "../graphql/services/auth.service"
 import { store } from "../store"
 import { changeRole, changeUserId } from "../store/slices/user.slice"
 
-export const RouteAuthentication = async (router, verifyTokenQuery) => {
+export const RouteAuthentication = async (router) => {
  
     const token = window.localStorage.getItem("token")
 

@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
-import dashboardService, { GET_DASH_PAYMENT_METHOD } from "../../graphql/services/dashboard.service";
+import { GET_DASH_PAYMENT_METHOD } from "../../graphql/services/dashboard.service";
 import { useQuery } from "@apollo/client";
 
 const PaymentMethodChart = () => {

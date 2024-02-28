@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import dashboardService, { GET_DASHBOARD_TIME } from "../../graphql/services/dashboard.service";
+import { GET_DASHBOARD_TIME } from "../../graphql/services/dashboard.service";
 import { IWeekScheduleHours } from "../../interfaces";
 import { useQuery } from "@apollo/client";
 

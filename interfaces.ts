@@ -195,7 +195,7 @@ export interface IWeekScheduleHours {
 export interface IAnimal {
     name: string
     userId: string
-    gender: GenderEnum
+    gender: string
     breed: string
     typeAnimalId: string
     neutered: boolean
