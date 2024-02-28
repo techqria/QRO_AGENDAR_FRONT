@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import userService, { CREATE_CUSTOMER } from "../../graphql/services/user.service";
+import userService, { CREATE_CUSTOMER, GET_CUSTOMERS } from "../../graphql/services/user.service";
 import { IAdress, IAnimal, ICustomer } from "../../interfaces";
 import { GenderEnum } from "../../enum/gender.enum";
 import Tooltip from "../Tooltip";
@@ -20,6 +20,7 @@ const RegisterCustomerForm = () => {
     const [createAnimalTypeMutation] = useMutation(CREATE_ANIMAL_TYPE)
     const [createCustomerMutation] = useMutation(CREATE_CUSTOMER)
     const { data, loading } = useQuery(GET_ANIMAL_TYPES)
+    const [birthdate, setBirthdate] = useState<string>('');
 
     async function registerCustomer(e) {
         e.preventDefault()
@@ -30,18 +31,22 @@ const RegisterCustomerForm = () => {
         if (cepResult.message) return alert(cepResult.message)
 
         const { service, street, ...adressFormatted } = cepResult
-        const adress: IAdress = adressFormatted
-        console.log(animals, adress, customer)
+        const adress: IAdress = {...adressFormatted, additionalInfo: ""}
+
+        const birthDateFormatted = `${birthdate.slice(3, 5)}/${birthdate.slice(0, 2)}/${birthdate.slice(6, birthdate.length)}`
+
         await createCustomerMutation({
             variables: {
-                name: customer.name, 
+                name: customer.name,
                 email: customer.email,
                 phone: customer.phone,
                 password: customer.password,
-                image_url: customer.image_url,
+                image_url: customer.image_url || "a",
+                birthdate: birthDateFormatted,
                 adress,
                 animals: animals,
-            }
+            },
+            refetchQueries: [{query: GET_CUSTOMERS}]
         })
         document.getElementById("close-register-customer-modal").click();
     }
@@ -50,7 +55,7 @@ const RegisterCustomerForm = () => {
         const initialStateAnimal: IAnimal = {
             breed: "", color: "", gender: GenderEnum.male,
             name: "", neutered: false,
-            typeAnimalId: data.getAllAnimalTypes,
+            typeAnimalId: data.getAllAnimalTypes[0].id,
             userId: currentUserId, avatar: ""
         }
 
@@ -82,6 +87,20 @@ const RegisterCustomerForm = () => {
         setShowNewAnimalType(false)
     }
 
+    function formatDateInput(value: string) {
+        const inputValue = value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+        const day = inputValue.slice(0, 2);
+        const month = inputValue.slice(2, 4);
+        const year = inputValue.slice(4, 8);
+        let formattedValue = '';
+
+        if (inputValue.length > 4) formattedValue = `${day}/${month}/${year}`;
+        else if (inputValue.length > 2) formattedValue = `${day}/${month}`;
+        else formattedValue = day;
+
+        setBirthdate(formattedValue);
+    }
+
     if (loading) return <p className="text-black">Carregando</p>
 
     return (
@@ -108,7 +127,7 @@ const RegisterCustomerForm = () => {
             </div>
             <div className="mb-3 d-flex justify-content-evenly">
                 <label className="w-20 text-black">Data de Nascimento</label>
-                <input onChange={(e) => setCustomer({ ...customer, birthdate: new Date(e.target.value) })} required placeholder="Insira sua data de nascimento" className="border-orange form-control mw-400" type="text" />
+                <input value={birthdate || ""} onChange={(e) => formatDateInput(e.target.value)} required placeholder="Insira sua data de nascimento" className="border-orange form-control mw-400" type="text" />
             </div>
             {
                 (animals && animals?.length > 0) && <h1 className="fs-5 text-orange text-center mt-5">Cadastrar pet</h1>
