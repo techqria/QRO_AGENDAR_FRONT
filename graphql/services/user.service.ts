@@ -165,7 +165,7 @@ export const GET_ALL_VETS = gql`query getAllVets {
 
   export const CREATE_CUSTOMER = gql`mutation createCustomer(
     $name: String!, $email: String!, $phone: String!, 
-    $password: String!, $imageUrl: String!, birthdate: Date!,$adress: AdressInput!, animals: [AnimalInput!]) {
+    $password: String!, $imageUrl: String!, $birthdate: DateTime!,$adress: AdressInput!, $animals: [AnimalInput!]!) {
     createCustomer(customer: { 
         name: $name
         email: $email 
@@ -173,9 +173,10 @@ export const GET_ALL_VETS = gql`query getAllVets {
         password: $password
         image_url: $imageUrl
         adress: $adress
-          animals: $animals
+        animals: $animals
     }) {
         name
+        animals
     }
   }`
 
@@ -184,3 +185,12 @@ export const GET_ALL_VETS = gql`query getAllVets {
         name
     }
   }`
+
+  export const GET_CUSTOMERS = gql`
+  query getAllCustomers{
+    getAllCustomers{
+        name
+        animals
+    }
+  }
+  `

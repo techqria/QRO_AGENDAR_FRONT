@@ -75,8 +75,29 @@ export interface ICustomer {
     email: string;
     phone: string;
     password: string;
-    imageUrl?: string;
+    birthdate: Date;
+    image_url?: string;
     id?: string
+    adress: IAdress
+    animals: IAnimal[]
+}
+
+export interface IAdress {
+    cep: string
+    city: string
+    state: string
+    neighborhood: string
+    additionalInfo: string
+}
+export interface IAnimal {
+    userId: string
+    name: string
+    gender: string
+    breed: string
+    color: string
+    typeAnimalId: string
+    neutered: boolean
+    avatar: string
 }
 
 export interface ISpecialties {

@@ -1,12 +1,16 @@
-import { FormEvent, useState } from "react";
-import userService from "../../graphql/services/user.service";
-import { IAnimal, ICustomer } from "../../interfaces";
+import { FormEvent, useEffect, useState } from "react";
+import userService, { CREATE_CUSTOMER } from "../../graphql/services/user.service";
+import { IAdress, IAnimal, ICustomer } from "../../interfaces";
 import { GenderEnum } from "../../enum/gender.enum";
 import Tooltip from "../Tooltip";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_ANIMAL_TYPE, GET_ANIMAL_TYPES } from "../../graphql/services/animal_type.service";
+import { useSelector } from "react-redux";
+import { IStore } from "../../store/types/types";
 
 const RegisterCustomerForm = () => {
+
+    const { userId: currentUserId } = useSelector((store: IStore) => store.user);
 
     const [customer, setCustomer] = useState<ICustomer>();
     const [animals, setAnimals] = useState<IAnimal[]>();
@@ -14,17 +18,41 @@ const RegisterCustomerForm = () => {
     const [showNewAnimalType, setShowNewAnimalType] = useState(false);
 
     const [createAnimalTypeMutation] = useMutation(CREATE_ANIMAL_TYPE)
-    const [createCustomerMutation] = useMutation(CREATE_ANIMAL_TYPE)
+    const [createCustomerMutation] = useMutation(CREATE_CUSTOMER)
     const { data, loading } = useQuery(GET_ANIMAL_TYPES)
 
     async function registerCustomer(e) {
         e.preventDefault()
-        userService.createCustomer(customer)
+
+        if (!animals || animals.length == 0) return alert('Você deve adicionar um animal para este cliente')
+
+        const cepResult = await (await fetch(process.env.NEXT_PUBLIC_CEP_API.replace("{CEP}", customer.adress.cep))).json()
+        if (cepResult.message) return alert(cepResult.message)
+
+        const { service, street, ...adressFormatted } = cepResult
+        const adress: IAdress = adressFormatted
+        console.log(animals, adress, customer)
+        await createCustomerMutation({
+            variables: {
+                name: customer.name, 
+                email: customer.email,
+                phone: customer.phone,
+                password: customer.password,
+                image_url: customer.image_url,
+                adress,
+                animals: animals,
+            }
+        })
         document.getElementById("close-register-customer-modal").click();
     }
 
     function insertNewAnimal() {
-        const initialStateAnimal: IAnimal = { breed: "", color: "", gender: GenderEnum.male, name: "", neutered: false, typeAnimalId: "", userId: "" }
+        const initialStateAnimal: IAnimal = {
+            breed: "", color: "", gender: GenderEnum.male,
+            name: "", neutered: false,
+            typeAnimalId: data.getAllAnimalTypes,
+            userId: currentUserId, avatar: ""
+        }
 
         !animals || animals?.length == 0
             ? setAnimals([initialStateAnimal])
@@ -76,11 +104,11 @@ const RegisterCustomerForm = () => {
             </div>
             <div className="mb-3 d-flex justify-content-evenly">
                 <label className="w-20 text-black">CEP</label>
-                <input onChange={(e) => setCustomer({ ...customer, password: e.target.value })} required placeholder="Insira seu CEP" className="border-orange form-control mw-400" type="password" />
+                <input onChange={(e) => setCustomer({ ...customer, adress: { ...customer.adress, cep: e.target.value } })} required placeholder="Insira seu CEP" className="border-orange form-control mw-400" type="text" />
             </div>
             <div className="mb-3 d-flex justify-content-evenly">
                 <label className="w-20 text-black">Data de Nascimento</label>
-                <input onChange={(e) => setCustomer({ ...customer, password: e.target.value })} required placeholder="Insira sua data de nascimento" className="border-orange form-control mw-400" type="password" />
+                <input onChange={(e) => setCustomer({ ...customer, birthdate: new Date(e.target.value) })} required placeholder="Insira sua data de nascimento" className="border-orange form-control mw-400" type="text" />
             </div>
             {
                 (animals && animals?.length > 0) && <h1 className="fs-5 text-orange text-center mt-5">Cadastrar pet</h1>
@@ -100,7 +128,7 @@ const RegisterCustomerForm = () => {
                             <div className="mw-400 d-flex gap-3 form-control border-0">
                                 <div className="mb-3 d-flex gap-1">
                                     <label className="text-black" >Macho</label>
-                                    <input onChange={(e) => updateAnimal("gender", index, e.target.value)} required placeholder="Tipo" value={GenderEnum.male} name="gender" type="radio" />
+                                    <input checked onChange={(e) => updateAnimal("gender", index, e.target.value)} required placeholder="Tipo" value={GenderEnum.male} name="gender" type="radio" />
                                 </div>
                                 <div className="mb-3 d-flex gap-1">
                                     <label className="text-black" >Fêmea</label>
@@ -154,7 +182,7 @@ const RegisterCustomerForm = () => {
                                 </div>
                                 <div className="mb-3 d-flex gap-1">
                                     <label className="text-black" >Não</label>
-                                    <input onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value="false" name="neutered" type="radio" />
+                                    <input checked onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value="false" name="neutered" type="radio" />
                                 </div>
                             </div>
                         </div>
@@ -165,13 +193,13 @@ const RegisterCustomerForm = () => {
                                     <label className="text-black" >
                                         <img src="/icons/cat-icon.svg" alt="gato" />
                                     </label>
-                                    <input onChange={(e) => updateAnimal("avatar", index, e.target.value)} required placeholder="Tipo" value="cat" name="avatar" type="radio" />
+                                    <input onChange={(e) => updateAnimal("avatar", index, e.target.value)} required placeholder="Tipo" value="/icons/cat-icon.svg" name="avatar" type="radio" />
                                 </div>
                                 <div className="mb-3 d-flex gap-1">
                                     <label className="text-black" >
                                         <img src="/icons/dog-icon.svg" alt="cachorro" />
                                     </label>
-                                    <input onChange={(e) => updateAnimal("avatar", index, e.target.value)} required placeholder="Tipo" value="dog" name="avatar" type="radio" />
+                                    <input onChange={(e) => updateAnimal("avatar", index, e.target.value)} required placeholder="Tipo" value="/icons/dog-icon.svg" name="avatar" type="radio" />
                                 </div>
                             </div>
                         </div>
