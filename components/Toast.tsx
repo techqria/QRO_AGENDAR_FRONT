@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../store/types/types";
-import { ToastEnum } from "../dto/toast.enum";
+import { ToastEnum } from "../enum/toast.enum";
 
 const Toast = () => {
 

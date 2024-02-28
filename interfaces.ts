@@ -1,5 +1,6 @@
-import { paymentMethodEnum } from "./dto/payment-method.enum";
-import { RoleEnum } from "./dto/role.enum";
+import { GenderEnum } from "./enum/gender.enum";
+import { paymentMethodEnum } from "./enum/payment-method.enum";
+import { RoleEnum } from "./enum/role.enum";
 
 export interface IMenuOptions {
     Component: () => JSX.Element
@@ -166,6 +167,16 @@ export interface IFinanceListByUser {
 }
 
 export interface IWeekScheduleHours {
-    hour: string 
+    hour: string
     qtt_schedules: number
+}
+
+export interface IAnimal {
+    name: string
+    userId: string
+    gender: GenderEnum
+    breed: string
+    typeAnimalId: string
+    neutered: boolean
+    color: string
 }

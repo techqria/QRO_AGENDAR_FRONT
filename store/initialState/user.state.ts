@@ -1,4 +1,4 @@
-import { RoleEnum } from "../../dto/role.enum";
+import { RoleEnum } from "../../enum/role.enum";
 import { IUser } from "../types/types";
 
 export const UserInitialState: IUser = {

@@ -1,16 +1,60 @@
-import {  useState } from "react";
+import { FormEvent, useState } from "react";
 import userService from "../../graphql/services/user.service";
-import { ICustomer } from "../../interfaces";
+import { IAnimal, ICustomer } from "../../interfaces";
+import { GenderEnum } from "../../enum/gender.enum";
+import Tooltip from "../Tooltip";
+import { useMutation, useQuery } from "@apollo/client";
+import { CREATE_ANIMAL_TYPE, GET_ANIMAL_TYPES } from "../../graphql/services/animal_type.service";
 
 const RegisterCustomerForm = () => {
 
     const [customer, setCustomer] = useState<ICustomer>();
+    const [animals, setAnimals] = useState<IAnimal[]>();
+    const [NewAnimalType, setNewAnimalType] = useState("");
+    const [showNewAnimalType, setShowNewAnimalType] = useState(false);
+
+    const [createAnimalTypeMutation] = useMutation(CREATE_ANIMAL_TYPE)
+    const [createCustomerMutation] = useMutation(CREATE_ANIMAL_TYPE)
+    const { data, loading } = useQuery(GET_ANIMAL_TYPES)
 
     async function registerCustomer(e) {
         e.preventDefault()
         userService.createCustomer(customer)
         document.getElementById("close-register-customer-modal").click();
     }
+
+    function insertNewAnimal() {
+        const initialStateAnimal: IAnimal = { breed: "", color: "", gender: GenderEnum.male, name: "", neutered: false, typeAnimalId: "", userId: "" }
+
+        !animals || animals?.length == 0
+            ? setAnimals([initialStateAnimal])
+            : setAnimals([...animals, initialStateAnimal])
+    }
+
+    function removeAnimal(index: number) {
+        animals.length == 1
+            ? setAnimals([])
+            : setAnimals(animals.slice(index, index + 1))
+    }
+
+    function updateAnimal(field: string, index: number, value: string) {
+        const arr = [...animals]
+        const currentAnimal = { ...arr[index] }
+
+        currentAnimal[field] = value
+        arr[index] = currentAnimal
+
+        console.log(animals)
+        setAnimals(arr)
+    }
+
+    async function createAnimalType() {
+        await createAnimalTypeMutation({ variables: { name: NewAnimalType }, refetchQueries: [{ query: GET_ANIMAL_TYPES }] })
+        setNewAnimalType("")
+        setShowNewAnimalType(false)
+    }
+
+    if (loading) return <p className="text-black">Carregando</p>
 
     return (
         <form onSubmit={registerCustomer} className="mt-3">
@@ -19,23 +63,134 @@ const RegisterCustomerForm = () => {
                 <input onChange={(e) => setCustomer({ ...customer, name: e.target.value })} required placeholder="Davi Speck" className="border-orange form-control mw-400" type="text" />
             </div>
             <div className="mb-3 d-flex justify-content-evenly">
-                <label className="w-20 text-black">Email</label>
-                <input onChange={(e) => setCustomer({ ...customer, email: e.target.value })} required placeholder="davispeck@mail.com" className="border-orange form-control mw-400" type="email" />
-            </div>
-            <div className="mb-3 d-flex justify-content-evenly">
                 <label className="w-20 text-black">Telefone</label>
                 <input maxLength={11} onChange={(e) => setCustomer({ ...customer, phone: e.target.value })} required placeholder="61 988229999" className="border-orange form-control mw-400" type="tel" />
+            </div>
+            <div className="mb-3 d-flex justify-content-evenly">
+                <label className="w-20 text-black">Email</label>
+                <input onChange={(e) => setCustomer({ ...customer, email: e.target.value })} required placeholder="davispeck@mail.com" className="border-orange form-control mw-400" type="email" />
             </div>
             <div className="mb-3 d-flex justify-content-evenly">
                 <label className="w-20 text-black">Senha</label>
                 <input onChange={(e) => setCustomer({ ...customer, password: e.target.value })} required placeholder="Insira sua senha" className="border-orange form-control mw-400" type="password" />
             </div>
-            {/* <div className="mb-3 d-flex justify-content-evenly">
-                <label className="w-20 text-black">Imagem</label>
-                <input onChange={(e) => setCustomer({ ...Customer, imageUrl: e.target.value })} className="border-orange form-control mw-400" type="file" />
-            </div> */}
+            <div className="mb-3 d-flex justify-content-evenly">
+                <label className="w-20 text-black">CEP</label>
+                <input onChange={(e) => setCustomer({ ...customer, password: e.target.value })} required placeholder="Insira seu CEP" className="border-orange form-control mw-400" type="password" />
+            </div>
+            <div className="mb-3 d-flex justify-content-evenly">
+                <label className="w-20 text-black">Data de Nascimento</label>
+                <input onChange={(e) => setCustomer({ ...customer, password: e.target.value })} required placeholder="Insira sua data de nascimento" className="border-orange form-control mw-400" type="password" />
+            </div>
+            {
+                (animals && animals?.length > 0) && <h1 className="fs-5 text-orange text-center mt-5">Cadastrar pet</h1>
+            }
+            {
+                animals?.map((animal, index) =>
+                    <>
+                        <div className="mb-3 d-flex justify-content-end ">
+                            <button onClick={() => removeAnimal(index)} className="btn btn-default text-danger fw-semibold mt-1 ">X Remover pet</button>
+                        </div>
+                        <div className="mb-3 d-flex justify-content-evenly">
+                            <label className="w-20 text-black">Nome</label>
+                            <input onChange={(e) => updateAnimal("name", index, e.target.value)} required placeholder="Thor" className="border-orange form-control mw-400" type="text" />
+                        </div>
+                        <div className="mb-3 d-flex justify-content-evenly">
+                            <label className="w-20 text-black">Sexo</label>
+                            <div className="mw-400 d-flex gap-3 form-control border-0">
+                                <div className="mb-3 d-flex gap-1">
+                                    <label className="text-black" >Macho</label>
+                                    <input onChange={(e) => updateAnimal("gender", index, e.target.value)} required placeholder="Tipo" value={GenderEnum.male} name="gender" type="radio" />
+                                </div>
+                                <div className="mb-3 d-flex gap-1">
+                                    <label className="text-black" >Fêmea</label>
+                                    <input onChange={(e) => updateAnimal("gender", index, e.target.value)} required placeholder="Tipo" value={GenderEnum.female} name="gender" type="radio" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mb-3 d-flex justify-content-evenly">
+                            <label className="w-20 text-black">Raça</label>
+                            <input onChange={(e) => updateAnimal("breed", index, e.target.value)} required placeholder="Pitbull" className="border-orange form-control mw-400" type="text" />
+                        </div>
+                        <div className="mb-3 d-flex justify-content-evenly">
+                            <label className="w-20 text-black">Cor</label>
+                            <input onChange={(e) => updateAnimal("color", index, e.target.value)} required placeholder="Tigrado" className="border-orange form-control mw-400" type="text" />
+                        </div>
+                        <div className="mb-3 d-flex justify-content-evenly">
+                            <label className="w-20 text-black d-flex gap-2 align-items-center">
+                                Tipo
+                                <Tooltip description="Criar novo tipo">
+                                    <button onClick={() => setShowNewAnimalType(!showNewAnimalType)} className="btn btn-default text-orange fs-4 p-0 m-0 fw-bold">+</button>
+                                </Tooltip>
+                            </label>
+                            <select onChange={(e) => updateAnimal("typeAnimalId", index, e.target.value)} className="form-control mw-400 border-orange" name="" id="">
+                                {
+                                    data?.getAllAnimalTypes?.map(animalType =>
+                                        <option value={animalType.id}>{animalType.name}</option>
+                                    )
+                                }
+                            </select>
+                        </div>
+                        {showNewAnimalType &&
+                            <div className="mb-3 d-flex justify-content-evenly">
+                                <div className="d-flex gap-2 w-20 align-items-center">
+                                    <label className="text-secondary">Nova especialidade</label>
+                                    <Tooltip description="Cancelar">
+                                        <span role="button" onClick={() => { setShowNewAnimalType(!showNewAnimalType); setNewAnimalType("") }} className="text-danger fs-5 p-0 m-0 fw-bold">x</span>
+                                    </Tooltip>
+                                </div>
+                                <div className="mw-400 form-control border-0 d-flex flex-column">
+                                    <input onChange={(e) => setNewAnimalType(e.target.value)} placeholder="Insira o nome do nome tipo de animal" required className="border-orange form-control mw-400" type="text" />
+                                    <button onClick={createAnimalType} className="btn btn-default p-0 d-flex align-self-end  text-orange">Criar</button>
+                                </div>
+                            </div>
+                        }
+                        <div className="mb-3 d-flex justify-content-evenly">
+                            <label className="w-20 text-black">Castrado</label>
+                            <div className="mw-400 d-flex gap-3 form-control border-0">
+                                <div className="mb-3 d-flex gap-1">
+                                    <label className="text-black" >Sim</label>
+                                    <input onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value="true" name="neutered" type="radio" />
+                                </div>
+                                <div className="mb-3 d-flex gap-1">
+                                    <label className="text-black" >Não</label>
+                                    <input onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value="false" name="neutered" type="radio" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mb-3 d-flex justify-content-evenly">
+                            <label className="w-20 text-black">Avatar</label>
+                            <div className="mw-400 d-flex gap-3 form-control border-0 align-items-center">
+                                <div className="mb-3 d-flex gap-1">
+                                    <label className="text-black" >
+                                        <img src="/icons/cat-icon.svg" alt="gato" />
+                                    </label>
+                                    <input onChange={(e) => updateAnimal("avatar", index, e.target.value)} required placeholder="Tipo" value="cat" name="avatar" type="radio" />
+                                </div>
+                                <div className="mb-3 d-flex gap-1">
+                                    <label className="text-black" >
+                                        <img src="/icons/dog-icon.svg" alt="cachorro" />
+                                    </label>
+                                    <input onChange={(e) => updateAnimal("avatar", index, e.target.value)} required placeholder="Tipo" value="dog" name="avatar" type="radio" />
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )
+            }
             <div className="mb-3 d-flex justify-content-center">
-                <button type="submit" className="btn btn-orange mt-5 rounded fw-bold">Salvar</button>
+                <button onClick={insertNewAnimal} className="btn btn-orange mt-5 rounded fw-bold">
+                    {
+                        !animals || animals?.length == 0
+                            ? 'Adicionar Animal'
+                            : 'Adicionar Outro Animal'
+                    }
+                </button>
+            </div>
+
+            <div className="mb-3 d-flex justify-content-center gap-3">
+                <button id="close-register-customer-modal" type="button" data-bs-dismiss="modal" aria-label="Close" className=" btn btn-orange opacity-50 mt-5 rounded fw-bold">Cancelar</button>
+                <button type="submit" className="btn btn-orange mt-5 rounded fw-bold">Confirmar</button>
             </div>
         </form>
     );

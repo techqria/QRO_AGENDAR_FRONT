@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { SchedulePeriodicityEnum } from "../dto/schedule-periodicity.enum";
+import { SchedulePeriodicityEnum } from "../enum/schedule-periodicity.enum";
 import { changeMonthDate, changeSchedule, changeWeekDate } from "../store/slices/scheduleSlice";
 import { useCallback, useEffect, useState } from "react";
 import { IStore } from "../store/types/types";

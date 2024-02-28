@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ScheduleInitialState } from "../initialState/schedule.state";
-import { SchedulePeriodicityEnum } from "../../dto/schedule-periodicity.enum";
+import { SchedulePeriodicityEnum } from "../../enum/schedule-periodicity.enum";
 
 const scheduleSlice = createSlice({
     name: 'schedule',

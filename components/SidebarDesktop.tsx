@@ -1,8 +1,8 @@
-import { PagesEnum } from "../dto/pages.enum";
+import { PagesEnum } from "../enum/pages.enum";
 import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../store/types/types";
 import { changePage } from "../store/slices/pagesSlice";
-import { RoleEnum } from "../dto/role.enum";
+import { RoleEnum } from "../enum/role.enum";
 import Tooltip from "./Tooltip";
 
 const SidebarDesktop = () => {

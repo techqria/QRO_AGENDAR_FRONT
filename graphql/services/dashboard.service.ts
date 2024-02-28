@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 import { apolloClient } from "../graphql-client";
-import { ToastEnum } from "../../dto/toast.enum";
+import { ToastEnum } from "../../enum/toast.enum";
 import { ToastMessage } from "../../hooks/ToastMessage";
 
 class DashboardService {

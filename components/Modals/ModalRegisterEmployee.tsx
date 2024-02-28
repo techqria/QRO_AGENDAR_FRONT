@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
-import { RoleEnum } from "../../dto/role.enum";
+import { RoleEnum } from "../../enum/role.enum";
 import RegisterEmployeeForm from "../Forms/RegisterEmployeeForm";
 import { useState } from "react";
 import RegisterManagerForm from "../Forms/RegisterManagerForm";

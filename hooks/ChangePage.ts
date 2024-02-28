@@ -1,6 +1,6 @@
-import { AdminPagesEnum } from "../dto/admin-pages.enum";
-import { EmployeePagesEnum } from "../dto/employee-pages.enum";
-import { PagesEnum } from "../dto/pages.enum";
+import { AdminPagesEnum } from "../enum/admin-pages.enum";
+import { EmployeePagesEnum } from "../enum/employee-pages.enum";
+import { PagesEnum } from "../enum/pages.enum";
 
 export const ChangePage = (page: string) => {
     switch(page){

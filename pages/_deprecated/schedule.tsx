@@ -3,7 +3,7 @@ import { IStore } from "../../store/types/types";
 import SwitchSchedule from "../../components/SwitchSchedule";
 import { MonthlyCalendar } from "../../components/Calendar/MonthlyCalendar";
 import { useCallback } from "react";
-import { SchedulePeriodicityEnum } from "../../dto/schedule-periodicity.enum";
+import { SchedulePeriodicityEnum } from "../../enum/schedule-periodicity.enum";
 import { WeekCalendar } from "../../components/Calendar/WeekCalendar";
 import { EmployeesSchedule } from "../../components/EmployeesSchedule";
 import ModalRegisterSchedule from "../../components/Modals/ModalRegisterSchedule";

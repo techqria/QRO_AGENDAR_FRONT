@@ -1,6 +1,6 @@
 import { gql, useMutation } from '@apollo/client';
 import { apolloClient } from "../graphql-client";
-import { ToastEnum } from "../../dto/toast.enum";
+import { ToastEnum } from "../../enum/toast.enum";
 import { ToastMessage } from "../../hooks/ToastMessage";
 import { IApolloCreateManager, IApolloGetAllVets, ICustomer, IEmployee, IManager, IVets } from "../../interfaces";
 
@@ -165,13 +165,15 @@ export const GET_ALL_VETS = gql`query getAllVets {
 
   export const CREATE_CUSTOMER = gql`mutation createCustomer(
     $name: String!, $email: String!, $phone: String!, 
-    $password: String!, $imageUrl: String!) {
+    $password: String!, $imageUrl: String!, birthdate: Date!,$adress: AdressInput!, animals: [AnimalInput!]) {
     createCustomer(customer: { 
         name: $name
         email: $email 
         phone: $phone
         password: $password
         image_url: $imageUrl
+        adress: $adress
+          animals: $animals
     }) {
         name
     }

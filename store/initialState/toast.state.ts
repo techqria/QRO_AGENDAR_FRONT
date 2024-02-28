@@ -1,4 +1,4 @@
-import { ToastEnum } from "../../dto/toast.enum";
+import { ToastEnum } from "../../enum/toast.enum";
 import { IToast } from "../types/types";
 
 export const ToastInitialState: IToast = {

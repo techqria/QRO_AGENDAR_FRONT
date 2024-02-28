@@ -1,4 +1,4 @@
-import { ToastEnum } from "../dto/toast.enum";
+import { ToastEnum } from "../enum/toast.enum";
 import { changeMessage, changeType, changeVisible } from "../store/slices/toast.slice";
 import { store } from "../store";
 

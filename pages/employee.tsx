@@ -7,7 +7,7 @@ import SidebarDesktop from "../components/SidebarDesktop";
 import BannerTopDesktop from "../components/BannerTopDesktop";
 import { useEffect } from "react";
 import { changePage } from "../store/slices/pagesSlice";
-import { PagesEnum } from "../dto/pages.enum";
+import { PagesEnum } from "../enum/pages.enum";
 
 const Employee = () => {
 

@@ -1,6 +1,6 @@
-import { RoleEnum } from "../../dto/role.enum";
-import { SchedulePeriodicityEnum } from "../../dto/schedule-periodicity.enum"
-import { ToastEnum } from "../../dto/toast.enum";
+import { RoleEnum } from "../../enum/role.enum";
+import { SchedulePeriodicityEnum } from "../../enum/schedule-periodicity.enum"
+import { ToastEnum } from "../../enum/toast.enum";
 import { IVets } from "../../interfaces";
 
 export interface IPages {

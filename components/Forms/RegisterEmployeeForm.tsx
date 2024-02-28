@@ -82,12 +82,13 @@ const RegisterEmployeeForm = () => {
             {showNewSpecialty &&
                 <div className="mb-3 d-flex justify-content-evenly">
                     <div className="d-flex gap-2 w-20 align-items-center">
-                        <label className="text-secondary">Nova especialidade</label>
+                        <label className="text-secondary">Novo tipo</label>
                         <Tooltip description="Cancelar">
                             <span role="button" onClick={() => { setShowNewSpecialty(!showNewSpecialty); setNewSpecialty("") }} className="text-danger fs-5 p-0 m-0 fw-bold">x</span>
                         </Tooltip>
                     </div>
                     <input onChange={(e) => setNewSpecialty(e.target.value)} placeholder="Insira o nome da nova especialidade" required className="border-orange form-control mw-400" type="text" />
+                    <span className="text-end text-orange">Criar</span>
                 </div>
             }
             <div className="mb-3 d-flex justify-content-evenly">

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ISchedule, ISpecialties, IVets } from "../../interfaces";
 import specialtyService, { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
 import userService, { GET_ALL_VETS } from "../../graphql/services/user.service";
-import { paymentMethodEnum } from "../../dto/payment-method.enum";
+import { paymentMethodEnum } from "../../enum/payment-method.enum";
 import scheduleService, { CREATE_SCHEDULE, GET_ALL_SCHEDULES } from "../../graphql/services/schedule.service";
 import { useMutation, useQuery } from "@apollo/client";
 
