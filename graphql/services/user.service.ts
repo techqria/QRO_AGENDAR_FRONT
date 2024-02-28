@@ -210,3 +210,11 @@ export const GET_ALL_VETS = gql`query getAllVets {
     }
   }
   `
+
+  export const GET_VET_BY_ID = gql`query getUserById($id:String!){
+    getUserById(id: $id){
+        name
+        specialty_id
+    }
+  }
+  `

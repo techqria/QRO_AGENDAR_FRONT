@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { ISchedule, ISpecialties, IVets } from "../../interfaces";
 import specialtyService, { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
-import userService, { GET_ALL_VETS } from "../../graphql/services/user.service";
+import userService, { GET_ALL_VETS, GET_CUSTOMERS, GET_VET_BY_ID } from "../../graphql/services/user.service";
 import { paymentMethodEnum } from "../../enum/payment-method.enum";
 import scheduleService, { CREATE_SCHEDULE, GET_ALL_SCHEDULES } from "../../graphql/services/schedule.service";
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 
 const ModalRegisterSchedule = () => {
 
@@ -26,13 +26,14 @@ const ModalRegisterSchedule = () => {
         delete formattedSchedule.hour
 
         await createScheduleMutation({
-            variables: { 
-                specialty_id: schedule.specialty_id, employee_id: schedule.employee_id, 
-                date: schedule.date, customer_name: schedule.customer_name, 
-                customer_phone: schedule.customer_phone, method: schedule.payment.method, 
-                price: schedule.payment.price, pet_breed: schedule.pet_breed, pet_name: schedule.pet_name, 
-                pet_type: schedule.pet_type },
-            refetchQueries: [{query: GET_ALL_SCHEDULES}]
+            variables: {
+                specialty_id: schedule.specialty_id, employee_id: schedule.employee_id,
+                date: schedule.date, customer_name: schedule.customer_name,
+                customer_phone: schedule.customer_phone, method: schedule.payment.method,
+                price: schedule.payment.price, pet_breed: schedule.pet_breed, pet_name: schedule.pet_name,
+                pet_type: schedule.pet_type
+            },
+            refetchQueries: [{ query: GET_ALL_SCHEDULES }]
         })
         document.getElementById('close-register-schedule-modal').click()
     }
@@ -90,10 +91,17 @@ const ModalRegisterSchedule = () => {
         setSchedule({ ...schedule, payment: { ...schedule?.payment, price: value } })
     }
 
+    async function setSpecialtyByVet(employee_id: string) {
+        const { data } = await getVetQuery({ variables: { id: employee_id } })
+        if (data) setSchedule({ ...schedule, specialty_id: data.getUserById.specialty_id })
+    }
+
+    const [getVetQuery] = useLazyQuery(GET_VET_BY_ID)
     const { data: vets, loading: loadingVets } = useQuery(GET_ALL_VETS);
     const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES);
+    const { data: customers, loading: loadingCustomers } = useQuery(GET_CUSTOMERS);
 
-    if (loadingVets || loadingSpecialties) return <p>Carregando</p>
+    if (loadingVets || loadingSpecialties || loadingCustomers) return <p className="text-black">Carregando</p>
 
     return (
         <div className="modal fade" id="registerScheduleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -109,7 +117,11 @@ const ModalRegisterSchedule = () => {
                         <form onSubmit={registerSchedule} className="mt-3">
                             <div className="mb-3 d-flex justify-content-evenly">
                                 <label className="w-20 text-black">Funcionário</label>
-                                <select className="border-orange form-control mw-400" required onChange={(e) => setSchedule({ ...schedule, employee_id: e.target.value })} name="" id="">
+                                <select className="border-orange form-control mw-400" required onChange={async (e) => {
+                                    setSpecialtyByVet(e.target.value)
+                                    setSchedule({ ...schedule, employee_id: e.target.value })
+                                }}
+                                    name="" id="">
                                     <option value="">Clique para escolher um funcionário</option>
                                     {
                                         vets.getAllVets?.map(employee => (
@@ -120,14 +132,7 @@ const ModalRegisterSchedule = () => {
                             </div>
                             <div className="mb-3 d-flex justify-content-evenly">
                                 <label className="w-20 text-black">Especialidade</label>
-                                <select className="border-orange form-control mw-400" required onChange={(e) => setSchedule({ ...schedule, specialty_id: e.target.value })} name="" id="">
-                                    <option value="">Clique para escolher uma especialidade</option>
-                                    {
-                                        specialties?.getAllSpecialties?.map(specialty => (
-                                            <option key={specialty.id} value={specialty.id}>{specialty.title}</option>
-                                        ))
-                                    }
-                                </select>
+                                <input type="text" value={specialties?.getAllSpecialties?.filter(el => el.id == schedule?.specialty_id)[0]?.title} className="form-control mw-400" disabled />
                             </div>
                             <div className="mb-3 d-flex justify-content-evenly">
                                 <label className="w-20 text-black">Data</label>
@@ -138,29 +143,20 @@ const ModalRegisterSchedule = () => {
                                 <input value={schedule?.hour} maxLength={5} minLength={5} required placeholder="10:30" onChange={formatHour} className="border-orange form-control mw-400" type="text" />
                             </div>
 
-
-                            <h2 className="fs-5 text-black text-center fw-normal mt-5 mb-4">Dados do Pet</h2>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Tipo do pet</label>
-                                <input required placeholder="Cachorro, gato, periquito" onChange={e => setSchedule({ ...schedule, pet_type: e.target.value })} className="border-orange form-control mw-400" type="text" />
-                            </div>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Nome do pet</label>
-                                <input required placeholder="Thor" onChange={e => setSchedule({ ...schedule, pet_name: e.target.value })} className="border-orange form-control mw-400" type="text" />
-                            </div>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Raça do pet</label>
-                                <input required placeholder="Shih-tzu" onChange={e => setSchedule({ ...schedule, pet_breed: e.target.value })} className="border-orange form-control mw-400" type="text" />
-                            </div>
-
                             <h2 className="fs-5 text-black text-center fw-normal mt-5 mb-4">Dados do Cliente</h2>
                             <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Nome do cliente</label>
-                                <input required placeholder="Roberto" onChange={e => setSchedule({ ...schedule, customer_name: e.target.value })} className="border-orange form-control mw-400" type="text" />
-                            </div>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Telefone do cliente</label>
-                                <input required placeholder="61999812988" onChange={e => setSchedule({ ...schedule, customer_phone: e.target.value })} className="border-orange form-control mw-400" type="text" />
+                                <label className="w-20 text-black">Cliente</label>
+                                <select className="border-orange form-control mw-400" required onChange={(e) => {
+                                    setSchedule({ ...schedule, customer_name: e.target.value })
+                                }}
+                                    name="" id="">
+                                    <option value="">Clique para escolher um cliente</option>
+                                    {
+                                        customers.getAllCustomers?.map(customer => (
+                                            <option key={customer.id} value={customer.id}>{customer.name}</option>
+                                        ))
+                                    }
+                                </select>
                             </div>
 
                             <h2 className="fs-5 text-black text-center fw-normal mt-5 mb-4">Dados de pagamento</h2>
