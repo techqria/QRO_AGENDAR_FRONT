@@ -25,7 +25,7 @@ const TimeChart = () => {
     function getHighestTime(array) {
         let arr = Object.values(array)
         arr = arr.slice(0, arr.length - 1)
-        let sorted = arr.sort((a: any, b: any) => a.qtt_schedules - b.qtt_schedules)
+        let sorted: any[] = arr.sort((a: any, b: any) => a.qtt_schedules - b.qtt_schedules)
 
         let highest = sorted.reverse()[0]?.qtt_schedules
         setHighestTime(Number(highest))
