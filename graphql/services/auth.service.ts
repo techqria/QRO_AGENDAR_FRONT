@@ -1,31 +1,13 @@
 import { gql } from '@apollo/client';
-import { useApollo } from "../graphql-client";
-import { ToastEnum } from "../../enum/toast.enum";
-import { ToastMessage } from "../../hooks/ToastMessage";
-import { IApolloLogin, IApolloVerifyToken, ILogin, IVerifyToken } from "../../interfaces";
-import { store } from "../../store";
-import { changeRole, changeUserId } from "../../store/slices/user.slice";
+import { apolloClient, useApollo } from "../graphql-client";
+import { IVerifyToken } from "../../interfaces";
 
 class AuthService {
-  async login(email: string, password: string): Promise<ILogin> {
-
-    const query = LOGIN_QUERY
-
-    return null
-  }
-
   async verifyToken(token: string): Promise<IVerifyToken> {
-    const query = VERIFY_TOKEN_QUERY
-    return null
-  }
-
-  async getCurrentUser(userId: string): Promise<any> {
-    const query = gql`query getUserById($userId: String!) {
-      getUserById(id: $userId) {
-       name
-      }
-    }`
-    return null
+    console.log('token:', token)
+    const { data, loading }: any = await apolloClient.query({ query: VERIFY_TOKEN_QUERY, variables: { token } })
+    
+    return data.verifyToken
   }
 }
 

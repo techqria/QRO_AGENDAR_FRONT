@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ISchedule, ISpecialties, IVets } from "../../interfaces";
+import { IPetsList, ISchedule, ISpecialties, IVets } from "../../interfaces";
 import { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
 import { GET_ALL_VETS, GET_CUSTOMERS, GET_VET_BY_ID } from "../../graphql/services/user.service";
 import { paymentMethodEnum } from "../../enum/payment-method.enum";
@@ -9,8 +9,14 @@ import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 const ModalRegisterSchedule = () => {
 
     const [schedule, setSchedule] = useState<ISchedule>();
+    const [petsList, setPetsList] = useState<IPetsList[]>();
 
     const [createScheduleMutation] = useMutation(CREATE_SCHEDULE)
+    const [getVetQuery] = useLazyQuery(GET_VET_BY_ID)
+
+    const { data: vets, loading: loadingVets } = useQuery(GET_ALL_VETS);
+    const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES);
+    const { data: customers, loading: loadingCustomers } = useQuery(GET_CUSTOMERS);
 
     async function registerSchedule(e) {
         e.preventDefault()
@@ -96,10 +102,24 @@ const ModalRegisterSchedule = () => {
         if (data) setSchedule({ ...schedule, specialty_id: data.getUserById.specialty_id })
     }
 
-    const [getVetQuery] = useLazyQuery(GET_VET_BY_ID)
-    const { data: vets, loading: loadingVets } = useQuery(GET_ALL_VETS);
-    const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES);
-    const { data: customers, loading: loadingCustomers } = useQuery(GET_CUSTOMERS);
+    function selectCustomer(customerId: string) {
+        if (customerId) {
+            const currentUser = customers.getAllCustomers.find(el => el.id == customerId)
+            console.log(currentUser)
+            setPetsList(currentUser.animals)
+            selectPet(currentUser.animals[0].name)
+        } else setPetsList([])
+    }
+
+    function selectPet(pet_name: string) {
+        const currentPet = petsList?.find(el => el.name == pet_name)
+
+        setSchedule({ ...schedule, pet_name: currentPet.name, pet_breed: currentPet.breed, pet_gender: currentPet.gender, pet_neutered: currentPet.neutered })
+    }
+
+    useEffect(() => {
+        petsList?.length > 0 && selectPet(petsList[0].name)
+    }, [petsList]);
 
     if (loadingVets || loadingSpecialties || loadingCustomers) return <p className="text-black">Carregando</p>
 
@@ -148,8 +168,8 @@ const ModalRegisterSchedule = () => {
                                 <label className="w-20 text-black">Cliente</label>
                                 <select className="border-orange form-control mw-400" required onChange={(e) => {
                                     setSchedule({ ...schedule, customer_name: e.target.value })
-                                }}
-                                    name="" id="">
+                                    selectCustomer(e.target.value)
+                                }}>
                                     <option value="">Clique para escolher um cliente</option>
                                     {
                                         customers.getAllCustomers?.map(customer => (
@@ -158,7 +178,36 @@ const ModalRegisterSchedule = () => {
                                     }
                                 </select>
                             </div>
+                            <h2 className="fs-5 text-black text-center fw-normal mt-5 mb-4">Dados do Pet</h2>
+                            <div className="mb-3 d-flex justify-content-evenly">
+                                <label className="w-20 text-black">Nome</label>
+                                <select className="border-orange form-control mw-400" required onChange={(e) => selectPet(e.target.value)}>
+                                    {!petsList || petsList?.length == 0
+                                        ? <option value="Selecione um cliente">Selecione um cliente</option>
+                                        : petsList?.map(pet => (
+                                            <option key={pet.name} value={pet.name}>{pet.name}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
 
+                            {
+                                schedule?.pet_name &&
+                                <>
+                                    <div className="mb-3 d-flex justify-content-evenly">
+                                        <label className="w-20 text-black">Raça</label>
+                                        <input value={schedule?.pet_breed} maxLength={5} minLength={5} required placeholder="10:30" disabled className="border-orange form-control mw-400" type="text" />
+                                    </div>
+                                    <div className="mb-3 d-flex justify-content-evenly">
+                                        <label className="w-20 text-black">Genêro</label>
+                                        <input value={schedule?.pet_gender} maxLength={5} minLength={5} required placeholder="10:30" disabled className="border-orange form-control mw-400" type="text" />
+                                    </div>
+                                    <div className="mb-3 d-flex justify-content-evenly">
+                                        <label className="w-20 text-black">Castrado?</label>
+                                        <input value={schedule?.pet_neutered ? 'Sim' : 'Não'} maxLength={5} minLength={5} required placeholder="10:30" disabled className="border-orange form-control mw-400" type="text" />
+                                    </div>
+                                </>
+                            }
                             <h2 className="fs-5 text-black text-center fw-normal mt-5 mb-4">Dados de pagamento</h2>
                             <div className="mb-3 d-flex justify-content-evenly">
                                 <label className="w-20 text-black">Valor do serviço</label>

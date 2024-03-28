@@ -9,8 +9,7 @@ export const RouteAuthentication = async (router) => {
     if (!token) return router.push("/login")
 
     const result = await authService.verifyToken(token)
-    // const result = await verifyTokenQuery({variables: {token}})
-    if (!result.userId) return router.push("/login")
+    if (!result?.userId) return router.push("/login")
 
     store.dispatch(changeRole(result.userRole))
     store.dispatch(changeUserId(result.userId))

@@ -142,12 +142,21 @@ export interface ISchedule {
     specialty_id: string;
     date: string;
     hour: string;
-    pet_name: string;
     customer_name: string;
     customer_phone: string;
+    pet_name: string;
     pet_breed: string;
     pet_type: string;
+    pet_gender?: string;
+    pet_neutered?: boolean;
     payment: IPayment
+}
+
+export interface IPetsList { 
+    name: string
+    breed: string
+    neutered:boolean
+    gender:string
 }
 
 export interface IScheduleRegister {

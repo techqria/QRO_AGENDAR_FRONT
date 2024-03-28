@@ -86,6 +86,7 @@ export const GET_ALL_VETS = gql`query getAllVets {
   export const GET_CUSTOMERS = gql`
   query getAllCustomers{
     getAllCustomers{
+        id
         name
         phone
         email
@@ -94,6 +95,9 @@ export const GET_ALL_VETS = gql`query getAllVets {
             name
             typeAnimalId
             avatar
+            gender
+            breed
+            neutered
         }
         adress{
             city

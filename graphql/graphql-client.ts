@@ -1,7 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { useMemo } from "react";
 
-const apolloClient =  new ApolloClient({
+const apolloClient = new ApolloClient({
     link: new HttpLink({
         uri: process.env.NODE_ENV == "development" ? process.env.NEXT_PUBLIC_DEV_API_URL : process.env.NEXT_PUBLIC_API_URL,
         headers: {
@@ -17,6 +17,8 @@ const apolloClient =  new ApolloClient({
 })
 
 export function useApollo() {
-    const client = useMemo(() => apolloClient,[])
+    const client = useMemo(() => apolloClient, [])
     return client
 }
+
+export { apolloClient }
