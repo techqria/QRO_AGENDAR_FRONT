@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ILoginUser } from "../interfaces";
 import { useRouter } from "next/router";
-import authService, { LOGIN_QUERY, VERIFY_TOKEN_QUERY } from "../graphql/services/auth.service";
+import { LOGIN_QUERY, VERIFY_TOKEN_QUERY } from "../graphql/services/auth.service";
 import { useDispatch } from "react-redux";
 import { changeRole, changeUserId } from "../store/slices/user.slice";
-import { RouteAuthentication } from "../hooks/RouteAuthentication";
-import { useLazyQuery, useQuery } from "@apollo/client";
-
+import { useLazyQuery } from "@apollo/client";
+import cookie from "js-cookie"
 const LoginForm = () => {
 
     const router = useRouter()
@@ -15,17 +14,18 @@ const LoginForm = () => {
 
     const [user, setUser] = useState<ILoginUser>();
 
-    const [loginQuery, { loading, data, error }] = useLazyQuery(LOGIN_QUERY);
-    const [verifyTokenQuery, optionsVerifyToken] = useLazyQuery(VERIFY_TOKEN_QUERY);
+    const [loginQuery] = useLazyQuery(LOGIN_QUERY);
+    const [verifyTokenQuery] = useLazyQuery(VERIFY_TOKEN_QUERY);
 
     async function callApi() {
         const { data } = await loginQuery({ variables: { email: user.email, password: user.password } })
         if (data.login.success) {
             dispatch(changeRole(data.login.user.role))
-            window.localStorage.setItem("token", data.login.token)
 
-            const { data: { verifyToken } } = await verifyTokenQuery({ variables: { token: data.login.token } })
-            dispatch(changeUserId(verifyToken.userId))
+            cookie.set("token", data.login.token)
+
+            // const { data: { verifyToken } } = await verifyTokenQuery({ variables: { token: data.login.token } })
+            // dispatch(changeUserId(verifyToken.userId))
             router.push(`${data.login.user.role}`)
         }
     }

@@ -2,12 +2,11 @@ import '../styles/globals.css'
 import MainContainer from "../components/MainContainer"
 import { Provider } from 'react-redux'
 import { store } from '../store'
-import { useRouter } from 'next/router'
-import { RouteAuthentication } from "../hooks/RouteAuthentication"
-import { useEffect } from 'react'
-import { ApolloProvider, useLazyQuery } from '@apollo/client'
+import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../graphql/graphql-client'
-import { VERIFY_TOKEN_QUERY } from '../graphql/services/auth.service'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { RouteAuthentication } from "../hooks/RouteAuthentication"
 
 function MyApp({ Component, pageProps }) {
 
