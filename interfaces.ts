@@ -157,6 +157,7 @@ export interface IPetsList {
     breed: string
     neutered:boolean
     gender:string
+    typeAnimalId:string
 }
 
 export interface IScheduleRegister {

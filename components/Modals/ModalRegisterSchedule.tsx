@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { IPetsList, ISchedule, ISpecialties, IVets } from "../../interfaces";
 import { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
 import { GET_ALL_VETS, GET_CUSTOMERS, GET_VET_BY_ID } from "../../graphql/services/user.service";
 import { paymentMethodEnum } from "../../enum/payment-method.enum";
-import { CREATE_SCHEDULE, GET_ALL_SCHEDULES } from "../../graphql/services/schedule.service";
+import { CREATE_SCHEDULE, GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 
 const ModalRegisterSchedule = () => {
@@ -18,7 +18,7 @@ const ModalRegisterSchedule = () => {
     const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES);
     const { data: customers, loading: loadingCustomers } = useQuery(GET_CUSTOMERS);
 
-    async function registerSchedule(e) {
+    async function registerSchedule(e: FormEvent) {
         e.preventDefault()
 
         const date = formatDateToRegister(schedule.date, schedule.hour)
@@ -33,20 +33,39 @@ const ModalRegisterSchedule = () => {
 
         await createScheduleMutation({
             variables: {
-                specialty_id: schedule.specialty_id, employee_id: schedule.employee_id,
-                date: schedule.date, customer_name: schedule.customer_name,
-                customer_phone: schedule.customer_phone, method: schedule.payment.method,
-                price: schedule.payment.price, pet_breed: schedule.pet_breed, pet_name: schedule.pet_name,
-                pet_type: schedule.pet_type
+                specialty_id: formattedSchedule.specialty_id, employee_id: formattedSchedule.employee_id,
+                date: formattedSchedule.date, customer_name: formattedSchedule.customer_name,
+                customer_phone: formattedSchedule.customer_phone, method: formattedSchedule.payment.method,
+                price: formattedSchedule.payment.price, pet_breed: formattedSchedule.pet_breed, pet_name: formattedSchedule.pet_name,
+                pet_type: formattedSchedule.pet_type
             },
-            refetchQueries: [{ query: GET_ALL_SCHEDULES }]
+            refetchQueries: [{ query: GET_SCHEDULES_CALENDAR }],
         })
+
+        clearFormData()
+        closeModal()
+    }
+
+    function clearFormData() {
+        setSchedule(
+            {
+                customer_name: '', customer_phone: '', date: '',
+                employee_id: '', hour: '',
+                payment: { method: paymentMethodEnum.money, price: 0 }, 
+                pet_breed: '', pet_name:'',pet_type:'',specialty_id:''
+            }
+        )
+        setPetsList([])
+    }
+
+    function closeModal() {
         document.getElementById('close-register-schedule-modal').click()
     }
 
     function formatPriceToRegister(payment) {
         return {
-            ...payment, price: Number(payment.price.toString().replace(/\D/g, ''))
+            ...payment,
+            price: Number(payment.price.toString().replace(/\D/g, ''))
         }
     }
 
@@ -99,22 +118,20 @@ const ModalRegisterSchedule = () => {
 
     async function setSpecialtyByVet(employee_id: string) {
         const { data } = await getVetQuery({ variables: { id: employee_id } })
-        if (data) setSchedule({ ...schedule, specialty_id: data.getUserById.specialty_id })
+        if (data) setSchedule({ ...schedule, specialty_id: data.getUserById.specialty_id, employee_id })
     }
 
     function selectCustomer(customerId: string) {
         if (customerId) {
             const currentUser = customers.getAllCustomers.find(el => el.id == customerId)
-            console.log(currentUser)
+            setSchedule({ ...schedule, customer_phone: currentUser.phone, customer_name: currentUser.name })
             setPetsList(currentUser.animals)
-            selectPet(currentUser.animals[0].name)
         } else setPetsList([])
     }
 
     function selectPet(pet_name: string) {
-        const currentPet = petsList?.find(el => el.name == pet_name)
-
-        setSchedule({ ...schedule, pet_name: currentPet.name, pet_breed: currentPet.breed, pet_gender: currentPet.gender, pet_neutered: currentPet.neutered })
+        const currentPet = petsList.find(el => el.name == pet_name)
+        setSchedule({ ...schedule, pet_name: currentPet.name, pet_breed: currentPet.breed, pet_gender: currentPet.gender, pet_neutered: currentPet.neutered, pet_type: currentPet.typeAnimalId })
     }
 
     useEffect(() => {
@@ -137,9 +154,8 @@ const ModalRegisterSchedule = () => {
                         <form onSubmit={registerSchedule} className="mt-3">
                             <div className="mb-3 d-flex justify-content-evenly">
                                 <label className="w-20 text-black">Funcionário</label>
-                                <select className="border-orange form-control mw-400" required onChange={async (e) => {
+                                <select className="border-orange form-control mw-400" required onChange={(e) => {
                                     setSpecialtyByVet(e.target.value)
-                                    setSchedule({ ...schedule, employee_id: e.target.value })
                                 }}
                                     name="" id="">
                                     <option value="">Clique para escolher um funcionário</option>
@@ -152,7 +168,7 @@ const ModalRegisterSchedule = () => {
                             </div>
                             <div className="mb-3 d-flex justify-content-evenly">
                                 <label className="w-20 text-black">Especialidade</label>
-                                <input type="text" value={specialties?.getAllSpecialties?.filter(el => el.id == schedule?.specialty_id)[0]?.title} className="form-control mw-400" disabled />
+                                <input type="text" defaultValue={specialties?.getAllSpecialties?.filter(el => el.id == schedule?.specialty_id)[0]?.title} className="form-control mw-400" disabled />
                             </div>
                             <div className="mb-3 d-flex justify-content-evenly">
                                 <label className="w-20 text-black">Data</label>

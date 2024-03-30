@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { FormatBgColor } from "../../hooks/FomatBgColor";
 import { IScheduleCalendar } from "../../interfaces";
-import { GET_ALL_SCHEDULES, GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
+import { useLazyQuery } from "@apollo/client";
 
 export const MonthlyCalendar = () => {
 
@@ -13,17 +13,16 @@ export const MonthlyCalendar = () => {
 
     const [schedules, setSchedules] = useState<IScheduleCalendar[]>([]);
 
-    const [schedulesQuery, { loading }] = useLazyQuery(GET_SCHEDULES_CALENDAR)
+    const [schedulesQuery, { data }] = useLazyQuery(GET_SCHEDULES_CALENDAR)
 
     useEffect(() => {
-        async function getData() {
-            setSchedules((await schedulesQuery()).data.getSchedulesCalendar)
-        }
-        getData()
-
+        getSchedules()
         setTotalMonthDays(handleTotalMonthDays)
-    }, [, monthDate]);
+    }, [data, monthDate]);
 
+    async function getSchedules() {
+        setSchedules((await schedulesQuery()).data.getSchedulesCalendar)
+    }
 
     const handleTotalMonthDays = () => {
         const newMonthDate = new Date(monthDate)
@@ -32,14 +31,14 @@ export const MonthlyCalendar = () => {
 
     const [totalMonthDays, setTotalMonthDays] = useState(handleTotalMonthDays);
 
-    function checkSameDate(schedule: IScheduleCalendar, day:number) {
+    function checkSameDate(schedule: IScheduleCalendar, day: number) {
         const daysMatch = new Date(schedule.date).getDate() == day
         const monthsMatch = new Date(schedule.date).getMonth() + 1 == new Date(monthDate).getMonth() + 1
         return daysMatch && monthsMatch
     }
 
     const checkScheduleDate = useCallback((day: number) => {
-        const filtered = schedules?.filter(el => checkSameDate(el, day)).sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        const filtered = schedules?.filter(el => checkSameDate(el, day)).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
         if (filtered.length) {
             return <div className="d-flex flex-column gap-1">
                 {filtered.map((filter, index) => index <= 2 &&

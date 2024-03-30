@@ -3,7 +3,7 @@ import { IStore } from "../../store/types/types";
 import { useCallback, useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
 import { IScheduleCalendar } from "../../interfaces";
-import  { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
+import { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
 import { FormatBgColor } from "../../hooks/FomatBgColor";
 import { useLazyQuery } from "@apollo/client";
 
@@ -17,16 +17,13 @@ export const WeekCalendar = () => {
     const [datesOfWeek, setDatesOfWeek] = useState([]);
 
     const [schedules, setSchedules] = useState<IScheduleCalendar[]>([]);
-    const [schedulesQuery, { loading }] = useLazyQuery(GET_SCHEDULES_CALENDAR)
+    const [schedulesQuery, { data }] = useLazyQuery(GET_SCHEDULES_CALENDAR)
 
     useEffect(() => {
-        async function getData() {
-            setSchedules((await schedulesQuery()).data.getSchedulesCalendar)
-        }
-        getData()
+        getSchedules()
 
         discoverFirstWeekDate()
-    }, []);
+    }, [data]);
 
     useEffect(() => {
         fillDaysOfWeek(startWeekDate)
@@ -36,6 +33,9 @@ export const WeekCalendar = () => {
         discoverFirstWeekDate()
     }, [weekDate]);
 
+    async function getSchedules() {
+        setSchedules((await schedulesQuery()).data.getSchedulesCalendar)
+    }
     function discoverFirstWeekDate() {
         const today = new Date(weekDate)
         const dayOfWeek = today.getDay()
@@ -60,7 +60,7 @@ export const WeekCalendar = () => {
         const filtered = schedules.filter(el =>
             new Date(el.date).getMonth() == date.getMonth() &&
             new Date(el.date).getDate() == date.getDate()
-        ).sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        ).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
         if (filtered.length) {
             return <div className="d-flex flex-column gap-2 mt-2">
                 {filtered.map((filter, index) => index <= 2 &&
