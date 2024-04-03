@@ -1,14 +1,17 @@
 import { faker } from "@faker-js/faker";
 import { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { FormatBgColor } from "../../hooks/FomatBgColor";
 import { IScheduleCalendar } from "../../interfaces";
 import { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
 import { useLazyQuery } from "@apollo/client";
 import { ModalsEnum } from "../../enum/modals.enum";
+import { changeScheduleIdToShow } from "../../store/slices/scheduleSlice";
 
 export const MonthlyCalendar = () => {
+
+    const dispatch = useDispatch()
 
     const { monthDate } = useSelector((store: IStore) => store.schedule);
 
@@ -43,12 +46,17 @@ export const MonthlyCalendar = () => {
         if (className.includes('square-calendar')) document.querySelector(ModalsEnum.REGISTER_MODAL).click()
     }
 
+    function setScheduleIdToShowDetails(id: string) {
+        dispatch(changeScheduleIdToShow(id))
+    }
+
     const checkScheduleDate = useCallback((day: number) => {
         const filtered = schedules?.filter(el => checkSameDate(el, day)).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        console.log(filtered)
         if (filtered.length) {
             return <div className="d-flex flex-column gap-1">
                 {filtered.map((filter, index) => index <= 2 &&
-                    <p key={index} className="ps-1 my-0 rounded scale-05" role="button" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }} >
+                    <p onClick={_ => setScheduleIdToShowDetails(filter.id)} key={index} data-bs-toggle="modal" data-bs-target="#scheduleDetailsModal" className="ps-1 my-0 rounded scale-05" role="button" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }} >
                         {filter.specialty_name}
                     </p>
                 )}

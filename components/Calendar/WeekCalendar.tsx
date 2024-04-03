@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { useCallback, useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
@@ -7,10 +7,13 @@ import { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service"
 import { FormatBgColor } from "../../hooks/FomatBgColor";
 import { useLazyQuery } from "@apollo/client";
 import { ModalsEnum } from "../../enum/modals.enum";
+import { changeScheduleIdToShow } from "../../store/slices/scheduleSlice";
 
 const nameDaysWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
 
 export const WeekCalendar = () => {
+
+    const dispatch = useDispatch()
 
     const { weekDate } = useSelector((store: IStore) => store.schedule);
 
@@ -62,6 +65,9 @@ export const WeekCalendar = () => {
         if (className.includes('week-calendar')) document.querySelector(ModalsEnum.REGISTER_MODAL).click()
     }
 
+    function setScheduleIdToShowDetails(id: string) {
+        dispatch(changeScheduleIdToShow(id))
+    }
 
     const checkScheduleDate = useCallback((date: Date) => {
         const filtered = schedules.filter(el =>
@@ -71,7 +77,7 @@ export const WeekCalendar = () => {
         if (filtered.length) {
             return <div className="d-flex flex-column gap-2 mt-2">
                 {filtered.map((filter, index) => index <= 2 &&
-                    <div key={index} className="d-flex gap-2 flex-column rounded p-2" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }}>
+                    <div onClick={_ => setScheduleIdToShowDetails(filter.id)} key={index} data-bs-toggle="modal" data-bs-target="#scheduleDetailsModal" className="d-flex gap-2 flex-column rounded p-2" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }}>
                         <p role="button" className="m-0 fs-5">{new Date(filter.date).toLocaleTimeString('pt-BR', { hour: "2-digit", minute: "2-digit" })}</p>
                         <p role="button" className="m-0 text-capitalize">{filter.specialty_name}</p>
                     </div>

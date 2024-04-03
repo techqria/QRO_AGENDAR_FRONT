@@ -16,8 +16,28 @@ export const GET_SCHEDULES_CALENDAR = gql`query getSchedulesCalendar {
         employee_name
         date
         employee_color
+        id
     }
   }`
+
+export const GET_SCHEDULE_BY_ID = gql`query getScheduleById($id: String!) {
+    getScheduleById(id: $id) {
+        pet_name
+        customer_name
+        customer_phone
+        employee_id
+        specialty_id
+        date
+        pet_breed
+        payment{
+          method
+          price
+        }
+        pet_type
+        text
+    }
+  }`
+
 
 export const REMOVE_SCHEDULE = gql`mutation removeSchedule($id: String!) {
     removeSchedule(id: $id) {

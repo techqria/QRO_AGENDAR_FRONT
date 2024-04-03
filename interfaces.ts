@@ -183,6 +183,7 @@ export interface IScheduleCalendar {
     employee_name: string
     date: Date
     employee_color: string
+    id:string
 }
 
 export interface IFinanceList {

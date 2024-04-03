@@ -23,6 +23,7 @@ export interface ISchedule {
     periodicityToShow: SchedulePeriodicityEnum;
     monthDate: number;
     weekDate: number;
+    scheduleIdToShow: string;
 }
 
 export interface IToast {

@@ -7,6 +7,7 @@ import { SchedulePeriodicityEnum } from "../../enum/schedule-periodicity.enum";
 import { WeekCalendar } from "../../components/Calendar/WeekCalendar";
 import { EmployeesSchedule } from "../../components/EmployeesSchedule";
 import ModalRegisterSchedule from "../../components/Modals/ModalRegisterSchedule";
+import ModalScheduleDetails from "../../components/Modals/ModalScheduleDetails";
 
 const Schedule = () => {
 
@@ -29,6 +30,7 @@ const Schedule = () => {
             <EmployeesSchedule />
             {chooseCalendar()}
             <ModalRegisterSchedule />
+            <ModalScheduleDetails />
         </section>
     );
 }
