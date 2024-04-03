@@ -149,7 +149,8 @@ export interface ISchedule {
     pet_type: string;
     pet_gender?: string;
     pet_neutered?: boolean;
-    payment: IPayment
+    payment: IPayment;
+    text?:string
 }
 
 export interface IPetsList { 

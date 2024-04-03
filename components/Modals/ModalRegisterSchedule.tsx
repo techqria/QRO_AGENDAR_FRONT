@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { IPetsList, ISchedule, ISpecialties, IVets } from "../../interfaces";
+import { IPetsList, ISchedule, } from "../../interfaces";
 import { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
 import { GET_ALL_VETS, GET_CUSTOMERS, GET_VET_BY_ID } from "../../graphql/services/user.service";
 import { paymentMethodEnum } from "../../enum/payment-method.enum";
@@ -37,7 +37,7 @@ const ModalRegisterSchedule = () => {
                 date: formattedSchedule.date, customer_name: formattedSchedule.customer_name,
                 customer_phone: formattedSchedule.customer_phone, method: formattedSchedule.payment.method,
                 price: formattedSchedule.payment.price, pet_breed: formattedSchedule.pet_breed, pet_name: formattedSchedule.pet_name,
-                pet_type: formattedSchedule.pet_type
+                pet_type: formattedSchedule.pet_type, text: formattedSchedule.text ?? ''
             },
             refetchQueries: [{ query: GET_SCHEDULES_CALENDAR }],
         })
@@ -51,8 +51,9 @@ const ModalRegisterSchedule = () => {
             {
                 customer_name: '', customer_phone: '', date: '',
                 employee_id: '', hour: '',
-                payment: { method: paymentMethodEnum.money, price: 0 }, 
-                pet_breed: '', pet_name:'',pet_type:'',specialty_id:''
+                payment: { method: paymentMethodEnum.money, price: 0 },
+                pet_breed: '', pet_name: '', pet_type: '', specialty_id: '',
+                text: ''
             }
         )
         setPetsList([])
@@ -224,6 +225,7 @@ const ModalRegisterSchedule = () => {
                                     </div>
                                 </>
                             }
+
                             <h2 className="fs-5 text-black text-center fw-normal mt-5 mb-4">Dados de pagamento</h2>
                             <div className="mb-3 d-flex justify-content-evenly">
                                 <label className="w-20 text-black">Valor do serviço</label>
@@ -240,6 +242,12 @@ const ModalRegisterSchedule = () => {
                                     }
                                 </select>
                             </div>
+
+                            <h2 className="fs-5 text-black text-center fw-normal mt-5 mb-4">Informações adicionais</h2>
+                            <div className="mb-3 d-flex justify-content-center">
+                                <textarea value={schedule?.text} onChange={(e) => setSchedule({ ...schedule, text: e.target.value })} className="border-orange form-control mw-80"></textarea>
+                            </div>
+
                             <div className="mb-3 d-flex justify-content-center">
                                 <button type="submit" className="btn btn-orange mt-5 rounded fw-bold">Salvar</button>
                             </div>

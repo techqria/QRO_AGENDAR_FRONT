@@ -14,7 +14,8 @@ const ModalListFinances = () => {
 
     useEffect(() => {
         async function getData() {
-            setFinanceData((await getFinanceQuery({ variables: { id } })).data.getFinanceListByUser)
+            const financeData = (await getFinanceQuery({ variables: { id } })).data.getFinanceListByUser
+            setFinanceData(financeData)
         }
         getData()
     }, [id]);

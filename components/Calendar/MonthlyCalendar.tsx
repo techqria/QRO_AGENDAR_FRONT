@@ -6,6 +6,7 @@ import { FormatBgColor } from "../../hooks/FomatBgColor";
 import { IScheduleCalendar } from "../../interfaces";
 import { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
 import { useLazyQuery } from "@apollo/client";
+import { ModalsEnum } from "../../enum/modals.enum";
 
 export const MonthlyCalendar = () => {
 
@@ -37,12 +38,17 @@ export const MonthlyCalendar = () => {
         return daysMatch && monthsMatch
     }
 
+    function checkSquareClick(e: any) {
+        const { className }: { className: string } = e.target
+        if (className.includes('square-calendar')) document.querySelector(ModalsEnum.REGISTER_MODAL).click()
+    }
+
     const checkScheduleDate = useCallback((day: number) => {
         const filtered = schedules?.filter(el => checkSameDate(el, day)).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
         if (filtered.length) {
             return <div className="d-flex flex-column gap-1">
                 {filtered.map((filter, index) => index <= 2 &&
-                    <p key={index} className="ps-1 my-0 rounded " role="button" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }} >
+                    <p key={index} className="ps-1 my-0 rounded scale-05" role="button" style={{ color: FormatBgColor(filter.employee_color), backgroundColor: filter.employee_color }} >
                         {filter.specialty_name}
                     </p>
                 )}
@@ -59,7 +65,7 @@ export const MonthlyCalendar = () => {
         <div className="pt-5 text-black w-100 d-flex flex-wrap justify-content-center">
             {
                 new Array(totalMonthDays).fill(0).map((el, index) => (
-                    <div key={index} className="square-calendar border p-1 overflow-hidden">
+                    <div onClick={checkSquareClick} role="button" key={index} className="square-calendar border p-1 overflow-hidden">
                         <p className="text-end mb-0 fs-5">{index + 1}</p>
                         {checkScheduleDate(index + 1)}
                     </div>

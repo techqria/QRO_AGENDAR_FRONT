@@ -6,6 +6,7 @@ import { IScheduleCalendar } from "../../interfaces";
 import { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
 import { FormatBgColor } from "../../hooks/FomatBgColor";
 import { useLazyQuery } from "@apollo/client";
+import { ModalsEnum } from "../../enum/modals.enum";
 
 const nameDaysWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
 
@@ -56,6 +57,12 @@ export const WeekCalendar = () => {
         setDatesOfWeek(daysOfWeekArray)
     }
 
+    function checkSquareClick(e: any) {
+        const { className }: { className: string } = e.target
+        if (className.includes('week-calendar')) document.querySelector(ModalsEnum.REGISTER_MODAL).click()
+    }
+
+
     const checkScheduleDate = useCallback((date: Date) => {
         const filtered = schedules.filter(el =>
             new Date(el.date).getMonth() == date.getMonth() &&
@@ -84,7 +91,7 @@ export const WeekCalendar = () => {
         <div className="pt-5 text-black w-100 d-flex flex-wrap justify-content-center">
             {
                 nameDaysWeek.map((el, index) => (
-                    <div key={index} className="week-calendar border p-2 overflow-hidden">
+                    <div onClick={checkSquareClick} key={index} className="week-calendar border p-2 overflow-hidden">
                         <p className="text-center mb-0 fs-5">{datesOfWeek[index]?.getDate()}</p>
                         <p className="text-center mb-0 fs-5">{el}</p>
                         {checkScheduleDate(datesOfWeek[index])}

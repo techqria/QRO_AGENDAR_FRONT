@@ -29,7 +29,7 @@ export const CREATE_SCHEDULE = gql`mutation createSchedule (
     $specialty_id: String!,$employee_id: String!,$date: DateTime!,
     $customer_name: String!,$customer_phone: String!,
     $method: String!,$price: Float!,$pet_breed: String!,
-    $pet_name: String!,$pet_type: String!){
+    $pet_name: String!,$pet_type: String!, $text: String!){
     createSchedule(schedule: {
         specialty_id: $specialty_id
         employee_id: $employee_id
@@ -39,6 +39,7 @@ export const CREATE_SCHEDULE = gql`mutation createSchedule (
         pet_breed: $pet_breed
         pet_name: $pet_name
         pet_type: $pet_type
+        text: $text
         payment: {
             price: $price
             method: $method

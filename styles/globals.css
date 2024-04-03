@@ -30,8 +30,21 @@ ul {
   list-style: none !important;
 }
 
+.scale-05{
+  scale: 1;
+  transition: .4s ease-in-out;
+}
+
+.scale-05:hover {
+  scale: 1.05;
+}
+
 .mw-400 {
   max-width: 400px;
+}
+
+.mw-80{
+  max-width: 80% !important;
 }
 
 .w-20 {
