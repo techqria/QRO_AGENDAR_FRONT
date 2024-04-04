@@ -4,6 +4,7 @@ import { GET_SCHEDULE_DETAIL_BY_ID } from "../../graphql/services/schedule.servi
 import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { IScheduleDetails } from "../../interfaces";
+import { paymentMethodEnum } from "../../enum/payment-method.enum";
 
 const ModalScheduleDetails = () => {
 
@@ -11,7 +12,7 @@ const ModalScheduleDetails = () => {
 
     const [scheduleDetails, setScheduleDetails] = useState<IScheduleDetails>();
 
-    const [scheduleDetailsQuery, { loading }] = useLazyQuery(GET_SCHEDULE_DETAIL_BY_ID)
+    const [scheduleDetailsQuery, { loading, data }] = useLazyQuery(GET_SCHEDULE_DETAIL_BY_ID)
 
     useEffect(() => {
         scheduleIdToShow != '' && getScheduleDetails()
@@ -22,12 +23,6 @@ const ModalScheduleDetails = () => {
         setScheduleDetails(data)
     }
 
-    function closeModal() {
-        document.getElementById('close-details-schedule-modal').click()
-    }
-
-
-    if (loading) return <p>Carregando informações do agendamento</p>
 
     return (
         <div className="modal fade" id="scheduleDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -37,69 +32,21 @@ const ModalScheduleDetails = () => {
                     <div className="modal-header border-0">
                         <button id="close-details-schedule-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div className="modal-body">
-                        <h1 className="modal-title fs-5 text-orange text-center" >Cadastrar Nova Agenda</h1>
-
-                        <form className="mt-3">
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Funcionário</label>
-                                <input defaultValue={scheduleDetails?.employee} disabled type="text" className="border-orange form-control mw-400" />
-                            </div>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Especialidade</label>
-                                <input type="text" className="border-orange form-control mw-400" />
-                            </div>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Data</label>
-                                <input className="border-orange form-control mw-400" maxLength={10} minLength={10} type="text" />
-                            </div>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Horário</label>
-                                <input className="border-orange form-control mw-400" type="text" />
-                            </div>
-
-                            <h2 className="fs-5 text-black text-center fw-normal mt-5 mb-4">Dados do Cliente</h2>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Cliente</label>
-                                <input type="text" className="border-orange form-control mw-400" />
-                            </div>
-                            <h2 className="fs-5 text-black text-center fw-normal mt-5 mb-4">Dados do Pet</h2>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Nome</label>
-                                <input type="text" className="border-orange form-control mw-400" />
-                            </div>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Raça</label>
-                                <input disabled className="border-orange form-control mw-400" type="text" />
-                            </div>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Genêro</label>
-                                <input disabled className="border-orange form-control mw-400" type="text" />
-                            </div>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Castrado?</label>
-                                <input disabled className="border-orange form-control mw-400" type="text" />
-                            </div>
-
-                            <h2 className="fs-5 text-black text-center fw-normal mt-5 mb-4">Dados de pagamento</h2>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Valor do serviço</label>
-                                <input placeholder="R$ 150" className="border-orange form-control mw-400" type="text" />
-                            </div>
-                            <div className="mb-3 d-flex justify-content-evenly">
-                                <label className="w-20 text-black">Método de pagamento</label>
-                                <input type="text" className="border-orange form-control mw-400" />
-                            </div>
-
-                            <h2 className="fs-5 text-black text-center fw-normal mt-5 mb-4">Informações adicionais</h2>
-                            <div className="mb-3 d-flex justify-content-center">
-                                <textarea className="border-orange form-control mw-80"></textarea>
-                            </div>
-
-                            <div className="mb-3 d-flex justify-content-center">
-                                <button type="submit" className="btn btn-orange mt-5 rounded fw-bold">Salvar</button>
-                            </div>
-                        </form>
+                    <div className="modal-body d-flex flex-column align-items-center">
+                        <h1 className="modal-title fs-5 text-orange" >Detalhes do agendamento</h1>
+                        {
+                            (loading || !data) ? <p className="text-black mt-5">Carregando informações do agendamento</p>
+                                :
+                                <ul className="mt-4 text-black">
+                                    <li><span className="fw-bold">Funcionário </span>{scheduleDetails.employee}</li>
+                                    <li><span className="fw-bold">Especialidade </span>{scheduleDetails.specialty}</li>
+                                    <li><span className="fw-bold">Data </span>{new Date(scheduleDetails.date).toLocaleDateString("pt-BR")}</li>
+                                    <li><span className="fw-bold">Horário </span>{new Date(scheduleDetails.date).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</li>
+                                    <li><span className="fw-bold">Cliente </span>Nome: {scheduleDetails.customer_name} - Telefone: {scheduleDetails.customer_phone}</li>
+                                    <li><span className="fw-bold">Pet </span>Nome: {scheduleDetails.pet_name} - Raça: {scheduleDetails.pet_breed} - Tipo: {scheduleDetails.pet_type} - Castrado: {scheduleDetails.pet_neutered ? 'Sim' : 'Não'}</li>
+                                    <li><span className="fw-bold">Informaçoes Adicionais </span>{scheduleDetails.text}</li>
+                                </ul>
+                        }
                     </div>
                 </div>
             </div>
