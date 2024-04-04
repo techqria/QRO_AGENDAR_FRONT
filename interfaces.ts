@@ -150,15 +150,30 @@ export interface ISchedule {
     pet_gender?: string;
     pet_neutered?: boolean;
     payment: IPayment;
-    text?:string
+    text?: string
 }
 
-export interface IPetsList { 
+export interface IScheduleDetails {
+    id: string
+    pet_name: string
+    customer_name: string
+    customer_phone: string
+    employee: string
+    specialty: string
+    date: string
+    pet_breed: string
+    pet_neutered: boolean
+    payment: IPayment
+    pet_type: string
+    text: string
+}
+
+export interface IPetsList {
     name: string
     breed: string
-    neutered:boolean
-    gender:string
-    typeAnimalId:string
+    neutered: boolean
+    gender: string
+    typeAnimalId: string
 }
 
 export interface IScheduleRegister {
@@ -183,7 +198,7 @@ export interface IScheduleCalendar {
     employee_name: string
     date: Date
     employee_color: string
-    id:string
+    id: string
 }
 
 export interface IFinanceList {

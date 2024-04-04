@@ -52,7 +52,6 @@ export const MonthlyCalendar = () => {
 
     const checkScheduleDate = useCallback((day: number) => {
         const filtered = schedules?.filter(el => checkSameDate(el, day)).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-        console.log(filtered)
         if (filtered.length) {
             return <div className="d-flex flex-column gap-1">
                 {filtered.map((filter, index) => index <= 2 &&
