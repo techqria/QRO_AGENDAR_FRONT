@@ -17,5 +17,8 @@ export const GET_FINANCE_BY_USER =gql`query getFinanceListByUser($id: String!) {
           method
         }
         customer_name
+        pet_name
+        pet_type
+        pet_breed
     }
   }`

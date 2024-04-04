@@ -60,7 +60,7 @@ export const MonthlyCalendar = () => {
                     </p>
                 )}
 
-                {(filtered.length > 2) &&
+                {(filtered.length > 3) &&
                     <button className="btn btn-default d-flex align-self-end text-black fw-semibold fs-14 rounded m-0 p-0">Ver mais</button>
                 }
             </div>

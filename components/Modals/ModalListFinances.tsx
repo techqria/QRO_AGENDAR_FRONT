@@ -37,6 +37,18 @@ const ModalListFinances = () => {
                                         <h5 className="text-black fw-bold mb-0">{el.customer_name}</h5>
                                         <span className="text-black fw-light">Cliente</span>
                                     </div>
+                                    <div className="d-flex flex-column w-100">
+                                        <h5 className="text-black fw-bold mb-0">{el.pet_name}</h5>
+                                        <span className="text-black fw-light">Nome do pet</span>
+                                    </div>
+                                    <div className="d-flex flex-column w-100">
+                                        <h5 className="text-black fw-bold mb-0">{el.pet_breed}</h5>
+                                        <span className="text-black fw-light">Raça do pet</span>
+                                    </div>
+                                    <div className="d-flex flex-column w-100">
+                                        <h5 className="text-black fw-bold mb-0">{el.pet_type}</h5>
+                                        <span className="text-black fw-light">Tipo do pet</span>
+                                    </div>
 
                                     <div className="d-flex flex-column w-100">
                                         <h5 className="text-black fw-bold mb-0">{new Date(el.date).toLocaleDateString('pt-BR')}</h5>

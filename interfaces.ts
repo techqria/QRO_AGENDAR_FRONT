@@ -212,6 +212,9 @@ export interface IFinanceListByUser {
     customer_name: string;
     date: Date;
     payment: IPayment;
+    pet_name: string;
+    pet_type: string;
+    pet_breed: string;
 }
 
 export interface IWeekScheduleHours {

@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { changeEmployeeId, changeEmployeeName } from "../store/slices/employee.slice";
 import { useQuery } from "@apollo/client";
 import { IEmployee, IFinanceList } from "../interfaces";
+import { ToastMessage } from "../hooks/ToastMessage";
+import { ToastEnum } from "../enum/toast.enum";
 
 const ListFinance = () => {
 
@@ -11,6 +13,7 @@ const ListFinance = () => {
     const { data, loading } = useQuery(GET_FINANCES)
 
     const setEmployeeId = (employee: IFinanceList) => {
+        if(!employee.qtt_schedules) return ToastMessage(ToastEnum.warning, "Funcionário não possui consultas")
         dispatch(changeEmployeeId(employee.employee_id))
         dispatch(changeEmployeeName(employee.employee_name))
     }
@@ -36,7 +39,7 @@ const ListFinance = () => {
                             <span className="text-black">Valor total</span>
                         </div>
 
-                        <button onClick={_ => setEmployeeId(el)} data-bs-toggle="modal" data-bs-target="#listFinancesModal" className="d-flex align-items-center p-0 m-0 btn btn-transparent">
+                        <button onClick={_ => setEmployeeId(el)} data-bs-toggle="modal" data-bs-target={`${el.qtt_schedules ? '#listFinancesModal' : ''}`} className="d-flex align-items-center p-0 m-0 btn btn-transparent">
                             <img role="button" src="https://raw.githubusercontent.com/gist/Aenewsss/fbe5368d795b9aececfdef9fa3c1edc9/raw/ab991ac12aa87c5ad47f3a8a2998415561c6b74e/modal-expand-qro-agendar.svg" alt="" />
                         </button>
                     </div>
