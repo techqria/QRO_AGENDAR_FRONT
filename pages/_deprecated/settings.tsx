@@ -1,12 +1,17 @@
 import { useRouter } from "next/router";
 import ModalChangePassword from "../../components/Modals/ModalChangePassword";
 import { useEffect, useState } from "react"
-import authService from "../../graphql/services/auth.service";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { ICurrentUser } from "../../interfaces";
+import { useLazyQuery } from "@apollo/client";
+import { GET_USER_BY_ID } from "../../graphql/services/user.service";
+import { changeUserId } from "../../store/slices/user.slice";
+import cookie from "js-cookie"
 
 const Settings = () => {
+
+    const dispatch = useDispatch()
 
     const route = useRouter();
 
@@ -14,20 +19,25 @@ const Settings = () => {
 
     const [currentUser, setCurrentUser] = useState<ICurrentUser>();
 
+    const [getUserByIdQuery, { loading, data }] = useLazyQuery(GET_USER_BY_ID)
+
+
     const logout = () => {
         route.push("/login")
-        window.localStorage.removeItem("token")
+        cookie.remove("token")
+
+        dispatch(changeUserId(''))
     };
 
     async function getCurrentUser() {
-        console.log(currentUserId)
-        console.log(await authService.getCurrentUser(currentUserId))
-        setCurrentUser(await authService.getCurrentUser(currentUserId))
+        setCurrentUser((await getUserByIdQuery({ variables: { id: currentUserId } })).data.getUserById)
     }
 
     useEffect(() => {
         getCurrentUser()
     }, []);
+
+    if (loading || !data) return <p>Carregando dados do usuário </p>
 
     return (
         <section className='container pt-5 bg-white-sec d-flex flex-column align-items-center'>
@@ -37,8 +47,8 @@ const Settings = () => {
 
                 <div className="mt-5 d-flex flex-column align-items-center me-md-5">
                     <img className="border-orange rounded-circle" src="/images/person.png" alt="" />
-                    <h3 className="text-black mt-2">{currentUser?.name}</h3>
-                    <p className="text-secondary mt-1">Administrador</p>
+                    <h3 className="text-black mt-2">{currentUser.name}</h3>
+                    <p className="text-secondary mt-1">{currentUser.role}</p>
                 </div>
 
 

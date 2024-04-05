@@ -34,7 +34,6 @@ const RegisterEmployeeForm = () => {
 
     useEffect(() => {
         if (data) {
-            console.log(data)
             const result = data.getAllSpecialties
             setSpecialties(result)
             setEmployee({ ...employee, specialty: result[0].id })

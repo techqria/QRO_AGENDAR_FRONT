@@ -77,7 +77,6 @@ const RegisterCustomerForm = () => {
         currentAnimal[field] = value
         arr[index] = currentAnimal
 
-        console.log(animals)
         setAnimals(arr)
     }
 

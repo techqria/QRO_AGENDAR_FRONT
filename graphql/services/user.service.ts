@@ -1,4 +1,4 @@
-import { gql, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 
 export const GET_ALL_VETS = gql`query getAllVets {
     getAllVets {
@@ -11,7 +11,7 @@ export const GET_ALL_VETS = gql`query getAllVets {
     }
   }`
 
-  export const UPDATE_VET = gql`mutation updateVet(
+export const UPDATE_VET = gql`mutation updateVet(
     $id: String!, $name: String!, $email: String!, $phone: String!, 
      $specialty_id: String!, $color: String!) {
     updateVet(vet: { 
@@ -27,7 +27,7 @@ export const GET_ALL_VETS = gql`query getAllVets {
     }
   }`
 
-  export const CREATE_MANAGER = gql`mutation createManager($name: String!, $email: String!, $phone: String!, $password: String!) {
+export const CREATE_MANAGER = gql`mutation createManager($name: String!, $email: String!, $phone: String!, $password: String!) {
     createManager(manager: { 
         name: $name, 
         email: $email, 
@@ -38,7 +38,7 @@ export const GET_ALL_VETS = gql`query getAllVets {
     }
   }`
 
-  export const CREATE_VET = gql`mutation createVet(
+export const CREATE_VET = gql`mutation createVet(
     $name: String!, $email: String!, $phone: String!, 
     $password: String!, $specialty: String!, $color: String!, 
     $imageUrl: String!) {
@@ -55,7 +55,7 @@ export const GET_ALL_VETS = gql`query getAllVets {
     }
   }`
 
-  export const CREATE_CUSTOMER = gql`mutation createCustomer(
+export const CREATE_CUSTOMER = gql`mutation createCustomer(
     $name: String!, $email: String!, $phone: String!, 
     $password: String!, $image_url: String!, $birthdate: DateTime!,$adress: AdressInput!, $animals: [AnimalInput!]!) {
     createCustomer(customer: { 
@@ -77,13 +77,13 @@ export const GET_ALL_VETS = gql`query getAllVets {
     }
   }`
 
-  export const REMOVE_VET = gql`mutation removeVet($id: String!) {
+export const REMOVE_VET = gql`mutation removeVet($id: String!) {
     removeVet(id: $id) {
         name
     }
-  }`
-
-  export const GET_CUSTOMERS = gql`
+    
+}`
+export const GET_CUSTOMERS = gql`
   query getAllCustomers{
     getAllCustomers{
         id
@@ -107,10 +107,18 @@ export const GET_ALL_VETS = gql`query getAllVets {
   }
   `
 
-  export const GET_VET_BY_ID = gql`query getUserById($id:String!){
+export const GET_VET_BY_ID = gql`query getUserById($id:String!){
     getUserById(id: $id){
         name
         specialty_id
     }
   }
-  `
+`
+
+export const GET_USER_BY_ID = gql`query getUserById($id: String!){
+    getUserById(id: $id){
+        name
+        role
+    }
+}
+`
