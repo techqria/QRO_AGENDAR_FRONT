@@ -21,10 +21,10 @@ const LoginForm = () => {
     async function callApi() {
         const { data } = await loginQuery({ variables: { email: user.email, password: user.password } })
         if (data.login.success) {
-            cookie.set("token", data.login.token)
+            cookie.set("qro_agendar_token", data.login.token)
 
             dispatch(changeRole(data.login.user.role))
-            dispatch(changeUserId(data.login.userId))
+            dispatch(changeUserId(data.login.user.id))
 
             router.push(`${data.login.user.role}`)
         }

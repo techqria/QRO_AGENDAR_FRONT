@@ -4,7 +4,7 @@ export function AuthHeader() {
     return {
         context: {
             headers: {
-                Authorization: `Bearer ${cookie.get("token")}`
+                Authorization: `Bearer ${cookie.get("qro_agendar_token")}`
             }
         }
     }
@@ -13,7 +13,7 @@ export function AuthHeader() {
 export function AuthHeaderRefetch() {
     return {
         headers: {
-            Authorization: `Bearer ${cookie.get("token")}`
+            Authorization: `Bearer ${cookie.get("qro_agendar_token")}`
         }
     }
 }

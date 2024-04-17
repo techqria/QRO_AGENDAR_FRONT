@@ -5,7 +5,7 @@ import authService from "./graphql/services/auth.service";
 export async function middleware(request: NextRequest) {
     if (request.url.includes('/login')) return NextResponse.next()
 
-    const token = request.cookies.get('token')?.value;
+    const token = request.cookies.get('qro_agendar_token')?.value;
 
     if (!token) return NextResponse.redirect(new URL('/login', request.url))
 

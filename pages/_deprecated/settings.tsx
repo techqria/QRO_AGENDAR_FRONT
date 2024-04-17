@@ -9,6 +9,8 @@ import { GET_USER_BY_ID } from "../../graphql/services/user.service";
 import { changeUserId } from "../../store/slices/user.slice";
 import cookie from "js-cookie"
 import { AuthHeader } from "../../hooks/AuthHeader";
+import { changePage } from "../../store/slices/pagesSlice";
+import { PagesEnum } from "../../enum/pages.enum";
 
 const Settings = () => {
 
@@ -24,21 +26,21 @@ const Settings = () => {
 
     const logout = () => {
         route.push("/login")
-        cookie.remove("token")
-
+        cookie.remove("qro_agendar_token")
+        dispatch(changePage(PagesEnum.dashboardPage))
         dispatch(changeUserId(''))
     };
 
     async function getCurrentUser() {
-        console.log(await getUserByIdQuery({ variables: { id: currentUserId } }))
-        setCurrentUser((await getUserByIdQuery({ variables: { id: currentUserId } })).data.getUserById)
+        console.log('line 35:',await getUserByIdQuery({ variables: { id: currentUserId } }))
+        setCurrentUser((await getUserByIdQuery({ variables: { id: currentUserId } }))?.data?.getUserById)
     }
 
     useEffect(() => {
         getCurrentUser()
-    }, []);
+    }, [currentUserId]);
 
-    if (loading || !data) return <p>Carregando dados do usuário </p>
+    if (loading || !data) return <p className="mt-5 text-black text-center">Carregando dados do usuário </p>
 
     return (
         <section className='container pt-5 bg-white-sec d-flex flex-column align-items-center'>
