@@ -9,9 +9,12 @@ const userSlice = createSlice({
         changeRole(state, action) {
             state.role = action.payload
         },
-        changeUserId(state,action){
+        changeUserId(state, action) {
             state.userId = action.payload
-        }
+        },
+        changeUserEmail(state, action) {
+            state.email = action.payload
+        },
     },
     extraReducers(builder) {
         builder.addCase(clearRedux, (state) => {
@@ -21,5 +24,5 @@ const userSlice = createSlice({
     },
 })
 
-export const { changeRole, changeUserId } = userSlice.actions
+export const { changeRole, changeUserId, changeUserEmail } = userSlice.actions
 export const userReducer = userSlice.reducer

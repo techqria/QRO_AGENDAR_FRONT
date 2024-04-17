@@ -119,6 +119,14 @@ export const GET_USER_BY_ID = gql`query getUserById($id: String!){
     getUserById(id: $id){
         name
         role
+        email
+    }
+}
+`
+
+export const CHANGE_PASSWORD = gql`query changePassword($email: String!, $newPassword: String!, $repeatNewPassword: String!){
+    changePassword(email: $email, newPassword: $newPassword, repeatNewPassword: $repeatNewPassword){
+        email
     }
 }
 `

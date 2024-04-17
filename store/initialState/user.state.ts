@@ -3,5 +3,6 @@ import { IUser } from "../types/types";
 
 export const UserInitialState: IUser = {
     role: RoleEnum.client,
-    userId: ""
+    userId: "",
+    email: ""
 }

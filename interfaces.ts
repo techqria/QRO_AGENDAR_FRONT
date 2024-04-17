@@ -117,6 +117,7 @@ export interface IDataGetAllSpecialties {
 export interface ICurrentUser {
     name: string
     role?: RoleEnum
+    email?: string
 }
 
 export interface IApolloGetAllVets {

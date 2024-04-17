@@ -22,8 +22,6 @@ const Settings = () => {
 
     const [getUserByIdQuery, { loading, data }] = useLazyQuery(GET_USER_BY_ID, AuthHeader())
 
-
-
     const logout = () => {
         route.push("/login")
         cookie.remove("token")
@@ -32,6 +30,7 @@ const Settings = () => {
     };
 
     async function getCurrentUser() {
+        console.log(await getUserByIdQuery({ variables: { id: currentUserId } }))
         setCurrentUser((await getUserByIdQuery({ variables: { id: currentUserId } })).data.getUserById)
     }
 
@@ -71,7 +70,7 @@ const Settings = () => {
                 </div>
             </div>
 
-            <ModalChangePassword />
+            <ModalChangePassword email={currentUser.email} />
         </section>
     );
 }

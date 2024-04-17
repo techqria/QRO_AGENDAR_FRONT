@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Script from "next/script";
 import Toast from "./Toast";
 
 const MainContainer = ({ children }) => {

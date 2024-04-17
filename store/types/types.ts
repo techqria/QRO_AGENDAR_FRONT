@@ -35,4 +35,5 @@ export interface IToast {
 export interface IUser {
     role: RoleEnum;
     userId: string;
+    email:string;
 }
