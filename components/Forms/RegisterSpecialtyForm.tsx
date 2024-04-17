@@ -1,12 +1,17 @@
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
+import { AuthHeader } from "../../hooks/AuthHeader";
+import { CREATE_SPECIALTY } from "../../graphql/services/specialty.service";
 
 const RegisterSpecialtyForm = () => {
 
     const [title, setTitle] = useState<string>('');
+    const [createSpecialtyMutation] = useMutation(CREATE_SPECIALTY, AuthHeader())
+
 
     async function registerSpecialty(e) {
         e.preventDefault()
-        // await specialtyService.createSpecialty(title)
+        await createSpecialtyMutation({ variables: { title }})
         document.getElementById("close-register-modal").click()
     }
 

@@ -23,7 +23,6 @@ const Employees = () => {
             <ModalRegisterSpecialty />
             <ModalRegisterCustomer />
             <ModalEditEmployee />
-            <ModalEditSpecialty />
         </section>
     );
 }
