@@ -13,7 +13,8 @@ export interface IStore {
     toast: IToast,
     user: IUser,
     employee: IVets,
-    specialty: ISpecialty
+    specialty: ISpecialty,
+    customer: ICustomer
 }
 
 export interface ISpecialty {
@@ -35,5 +36,9 @@ export interface IToast {
 export interface IUser {
     role: RoleEnum;
     userId: string;
-    email:string;
+    email: string;
+}
+
+export interface ICustomer {
+    customerId: string;
 }

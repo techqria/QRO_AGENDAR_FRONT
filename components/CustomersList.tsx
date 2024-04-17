@@ -4,17 +4,24 @@ import { ICustomer } from "../interfaces";
 import { useState } from "react";
 import { GET_ANIMAL_TYPES, GET_ANIMAL_TYPE_BY_ID } from "../graphql/services/animal_type.service";
 import { AuthHeader } from "../hooks/AuthHeader";
+import ModalRegisterPet from "./Modals/ModalRegisterPet";
+import { useDispatch } from "react-redux";
+import { changeCustomerId } from "../store/slices/customer.slice";
 
 const CustomersList = () => {
+
+    const dispatch = useDispatch()
 
     const [customerIndexToShow, setCustomerIndexToShow] = useState(-1);
 
     const { data, loading } = useQuery(GET_CUSTOMERS, AuthHeader())
-    const { data: animalTypes, loading: loadingAnimalTypes } = useQuery(GET_ANIMAL_TYPES,AuthHeader())
+    const { data: animalTypes, loading: loadingAnimalTypes } = useQuery(GET_ANIMAL_TYPES, AuthHeader())
 
     function checkSameIndex(index: number) {
         return customerIndexToShow == index
     }
+
+    const setCurrentCustomerId = (customerId: string) => dispatch(changeCustomerId(customerId))
 
     if (loading || loadingAnimalTypes) return <p className="text-black">Carregando Clientes</p>
     return (
@@ -53,7 +60,7 @@ const CustomersList = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-md-6 d-flex flex-column">
                                     <h2 className="text-orange">Animais</h2>
                                     {
                                         customer.animals.map((animal, index) =>
@@ -76,17 +83,18 @@ const CustomersList = () => {
                                                         <td role="button" className="text-orange fw-semibold">ver mais</td>
                                                     </tbody>
                                                 </table>
-                                                
-                                                <button className="btn btn-orange d-flex align-self-end align-items-center">Adicionar outro animal</button>
+
                                             </div>
                                         )
                                     }
+                                    <button onClick={_ => setCurrentCustomerId(customer.id)} data-bs-toggle="modal" data-bs-target="#registerPetModal" className="btn btn-orange d-flex align-self-end align-items-center">Adicionar outro pet</button>
                                 </div>
                             </div>
                         }
                     </div>
                 )
             }
+            <ModalRegisterPet />
         </section>
     );
 }

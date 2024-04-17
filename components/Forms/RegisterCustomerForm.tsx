@@ -8,6 +8,8 @@ import { CREATE_ANIMAL_TYPE, GET_ANIMAL_TYPES } from "../../graphql/services/ani
 import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { AuthHeader, AuthHeaderRefetch } from "../../hooks/AuthHeader";
+import { ToastMessage } from "../../hooks/ToastMessage";
+import { ToastEnum } from "../../enum/toast.enum";
 
 const RegisterCustomerForm = () => {
 
@@ -85,6 +87,7 @@ const RegisterCustomerForm = () => {
         await createAnimalTypeMutation({ variables: { name: NewAnimalType }, refetchQueries: [{ query: GET_ANIMAL_TYPES,context: AuthHeaderRefetch() }] })
         setNewAnimalType("")
         setShowNewAnimalType(false)
+        ToastMessage(ToastEnum.success, "Tipo criado com sucesso")
     }
 
     function formatDateInput(value: string) {
@@ -181,7 +184,7 @@ const RegisterCustomerForm = () => {
                         {showNewAnimalType &&
                             <div className="mb-3 d-flex justify-content-evenly">
                                 <div className="d-flex gap-2 w-20 align-items-center">
-                                    <label className="text-secondary">Nova especialidade</label>
+                                    <label className="text-secondary">Novo Tipo</label>
                                     <Tooltip description="Cancelar">
                                         <span role="button" onClick={() => { setShowNewAnimalType(!showNewAnimalType); setNewAnimalType("") }} className="text-danger fs-5 p-0 m-0 fw-bold">x</span>
                                     </Tooltip>

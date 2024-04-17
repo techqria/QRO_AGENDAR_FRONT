@@ -1,3 +1,4 @@
+
 import RegisterCustomerForm from "../Forms/RegisterCustomerForm";
 
 const ModalRegisterCustomer = () => {
