@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import  { GET_DASH_FINANCE } from "../../graphql/services/dashboard.service";
 import { useQuery } from "@apollo/client";
+import { AuthHeader } from "../../hooks/AuthHeader";
 
 const FinanceChart = () => {
 
     const [annualRevenue, setAnnualRevenue] = useState([]);
     const [highestPrice, setHighestPrice] = useState(0);
 
-    const { data, loading } = useQuery(GET_DASH_FINANCE)
+    const { data, loading } = useQuery(GET_DASH_FINANCE, AuthHeader())
 
     useEffect(() => {
         if (data) {

@@ -6,6 +6,7 @@ import  { GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
 import { changeEmployeeColor, changeEmployeeEmail, changeEmployeeName, changeEmployeePhone, changeEmployeeSpecialtyId } from "../../store/slices/employee.slice";
 import  { GET_ALL_VETS, UPDATE_VET } from "../../graphql/services/user.service";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { AuthHeader, AuthHeaderRefetch } from "../../hooks/AuthHeader";
 
 const ModalEditEmployee = () => {
 
@@ -13,15 +14,15 @@ const ModalEditEmployee = () => {
 
     const { employee } = useSelector((store: IStore) => store)
 
-    const [updateMutation, { error, loading, data }] = useMutation(UPDATE_VET)
-    const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES);
+    const [updateMutation, { error, loading, data }] = useMutation(UPDATE_VET,AuthHeader())
+    const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES,AuthHeader());
 
     async function updateEmployee(e) {
         e.preventDefault()
 
         await updateMutation({
             variables: { color: employee.color, email: employee.email, name: employee.name, phone: employee.phone, specialty_id: employee.specialty_id, id: employee.id },
-            refetchQueries: [{ query: GET_ALL_VETS }]
+            refetchQueries: [{ query: GET_ALL_VETS, context: AuthHeaderRefetch() }]
         })
 
         document.getElementById("close-edit-employee-modal").click();

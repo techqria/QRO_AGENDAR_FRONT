@@ -1,15 +1,16 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_CUSTOMERS } from "../graphql/services/user.service";
 import { ICustomer } from "../interfaces";
 import { useState } from "react";
 import { GET_ANIMAL_TYPES, GET_ANIMAL_TYPE_BY_ID } from "../graphql/services/animal_type.service";
+import { AuthHeader } from "../hooks/AuthHeader";
 
 const CustomersList = () => {
 
     const [customerIndexToShow, setCustomerIndexToShow] = useState(-1);
 
-    const { data, loading } = useQuery(GET_CUSTOMERS)
-    const { data: animalTypes, loading: loadingAnimalTypes } = useQuery(GET_ANIMAL_TYPES)
+    const { data, loading } = useQuery(GET_CUSTOMERS, AuthHeader())
+    const { data: animalTypes, loading: loadingAnimalTypes } = useQuery(GET_ANIMAL_TYPES,AuthHeader())
 
     function checkSameIndex(index: number) {
         return customerIndexToShow == index

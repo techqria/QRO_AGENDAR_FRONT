@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { GET_DASHBOARD_TIME } from "../../graphql/services/dashboard.service";
 import { IWeekScheduleHours } from "../../interfaces";
 import { useQuery } from "@apollo/client";
+import { AuthHeader } from "../../hooks/AuthHeader";
 
 const TimeChart = () => {
 
     const [timeArray, setTimeArray] = useState<IWeekScheduleHours[]>();
     const [highestTime, setHighestTime] = useState(0);
 
-    const { data, loading } = useQuery(GET_DASHBOARD_TIME)
+    const { data, loading } = useQuery(GET_DASHBOARD_TIME,AuthHeader())
 
 
     useEffect(() => {

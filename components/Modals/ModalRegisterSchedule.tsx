@@ -5,18 +5,21 @@ import { GET_ALL_VETS, GET_CUSTOMERS, GET_VET_BY_ID } from "../../graphql/servic
 import { paymentMethodEnum } from "../../enum/payment-method.enum";
 import { CREATE_SCHEDULE, GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { AuthHeader, AuthHeaderRefetch } from "../../hooks/AuthHeader";
+import { ToastMessage } from "../../hooks/ToastMessage";
+import { ToastEnum } from "../../enum/toast.enum";
 
 const ModalRegisterSchedule = () => {
 
     const [schedule, setSchedule] = useState<ISchedule>();
     const [petsList, setPetsList] = useState<IPetsList[]>();
 
-    const [createScheduleMutation] = useMutation(CREATE_SCHEDULE)
-    const [getVetQuery] = useLazyQuery(GET_VET_BY_ID)
+    const [createScheduleMutation] = useMutation(CREATE_SCHEDULE, AuthHeader())
+    const [getVetQuery] = useLazyQuery(GET_VET_BY_ID, AuthHeader())
 
-    const { data: vets, loading: loadingVets } = useQuery(GET_ALL_VETS);
-    const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES);
-    const { data: customers, loading: loadingCustomers } = useQuery(GET_CUSTOMERS);
+    const { data: vets, loading: loadingVets } = useQuery(GET_ALL_VETS, AuthHeader());
+    const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES, AuthHeader());
+    const { data: customers, loading: loadingCustomers } = useQuery(GET_CUSTOMERS, AuthHeader());
 
     async function registerSchedule(e: FormEvent) {
         e.preventDefault()
@@ -39,8 +42,8 @@ const ModalRegisterSchedule = () => {
                 price: formattedSchedule.payment.price, pet_breed: formattedSchedule.pet_breed, pet_name: formattedSchedule.pet_name,
                 pet_type: formattedSchedule.pet_type, text: formattedSchedule.text ?? ''
             },
-            refetchQueries: [{ query: GET_SCHEDULES_CALENDAR }],
-        })
+            refetchQueries: [{ query: GET_SCHEDULES_CALENDAR,context: AuthHeaderRefetch() }],
+        }).catch(e => ToastMessage(ToastEnum.warning,e.message))
 
         clearFormData()
         closeModal()

@@ -2,12 +2,13 @@ import { useState } from "react";
 import  { CREATE_MANAGER, GET_ALL_VETS } from "../../graphql/services/user.service";
 import { IManager } from "../../interfaces";
 import { useMutation } from "@apollo/client";
+import { AuthHeader } from "../../hooks/AuthHeader";
 
 const RegisterManagerForm = () => {
 
     const [manager, setManager] = useState<IManager>();
 
-    const [createManagerMutation] = useMutation(CREATE_MANAGER)
+    const [createManagerMutation] = useMutation(CREATE_MANAGER,AuthHeader())
 
     async function registerManager(e) {
         e.preventDefault()

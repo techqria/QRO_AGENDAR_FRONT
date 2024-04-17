@@ -8,6 +8,7 @@ import { useLazyQuery } from "@apollo/client";
 import { GET_USER_BY_ID } from "../../graphql/services/user.service";
 import { changeUserId } from "../../store/slices/user.slice";
 import cookie from "js-cookie"
+import { AuthHeader } from "../../hooks/AuthHeader";
 
 const Settings = () => {
 
@@ -19,7 +20,8 @@ const Settings = () => {
 
     const [currentUser, setCurrentUser] = useState<ICurrentUser>();
 
-    const [getUserByIdQuery, { loading, data }] = useLazyQuery(GET_USER_BY_ID)
+    const [getUserByIdQuery, { loading, data }] = useLazyQuery(GET_USER_BY_ID, AuthHeader())
+
 
 
     const logout = () => {

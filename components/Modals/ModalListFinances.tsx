@@ -4,13 +4,14 @@ import { useEffect, useState } from "react"
 import  { GET_FINANCE_BY_USER } from "../../graphql/services/finance.service";
 import { IFinanceListByUser } from "../../interfaces";
 import { useLazyQuery } from "@apollo/client";
+import { AuthHeader } from "../../hooks/AuthHeader";
 
 const ModalListFinances = () => {
 
     const { id,name } = useSelector((store: IStore) => store.employee)
 
     const [financeData, setFinanceData] = useState<IFinanceListByUser[]>([])
-    const [getFinanceQuery] = useLazyQuery(GET_FINANCE_BY_USER)
+    const [getFinanceQuery] = useLazyQuery(GET_FINANCE_BY_USER,AuthHeader())
 
     useEffect(() => {
         async function getData() {

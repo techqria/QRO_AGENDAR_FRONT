@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { changeRole, changeUserId } from "../store/slices/user.slice";
 import { useLazyQuery } from "@apollo/client";
 import cookie from "js-cookie"
+import { AuthHeader } from "../hooks/AuthHeader";
 
 const LoginForm = () => {
 
@@ -15,18 +16,16 @@ const LoginForm = () => {
 
     const [user, setUser] = useState<ILoginUser>();
 
-    const [loginQuery] = useLazyQuery(LOGIN_QUERY);
-    const [verifyTokenQuery] = useLazyQuery(VERIFY_TOKEN_QUERY);
+    const [loginQuery] = useLazyQuery(LOGIN_QUERY,AuthHeader());
 
     async function callApi() {
         const { data } = await loginQuery({ variables: { email: user.email, password: user.password } })
         if (data.login.success) {
-            dispatch(changeRole(data.login.user.role))
-
-            const { data: { verifyToken } } = await verifyTokenQuery({ variables: { token: data.login.token } })
-            dispatch(changeUserId(verifyToken.userId))
-
             cookie.set("token", data.login.token)
+
+            dispatch(changeRole(data.login.user.role))
+            dispatch(changeUserId(data.login.userId))
+
             router.push(`${data.login.user.role}`)
         }
     }

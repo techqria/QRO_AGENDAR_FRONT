@@ -8,6 +8,7 @@ import { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service"
 import { useLazyQuery } from "@apollo/client";
 import { ModalsEnum } from "../../enum/modals.enum";
 import { changeScheduleIdToShow } from "../../store/slices/scheduleSlice";
+import { AuthHeader } from "../../hooks/AuthHeader";
 
 export const MonthlyCalendar = () => {
 
@@ -17,7 +18,7 @@ export const MonthlyCalendar = () => {
 
     const [schedules, setSchedules] = useState<IScheduleCalendar[]>([]);
 
-    const [schedulesQuery, { data }] = useLazyQuery(GET_SCHEDULES_CALENDAR)
+    const [schedulesQuery, { data }] = useLazyQuery(GET_SCHEDULES_CALENDAR,AuthHeader())
 
     useEffect(() => {
         getSchedules()

@@ -4,6 +4,7 @@ import  { CREATE_VET, GET_ALL_VETS } from "../../graphql/services/user.service";
 import  { CREATE_SPECIALTY, GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
 import Tooltip from "../Tooltip";
 import { useMutation, useQuery } from "@apollo/client";
+import { AuthHeader, AuthHeaderRefetch } from "../../hooks/AuthHeader";
 
 const RegisterEmployeeForm = () => {
 
@@ -12,8 +13,8 @@ const RegisterEmployeeForm = () => {
     const [newSpecialty, setNewSpecialty] = useState("");
     const [showNewSpecialty, setShowNewSpecialty] = useState(false);
 
-    const [createEmployeeMutation] = useMutation(CREATE_VET)
-    const [createSpecialtyMutation] = useMutation(CREATE_SPECIALTY)
+    const [createEmployeeMutation] = useMutation(CREATE_VET,AuthHeader())
+    const [createSpecialtyMutation] = useMutation(CREATE_SPECIALTY,AuthHeader())
 
     async function registerEmployee(e) {
         e.preventDefault()
@@ -23,13 +24,13 @@ const RegisterEmployeeForm = () => {
 
         await createEmployeeMutation({
             variables: { name: employee.name, email: employee.email, phone: employee.phone, password: employee.password, specialty: employee.specialty, color: employee.color ?? "#000000", imageUrl: employee.imageUrl ?? "" },
-            refetchQueries: [{ query: GET_ALL_VETS }]
+            refetchQueries: [{ query: GET_ALL_VETS, context: AuthHeaderRefetch() }]
         })
 
         document.getElementById("close-register-modal").click();
     }
 
-    const { data, loading } = useQuery(GET_ALL_SPECIALTIES);
+    const { data, loading } = useQuery(GET_ALL_SPECIALTIES,AuthHeader());
 
 
     useEffect(() => {

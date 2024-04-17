@@ -1,7 +1,7 @@
-import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
 import { GET_DASH_PAYMENT_METHOD } from "../../graphql/services/dashboard.service";
 import { useQuery } from "@apollo/client";
+import { AuthHeader } from "../../hooks/AuthHeader";
 
 const PaymentMethodChart = () => {
 
@@ -10,7 +10,7 @@ const PaymentMethodChart = () => {
     const [CreditPercentage, setCreditPercentage] = useState<number>(0);
     const [DebitPercentage, setDebitPercentage] = useState<number>(0);
 
-    const { data, loading } = useQuery(GET_DASH_PAYMENT_METHOD)
+    const { data, loading } = useQuery(GET_DASH_PAYMENT_METHOD,AuthHeader())
 
     useEffect(() => {
         if (data) {

@@ -1,12 +1,11 @@
-import { faker } from "@faker-js/faker";
-import { useEffect, useState } from "react";
 import  { GET_ALL_VETS } from "../graphql/services/user.service";
 import { useQuery } from "@apollo/client";
+import { AuthHeader } from "../hooks/AuthHeader";
 
 export const EmployeesSchedule = () => {
 
 
-    const {data, loading} = useQuery(GET_ALL_VETS)
+    const {data, loading} = useQuery(GET_ALL_VETS,AuthHeader())
 
     if(loading) return <p>Carregando</p>
 

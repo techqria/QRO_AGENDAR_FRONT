@@ -7,6 +7,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_ANIMAL_TYPE, GET_ANIMAL_TYPES } from "../../graphql/services/animal_type.service";
 import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
+import { AuthHeader, AuthHeaderRefetch } from "../../hooks/AuthHeader";
 
 const RegisterCustomerForm = () => {
 
@@ -17,9 +18,9 @@ const RegisterCustomerForm = () => {
     const [NewAnimalType, setNewAnimalType] = useState("");
     const [showNewAnimalType, setShowNewAnimalType] = useState(false);
 
-    const [createAnimalTypeMutation] = useMutation(CREATE_ANIMAL_TYPE)
-    const [createCustomerMutation] = useMutation(CREATE_CUSTOMER)
-    const { data, loading } = useQuery(GET_ANIMAL_TYPES)
+    const [createAnimalTypeMutation] = useMutation(CREATE_ANIMAL_TYPE,AuthHeader())
+    const [createCustomerMutation] = useMutation(CREATE_CUSTOMER,AuthHeader())
+    const { data, loading } = useQuery(GET_ANIMAL_TYPES,AuthHeader())
     const [birthdate, setBirthdate] = useState<string>('');
 
     async function registerCustomer(e) {
@@ -46,7 +47,7 @@ const RegisterCustomerForm = () => {
                 adress,
                 animals: animals,
             },
-            refetchQueries: [{query: GET_CUSTOMERS}]
+            refetchQueries: [{query: GET_CUSTOMERS, context: AuthHeaderRefetch()}]
         })
         document.getElementById("close-register-customer-modal").click();
     }
@@ -81,7 +82,7 @@ const RegisterCustomerForm = () => {
     }
 
     async function createAnimalType() {
-        await createAnimalTypeMutation({ variables: { name: NewAnimalType }, refetchQueries: [{ query: GET_ANIMAL_TYPES }] })
+        await createAnimalTypeMutation({ variables: { name: NewAnimalType }, refetchQueries: [{ query: GET_ANIMAL_TYPES,context: AuthHeaderRefetch() }] })
         setNewAnimalType("")
         setShowNewAnimalType(false)
     }

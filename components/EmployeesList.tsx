@@ -8,6 +8,7 @@ import { changeSpecialyId } from "../store/slices/specialty.slice";
 import { IStore } from "../store/types/types";
 import Tooltip from "./Tooltip";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { AuthHeader, AuthHeaderRefetch } from "../hooks/AuthHeader";
 
 const EmployeesList = () => {
 
@@ -15,9 +16,9 @@ const EmployeesList = () => {
 
     const { employee } = useSelector((store: IStore) => store)
 
-    const { data: vets, loading: loadingVets } = useQuery(GET_ALL_VETS);
-    const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES);
-    const [removeVetMutation] = useMutation(REMOVE_VET)
+    const { data: vets, loading: loadingVets } = useQuery(GET_ALL_VETS,AuthHeader());
+    const { data: specialties, loading: loadingSpecialties } = useQuery(GET_ALL_SPECIALTIES,AuthHeader());
+    const [removeVetMutation] = useMutation(REMOVE_VET,AuthHeader())
 
     if (loadingVets || loadingSpecialties) return <p>Carregando</p>
 
@@ -25,7 +26,7 @@ const EmployeesList = () => {
 
     const setEmployee = (employee: IVets) => dispatch(changeEmployee(employee))
 
-    const removeEmployee = async (employeeId) => { await removeVetMutation({variables: {id: employeeId}, refetchQueries: [{query: GET_ALL_VETS}]}); }
+    const removeEmployee = async (employeeId) => { await removeVetMutation({variables: {id: employeeId}, refetchQueries: [{query: GET_ALL_VETS, context: AuthHeaderRefetch()}]}); }
 
     const listEmployees = (specialtyId: string) => {
         if (vets?.getAllVets?.find(el => el.specialty_id == specialtyId) == undefined) {

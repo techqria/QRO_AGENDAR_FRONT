@@ -4,7 +4,7 @@ import { GET_SCHEDULE_DETAIL_BY_ID } from "../../graphql/services/schedule.servi
 import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { IScheduleDetails } from "../../interfaces";
-import { paymentMethodEnum } from "../../enum/payment-method.enum";
+import { AuthHeader } from "../../hooks/AuthHeader";
 
 const ModalScheduleDetails = () => {
 
@@ -12,7 +12,7 @@ const ModalScheduleDetails = () => {
 
     const [scheduleDetails, setScheduleDetails] = useState<IScheduleDetails>();
 
-    const [scheduleDetailsQuery, { loading, data }] = useLazyQuery(GET_SCHEDULE_DETAIL_BY_ID)
+    const [scheduleDetailsQuery, { loading, data }] = useLazyQuery(GET_SCHEDULE_DETAIL_BY_ID,AuthHeader())
 
     useEffect(() => {
         scheduleIdToShow != '' && getScheduleDetails()

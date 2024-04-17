@@ -5,12 +5,13 @@ import { useQuery } from "@apollo/client";
 import { IEmployee, IFinanceList } from "../interfaces";
 import { ToastMessage } from "../hooks/ToastMessage";
 import { ToastEnum } from "../enum/toast.enum";
+import { AuthHeader } from "../hooks/AuthHeader";
 
 const ListFinance = () => {
 
     const dispatch = useDispatch()
 
-    const { data, loading } = useQuery(GET_FINANCES)
+    const { data, loading } = useQuery(GET_FINANCES,AuthHeader())
 
     const setEmployeeId = (employee: IFinanceList) => {
         if(!employee.qtt_schedules) return ToastMessage(ToastEnum.warning, "Funcionário não possui consultas")

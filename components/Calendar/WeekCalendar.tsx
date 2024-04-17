@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { useCallback, useEffect, useState } from "react";
-import { faker } from "@faker-js/faker";
 import { IScheduleCalendar } from "../../interfaces";
 import { GET_SCHEDULES_CALENDAR } from "../../graphql/services/schedule.service";
 import { FormatBgColor } from "../../hooks/FomatBgColor";
 import { useLazyQuery } from "@apollo/client";
 import { ModalsEnum } from "../../enum/modals.enum";
 import { changeScheduleIdToShow } from "../../store/slices/scheduleSlice";
+import { AuthHeader } from "../../hooks/AuthHeader";
 
 const nameDaysWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
 
@@ -21,7 +21,7 @@ export const WeekCalendar = () => {
     const [datesOfWeek, setDatesOfWeek] = useState([]);
 
     const [schedules, setSchedules] = useState<IScheduleCalendar[]>([]);
-    const [schedulesQuery, { data }] = useLazyQuery(GET_SCHEDULES_CALENDAR)
+    const [schedulesQuery, { data }] = useLazyQuery(GET_SCHEDULES_CALENDAR,AuthHeader())
 
     useEffect(() => {
         getSchedules()
