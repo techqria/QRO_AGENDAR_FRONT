@@ -13,6 +13,7 @@ const FinanceChart = () => {
     useEffect(() => {
         if (data) {
             const financeValues = data.getDashboard.annualRevenue
+            console.log(financeValues)
             let arr = Object.values(financeValues)
             arr = arr.slice(0, arr.length - 1)
 

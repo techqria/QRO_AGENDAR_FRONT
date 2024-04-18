@@ -14,7 +14,13 @@ export interface IStore {
     user: IUser,
     employee: IVets,
     specialty: ISpecialty,
-    customer: ICustomer
+    customer: ICustomer,
+    dateFilter: IDateFilter
+}
+
+export interface IDateFilter{
+    startDate: Date
+    finalDate: Date
 }
 
 export interface ISpecialty {

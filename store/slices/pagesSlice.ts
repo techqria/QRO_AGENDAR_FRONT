@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PagesInitialState } from "../initialState/pages.state";
-import { IPages } from "../types/types";
 
 const pagesSlice = createSlice({
     name: 'pages',

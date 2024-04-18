@@ -6,6 +6,7 @@ import { userReducer } from "./slices/user.slice";
 import { employeeReducer } from "./slices/employee.slice";
 import { specialtyReducer } from "./slices/specialty.slice";
 import { customerReducer } from "./slices/customer.slice";
+import { dateFilterReducer } from "./slices/date-filter.slice";
 
 export const store = configureStore({
     reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
         user: userReducer,
         employee: employeeReducer,
         specialty: specialtyReducer,
-        customer: customerReducer
+        customer: customerReducer,
+        dateFilter: dateFilterReducer,
     }
 });
