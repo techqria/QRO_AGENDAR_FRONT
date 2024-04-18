@@ -39,21 +39,16 @@ export const GET_DASH_PAYMENT_METHOD =gql`query getDashboard {
   }
 }`
 
-export const GET_DASH_FINANCE = gql`query getDashboard {
-  getDashboard{
-      annualRevenue{
-      january
-      february
-      march
-      april
-      may
-      june
-      july
-      august
-      september
-      october
-      november
-      december
-      }
+export const GET_DASH_FINANCE = gql`query getDashboardFinance($startDate: DateTime!, $finalDate: DateTime!) {
+  getDashboardFinance(
+    startDate: $startDate
+    finalDate: $finalDate
+  ){
+    paymentMethods{
+      pix
+      debit
+      money
+      credit
     }
+  }
 }`

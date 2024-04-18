@@ -32,7 +32,6 @@ const Settings = () => {
     };
 
     async function getCurrentUser() {
-        console.log('line 35:',await getUserByIdQuery({ variables: { id: currentUserId } }))
         setCurrentUser((await getUserByIdQuery({ variables: { id: currentUserId } }))?.data?.getUserById)
     }
 

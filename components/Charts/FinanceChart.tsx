@@ -1,29 +1,38 @@
 import { useEffect, useState } from "react";
-import  { GET_DASH_FINANCE } from "../../graphql/services/dashboard.service";
-import { useQuery } from "@apollo/client";
+import { GET_DASH_FINANCE } from "../../graphql/services/dashboard.service";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { AuthHeader } from "../../hooks/AuthHeader";
+import { useSelector } from "react-redux";
+import { IStore } from "../../store/types/types";
+import Tooltip from "../Tooltip";
 
 const FinanceChart = () => {
 
-    const [annualRevenue, setAnnualRevenue] = useState([]);
+    const { startDate, finalDate } = useSelector((store: IStore) => store.dateFilter)
+
+    const [financeValues, setFinanceValues] = useState({ pix: 0, debit: 0, credit: 0, money: 0 });
     const [highestPrice, setHighestPrice] = useState(0);
 
-    const { data, loading } = useQuery(GET_DASH_FINANCE, AuthHeader())
+    const [getDashFinanceQuery, { loading }] = useLazyQuery(GET_DASH_FINANCE, AuthHeader())
 
     useEffect(() => {
-        if (data) {
-            const financeValues = data.getDashboard.annualRevenue
-            console.log(financeValues)
+        getDashFinance()
+    }, []);
+
+    async function getDashFinance() {
+        const { data } = await getDashFinanceQuery({ variables: { startDate, finalDate } })
+        const financeValues = data?.getDashboardFinance.paymentMethods
+
+        if (financeValues) {
             let arr = Object.values(financeValues)
             arr = arr.slice(0, arr.length - 1)
 
-            setAnnualRevenue(arr)
-            setHighestPrice(arr.sort((a: any, b: any) => a - b).reverse()[0] as number)
+            setFinanceValues(financeValues)
+            setHighestPrice(Object.values(arr).sort((a: any, b: any) => a - b).reverse()[0] as number)
         }
-    }, [data]);
+    }
 
-
-    function checkPercentage(price: number) {
+    function getPercentage(price: number) {
 
         let percentage = 0;
         if (price !== highestPrice) {
@@ -45,11 +54,38 @@ const FinanceChart = () => {
 
                 <h5>Financeiro</h5>
 
-                <div className="d-flex mt-3">
-                    <svg width={30} height={30}>
-                        <circle cx={15} cy={12} r="10" fill="#4339F2" />
-                    </svg>
-                    <span>Quanto entrou{highestPrice == 0 && <span className="text-danger">&nbsp;(Nenhum valor entrou nessa semana)</span>}</span>
+                <p>
+                    Quanto entrou no período de tempo selecionado
+                    {
+                        highestPrice == 0 && <span className="text-danger">&nbsp;(Nada)</span>
+                    }
+                </p>
+
+                <div className="d-flex gap-2">
+                    <div className="d-flex mt-3">
+                        <svg width={30} height={30}>
+                            <circle cx={15} cy={12} r="10" fill="#34B53A" />
+                        </svg>
+                        <span>Dinheiro</span>
+                    </div>
+                    <div className="d-flex mt-3">
+                        <svg width={30} height={30}>
+                            <circle cx={15} cy={12} r="10" fill="#4339F2" />
+                        </svg>
+                        <span>Pix</span>
+                    </div>
+                    <div className="d-flex mt-3">
+                        <svg width={30} height={30}>
+                            <circle cx={15} cy={12} r="10" fill="#D902FC" />
+                        </svg>
+                        <span>Crédito</span>
+                    </div>
+                    <div className="d-flex mt-3">
+                        <svg width={30} height={30}>
+                            <circle cx={15} cy={12} r="10" fill="#FF3A29" />
+                        </svg>
+                        <span>Débito</span>
+                    </div>
                 </div>
 
 
@@ -62,12 +98,29 @@ const FinanceChart = () => {
                         <span>0</span>
                     </div>
                     {highestPrice > 0 &&
+                        <div className="d-flex gap-4 align-items-end">
+                            {financeValues.money > 0 &&
+                                <Tooltip className="h-100 d-flex align-items-end " description={`R$ ${financeValues.money}`}>
+                                    <div role="button" style={{ height: `${getPercentage(financeValues.money)}%` }} className="finance-chart-bar bg-money"></div>
+                                </Tooltip>
+                            }
 
-                        <div className="d-flex gap-2 align-items-end">
-                            {
-                                annualRevenue?.map((item, index) => (
-                                    <div key={index} style={{ height: `${checkPercentage(item)}%` }} className="finance-chart-bar"></div>
-                                ))
+                            {financeValues.pix > 0 &&
+                                <Tooltip className="h-100 d-flex align-items-end " description={`R$ ${financeValues.pix}`}>
+                                    <div role="button" style={{ height: `${getPercentage(financeValues.pix)}%` }} className="finance-chart-bar bg-pix"></div>
+                                </Tooltip>
+                            }
+
+                            {financeValues.credit > 0 &&
+                                <Tooltip className="h-100 d-flex align-items-end " description={`R$ ${financeValues.credit}`}>
+                                    <div role="button" style={{ height: `${getPercentage(financeValues.credit)}%` }} className="finance-chart-bar bg-credit"></div>
+                                </Tooltip>
+                            }
+
+                            {financeValues.debit > 0 &&
+                                <Tooltip className="h-100 d-flex align-items-end " description={`R$ ${financeValues.debit}`}>
+                                    <div role="button" style={{ height: `${getPercentage(financeValues.debit)}%` }} className="finance-chart-bar bg-debit"></div>
+                                </Tooltip>
                             }
                         </div>
                     }

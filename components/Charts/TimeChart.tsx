@@ -3,13 +3,14 @@ import { GET_DASHBOARD_TIME } from "../../graphql/services/dashboard.service";
 import { IWeekScheduleHours } from "../../interfaces";
 import { useQuery } from "@apollo/client";
 import { AuthHeader } from "../../hooks/AuthHeader";
+import Tooltip from "../Tooltip";
 
 const TimeChart = () => {
 
     const [timeArray, setTimeArray] = useState<IWeekScheduleHours[]>();
     const [highestTime, setHighestTime] = useState(0);
 
-    const { data, loading } = useQuery(GET_DASHBOARD_TIME,AuthHeader())
+    const { data, loading } = useQuery(GET_DASHBOARD_TIME, AuthHeader())
 
 
     useEffect(() => {
@@ -63,8 +64,15 @@ const TimeChart = () => {
                             {
                                 timeArray?.map((item, index) => (
                                     <div key={index} className="d-flex flex-column justify-content-end gap-2 h-100">
-                                        <div style={{ height: `${checkPercentage(item?.qtt_schedules)}%` }} className={`${item.qtt_schedules === highestTime ? "bg-info time-chart-bar" : 'time-chart-bar'}`}></div>
-                                        <span className="text-secondary text-center">{item.hour?.slice(0, 5)}</span>
+                                        {item.qtt_schedules > 0
+                                            &&
+                                            <>
+                                                <Tooltip className="h-100" description={`${item?.qtt_schedules} atendimentos`}>
+                                                    <div role="button" style={{ height: `${checkPercentage(item?.qtt_schedules)}%` }} className={`${item.qtt_schedules === highestTime ? "bg-info time-chart-bar" : 'time-chart-bar'}`}></div>
+                                                </Tooltip>
+                                                <span className="text-secondary text-center">{item.hour?.slice(0, 5)}</span>
+                                            </>
+                                        }
                                     </div>
                                 ))
                             }
@@ -72,7 +80,7 @@ const TimeChart = () => {
                     </div>
                 }
             </div>
-        </div>
+        </div >
     );
 }
 
