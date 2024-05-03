@@ -77,6 +77,26 @@ export const CREATE_CUSTOMER = gql`mutation createCustomer(
     }
   }`
 
+export const UPDATE_CUSTOMER_PROFILE = gql`mutation updateCustomerProfile(
+    $id: String!,$name: String!, $email: String!, $phone: String!, 
+    $password: String!, $image_url: String!, $birthdate: DateTime!,$adress: AdressInput!) {
+    updateCustomerProfile(id:$id, customer: { 
+        name: $name
+        email: $email 
+        phone: $phone
+        password: $password
+        image_url: $image_url
+        birthdate: $birthdate
+        adress: $adress
+    }) {
+        name
+        email
+        phone
+        image_url
+        birthdate
+    }
+  }`
+
 export const REMOVE_VET = gql`mutation removeVet($id: String!) {
     removeVet(id: $id) {
         name
@@ -102,6 +122,28 @@ export const GET_CUSTOMERS = gql`
         adress{
             city
             neighborhood
+        }
+    }
+  }
+  `
+export const GET_CUSTOMER_BY_ID = gql`
+  query getUserById($id: String!){
+    getUserById(id: $id){
+        id
+        name
+        phone
+        email
+        birthdate
+        animals{
+            name
+            typeAnimalId
+            avatar
+            gender
+            breed
+            neutered
+        }
+        adress{
+            cep
         }
     }
   }

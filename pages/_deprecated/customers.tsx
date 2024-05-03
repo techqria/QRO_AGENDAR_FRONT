@@ -1,4 +1,6 @@
 import CustomersList from "../../components/CustomersList";
+import ModalEditCustomer from "../../components/Modals/ModalEditCustomer";
+import ModalEditPet from "../../components/Modals/ModalEditPet";
 import ModalRegisterCustomer from "../../components/Modals/ModalRegisterCustomer";
 
 const Customers = () => {
@@ -8,6 +10,8 @@ const Customers = () => {
             <CustomersList />
             <button data-bs-toggle="modal" data-bs-target="#registerCustomerModal" className="btn btn-orange mt-5 rounded fw-bold">Cadastrar Novo Cliente</button>
             <ModalRegisterCustomer />
+            <ModalEditCustomer />
+            <ModalEditPet />
         </section>
     );
 }

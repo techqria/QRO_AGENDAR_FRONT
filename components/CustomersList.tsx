@@ -6,7 +6,7 @@ import { GET_ANIMAL_TYPES, GET_ANIMAL_TYPE_BY_ID } from "../graphql/services/ani
 import { AuthHeader } from "../hooks/AuthHeader";
 import ModalRegisterPet from "./Modals/ModalRegisterPet";
 import { useDispatch } from "react-redux";
-import { changeCustomerId } from "../store/slices/customer.slice";
+import { changeCurrentPet, changeCustomerId } from "../store/slices/customer.slice";
 
 const CustomersList = () => {
 
@@ -56,7 +56,7 @@ const CustomersList = () => {
                                                 <li><span className="fw-semibold">Endereço:&nbsp;</span>{customer.adress.neighborhood}</li>
                                                 <li><span className="fw-semibold">Data de nascimento:&nbsp;</span>{new Date(customer.birthdate).toLocaleDateString('pt-br')}</li>
                                             </ul>
-                                            <button className="btn btn-orange">Editar perfil</button>
+                                            <button onClick={_ => setCurrentCustomerId(customer.id)} data-bs-toggle="modal" data-bs-target="#editCustomerModal" className="btn btn-orange">Editar perfil</button>
                                         </div>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@ const CustomersList = () => {
                                                         <td>{animal.name}</td>
                                                         <td>{animalTypes.getAllAnimalTypes.filter(el => el.id == animal.typeAnimalId)[0].name}</td>
                                                         <td></td>
-                                                        <td role="button" className="text-orange fw-semibold">ver mais</td>
+                                                        <td onClick={_ => dispatch(changeCurrentPet({...animal, index}))} role="button"  data-bs-toggle="modal" data-bs-target="#editPetModal" className="text-orange fw-semibold">ver mais</td>
                                                     </tbody>
                                                 </table>
 

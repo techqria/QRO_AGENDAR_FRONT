@@ -22,3 +22,15 @@ export const CREATE_ANIMAL = gql`
         }
     }
 `
+
+export const UPDATE_ANIMAL = gql`mutation updateAnimal($userId: String!, $index: Int!, $animal: AnimalInput!) {
+  updateAnimal(
+    userId: $userId,
+    index: $index,
+    animal: $animal
+  )
+  {
+    name
+  }
+}
+`

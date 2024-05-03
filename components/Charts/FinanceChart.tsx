@@ -49,7 +49,7 @@ const FinanceChart = () => {
     if (loading) return <p>Carregando</p>
 
     return (
-        <div className="col-md-6 text-black ">
+        <div className="col-md-12 text-black ">
             <div className="bg-white p-4 rounded">
 
                 <h5>Financeiro</h5>

@@ -9,6 +9,9 @@ const customerSlice = createSlice({
         changeCustomerId(state, action) {
             state.customerId = action.payload
         },
+        changeCurrentPet(state, action) {
+            state.currentPet = action.payload
+        }
     },
     extraReducers(builder) {
         builder.addCase(clearRedux, (state) => {
@@ -17,5 +20,5 @@ const customerSlice = createSlice({
     },
 })
 
-export const { changeCustomerId } = customerSlice.actions
+export const { changeCustomerId, changeCurrentPet } = customerSlice.actions
 export const customerReducer = customerSlice.reducer

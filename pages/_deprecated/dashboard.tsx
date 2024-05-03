@@ -20,7 +20,6 @@ const Dashboard = () => {
 
             <section className='row mt-5 justify-content-between'>
                 <FinanceChart />
-                <PaymentMethodChart />
                 <SpecialtyChart />
                 <TimeChart />
             </section>

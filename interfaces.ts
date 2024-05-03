@@ -79,7 +79,7 @@ export interface ICustomer {
     image_url?: string;
     id?: string
     adress: IAdress
-    animals: IAnimal[]
+    animals?: IAnimal[]
 }
 
 export interface IAdress {
@@ -90,6 +90,7 @@ export interface IAdress {
     additionalInfo: string
 }
 export interface IAnimal {
+    index?:number
     userId: string
     name: string
     gender: string

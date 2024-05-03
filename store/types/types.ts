@@ -1,7 +1,7 @@
 import { RoleEnum } from "../../enum/role.enum";
 import { SchedulePeriodicityEnum } from "../../enum/schedule-periodicity.enum"
 import { ToastEnum } from "../../enum/toast.enum";
-import { IVets } from "../../interfaces";
+import { IAnimal, IVets } from "../../interfaces";
 
 export interface IPages {
     currentPage: string
@@ -47,4 +47,5 @@ export interface IUser {
 
 export interface ICustomer {
     customerId: string;
+    currentPet?: IAnimal
 }
