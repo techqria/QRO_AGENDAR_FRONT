@@ -49,7 +49,7 @@ const RegisterPetForm = () => {
 
     useEffect(() => {
         //Inserindo gênero e tipo do animal assim que o componente é montado 
-        if (data) setAnimal({ ...animal, gender: GenderEnum.male, typeAnimalId: data.getAllAnimalTypes[0].id })
+        if (data) setAnimal({ ...animal, gender: GenderEnum.male, typeAnimalId: data.getAllAnimalTypes[0].id, neutered: false })
     }, [data]);
 
     if (loading) return <p className="text-black">Carregando</p>

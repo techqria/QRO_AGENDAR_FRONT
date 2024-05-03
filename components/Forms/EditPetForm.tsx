@@ -10,7 +10,7 @@ import { IStore } from "../../store/types/types";
 import { AuthHeader, AuthHeaderRefetch } from "../../hooks/AuthHeader";
 import { ToastMessage } from "../../hooks/ToastMessage";
 import { ToastEnum } from "../../enum/toast.enum";
-import { UPDATE_ANIMAL } from "../../graphql/services/animal.service";
+import { REMOVE_ANIMAL, UPDATE_ANIMAL } from "../../graphql/services/animal.service";
 
 const EditPetForm = () => {
 
@@ -23,6 +23,20 @@ const EditPetForm = () => {
     const { data, loading } = useQuery(GET_ANIMAL_TYPES, AuthHeader())
     const [createAnimalTypeMutation] = useMutation(CREATE_ANIMAL_TYPE, AuthHeader())
     const [updateAnimalMutation] = useMutation(UPDATE_ANIMAL, AuthHeader())
+    const [removeAnimalMutation] = useMutation(REMOVE_ANIMAL, AuthHeader())
+
+    async function removeAnimal() {
+        removeAnimalMutation({
+            variables: {
+                index: animal.index,
+                userId: animal.userId
+            },
+            refetchQueries: [{ query: GET_CUSTOMERS, context: AuthHeaderRefetch() }]
+        }).then(_ => {
+            ToastMessage(ToastEnum.success, "Pet removido com sucesso")
+            document.getElementById('close-edit-pet-modal').click()
+        })
+    }
 
     async function createAnimalType() {
         await createAnimalTypeMutation({ variables: { name: NewAnimalType }, refetchQueries: [{ query: GET_ANIMAL_TYPES, context: AuthHeaderRefetch() }] })
@@ -51,7 +65,6 @@ const EditPetForm = () => {
 
 
     useEffect(() => {
-        console.log(currentPet)
         if (currentPet) setAnimal(currentPet)
     }, [currentPet]);
 
@@ -60,6 +73,9 @@ const EditPetForm = () => {
 
     return (
         <form onSubmit={updateAnimal}>
+            <Tooltip description="Remover Pet" className="position-absolute top-0 left-0">
+                <img onClick={removeAnimal} role="button" width={16} src="/icons/trash.svg" alt="edit-orange.svg" />
+            </Tooltip>
             <div className="mb-3 d-flex justify-content-evenly">
                 <label className="w-20 text-black">Nome</label>
                 <input value={animal.name} onChange={(e) => setAnimal({ ...animal, name: e.target.value })} required placeholder="Thor" className="border-orange form-control mw-400" type="text" />

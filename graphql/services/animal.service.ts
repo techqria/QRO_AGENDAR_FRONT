@@ -33,3 +33,14 @@ export const UPDATE_ANIMAL = gql`mutation updateAnimalByIndex($index: Float!, $a
   }
 }
 `
+
+export const REMOVE_ANIMAL = gql`mutation removeAnimalByIndex($index: Float!, $userId: String!) {
+  removeAnimalByIndex(
+    index: $index,
+    userId: $userId
+  )
+  {
+    name
+  }
+}
+`
