@@ -23,9 +23,8 @@ export const CREATE_ANIMAL = gql`
     }
 `
 
-export const UPDATE_ANIMAL = gql`mutation updateAnimal($userId: String!, $index: Int!, $animal: AnimalInput!) {
-  updateAnimal(
-    userId: $userId,
+export const UPDATE_ANIMAL = gql`mutation updateAnimalByIndex($index: Float!, $animal: AnimalInput!) {
+  updateAnimalByIndex(
     index: $index,
     animal: $animal
   )

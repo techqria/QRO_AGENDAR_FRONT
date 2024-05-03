@@ -80,7 +80,7 @@ const CustomersList = () => {
                                                         <td>{animal.name}</td>
                                                         <td>{animalTypes.getAllAnimalTypes.filter(el => el.id == animal.typeAnimalId)[0].name}</td>
                                                         <td></td>
-                                                        <td onClick={_ => dispatch(changeCurrentPet({...animal, index}))} role="button"  data-bs-toggle="modal" data-bs-target="#editPetModal" className="text-orange fw-semibold">ver mais</td>
+                                                        <td onClick={_ => dispatch(changeCurrentPet({...animal, index,userId: customer.id}))} role="button"  data-bs-toggle="modal" data-bs-target="#editPetModal" className="text-orange fw-semibold">ver mais</td>
                                                     </tbody>
                                                 </table>
 

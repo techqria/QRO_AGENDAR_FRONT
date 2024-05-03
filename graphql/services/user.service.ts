@@ -118,6 +118,7 @@ export const GET_CUSTOMERS = gql`
             gender
             breed
             neutered
+            color
         }
         adress{
             city

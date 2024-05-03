@@ -34,18 +34,21 @@ const EditPetForm = () => {
     async function updateAnimal(e: FormEvent) {
         e.preventDefault()
 
+        const index = animal.index
+        delete animal.index
+
         updateAnimalMutation({
             variables: {
-                userId: customerId,
-                index: animal.index,
+                index,
                 animal
             },
             refetchQueries: [{ query: GET_CUSTOMERS, context: AuthHeaderRefetch() }]
         }).then(_ => {
             ToastMessage(ToastEnum.success, "Pet atualizado com sucesso")
-            document.getElementById('close-register-pet-modal').click()
+            document.getElementById('close-edit-pet-modal').click()
         })
     }
+
 
     useEffect(() => {
         console.log(currentPet)
