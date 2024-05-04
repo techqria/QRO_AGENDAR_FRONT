@@ -54,7 +54,7 @@ const SidebarDesktop = () => {
     return (
         <div className="d-none d-md-flex bg-white sidebar-menu position-fixed h-100 p-4 flex-column justify-content-between">
             <div className="d-flex flex-column gap-5">
-                <img role={userRole === RoleEnum.employee && "button"} onClick={employeeSchedule} width={30} className="mb-5" src="/favicon.svg" alt="logo-orange-qro-agendar.svg" />
+                <img role={userRole == RoleEnum.employee ? "button": undefined} onClick={employeeSchedule} width={30} className="mb-5" src="/favicon.svg" alt="logo-orange-qro-agendar.svg" />
                 {renderSidebarIcons()}
             </div>
             <Tooltip description="Configurações" >
