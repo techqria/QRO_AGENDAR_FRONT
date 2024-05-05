@@ -60,7 +60,7 @@ export const GET_SCHEDULE_DETAIL_BY_ID = gql`query getScheduleDetailsById($id: S
 
 export const REMOVE_SCHEDULE = gql`mutation removeSchedule($id: String!) {
     removeSchedule(id: $id) {
-        title
+        id
     }
   }`
 

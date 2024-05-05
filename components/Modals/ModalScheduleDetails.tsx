@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import { GET_SCHEDULES_CALENDAR, GET_SCHEDULE_DETAIL_BY_ID, UPDATE_SCHEDULE } from "../../graphql/services/schedule.service";
+import { GET_SCHEDULES_CALENDAR, GET_SCHEDULE_DETAIL_BY_ID, REMOVE_SCHEDULE, UPDATE_SCHEDULE } from "../../graphql/services/schedule.service";
 import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { IPetsList, ISchedule, IScheduleDetails } from "../../interfaces";
@@ -10,6 +10,7 @@ import { ToastMessage } from "../../hooks/ToastMessage";
 import { ToastEnum } from "../../enum/toast.enum";
 import { GET_ALL_VETS, GET_CUSTOMERS, GET_VET_BY_ID } from "../../graphql/services/user.service";
 import { GET_SPECIALTY_BY_ID } from "../../graphql/services/specialty.service";
+import Tooltip from "../Tooltip";
 
 const ModalScheduleDetails = () => {
 
@@ -24,6 +25,7 @@ const ModalScheduleDetails = () => {
     const { data: vets, loading: loadingVets } = useQuery(GET_ALL_VETS, AuthHeader());
     const { data: customers, loading: loadingCustomers } = useQuery(GET_CUSTOMERS, AuthHeader());
     const [specialtyByIdQuery] = useLazyQuery(GET_SPECIALTY_BY_ID, AuthHeader());
+    const [removeScheduleMutation] = useMutation(REMOVE_SCHEDULE, AuthHeader())
 
     useEffect(() => {
         scheduleIdToShow != '' && getScheduleDetails()
@@ -175,6 +177,17 @@ const ModalScheduleDetails = () => {
         setSchedule({ ...schedule, pet_name: currentPet.name, pet_breed: currentPet.breed, pet_gender: currentPet.gender, pet_neutered: currentPet.neutered, pet_type: currentPet.typeAnimalId })
     }
 
+    async function removeSchedule() {
+        await removeScheduleMutation({
+            variables: { id: scheduleIdToShow },
+            refetchQueries: [{ query: GET_SCHEDULES_CALENDAR, context: AuthHeaderRefetch() }],
+        })
+            .then(_ => ToastMessage(ToastEnum.success, 'Agendamento removido com sucesso'))
+
+        clearFormData()
+        closeModal()
+    }
+
     if (loadingVets || loadingCustomers) return <p className="text-black">Carregando</p>
 
     return (
@@ -184,6 +197,9 @@ const ModalScheduleDetails = () => {
                 <div className="modal-content">
                     <div className="modal-header border-0">
                         <button id="close-details-schedule-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <Tooltip description="Remover Pet" className="position-absolute top-0 left-0 mt-3">
+                            <img onClick={removeSchedule} role="button" width={16} src="/icons/trash.svg" alt="edit-orange.svg" />
+                        </Tooltip>
                     </div>
                     <div className="modal-body">
                         <h1 className="modal-title fs-5 text-orange text-center" >Detalhes do Agendamento</h1>
