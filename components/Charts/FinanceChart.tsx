@@ -17,7 +17,7 @@ const FinanceChart = () => {
 
     useEffect(() => {
         getDashFinance()
-    }, []);
+    }, [startDate, finalDate]);
 
     async function getDashFinance() {
         const { data } = await getDashFinanceQuery({ variables: { startDate, finalDate } })

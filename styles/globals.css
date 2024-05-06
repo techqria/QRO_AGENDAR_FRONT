@@ -47,12 +47,19 @@ ul {
 
 .react-datepicker__input-container > input{
   background-color: transparent;
-  color: var(--black);
+  color: var(--orange);
   border: 0;
   padding: 0.5rem 1rem;
   text-align: center;
-  border: 1px solid var(--black);
-  border-radius: 2px;
+  border: 1px solid var(--orange);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.react-datepicker__input-container:hover > input{
+  background-color: var(--orange);
+  color: var(--white) !important;
+
 }
 
 .react-datepicker__header {

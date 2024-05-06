@@ -1,27 +1,33 @@
 import { useEffect, useState } from "react";
 import { GET_DASHBOARD_TIME } from "../../graphql/services/dashboard.service";
 import { IWeekScheduleHours } from "../../interfaces";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { AuthHeader } from "../../hooks/AuthHeader";
 import Tooltip from "../Tooltip";
+import { useSelector } from "react-redux";
+import { IStore } from "../../store/types/types";
 
 const TimeChart = () => {
+
+    const { startDate, finalDate } = useSelector((store: IStore) => store.dateFilter)
 
     const [timeArray, setTimeArray] = useState<IWeekScheduleHours[]>();
     const [highestTime, setHighestTime] = useState(0);
 
-    const { data, loading } = useQuery(GET_DASHBOARD_TIME, AuthHeader())
+    const [getDashboardTimeQuery, { loading }] = useLazyQuery(GET_DASHBOARD_TIME, AuthHeader())
 
 
     useEffect(() => {
-        if (data) {
-            const times = data.getDashboard.weekScheduleHours
-            let arr = Object.values(times)
-            arr = arr.slice(0, arr.length - 1)
-            setTimeArray(arr as any)
-            getHighestTime(arr)
-        }
-    }, [data]);
+        getDashBoardTimeData()
+    }, [startDate, finalDate]);
+
+    async function getDashBoardTimeData() {
+        const { data } = await getDashboardTimeQuery({ variables: { startDate, finalDate } })
+        let arr = Object.values(data.getDashboardTime.dateRangeScheduleHours)
+        arr = arr.slice(0, arr.length - 1)
+        setTimeArray(arr as any)
+        getHighestTime(arr)
+    }
 
 
     function getHighestTime(array) {
@@ -54,7 +60,7 @@ const TimeChart = () => {
         <div className="col-md-6 text-black mt-4">
             <div className="bg-white p-4 rounded h-100 minh-400">
 
-                <h5>Horários mais atendidos na semana</h5>
+                <h5>Horários mais atendidos</h5>
 
                 {highestTime == 0 ? <p className="text-danger mt-5 ">Nenhum horário nessa semana</p>
                     :
@@ -67,7 +73,7 @@ const TimeChart = () => {
                                         {item.qtt_schedules > 0
                                             &&
                                             <>
-                                                <Tooltip className="h-100" description={`${item?.qtt_schedules} atendimentos`}>
+                                                <Tooltip className="h-100 d-flex align-items-end" description={`${item?.qtt_schedules} atendimentos`}>
                                                     <div role="button" style={{ height: `${checkPercentage(item?.qtt_schedules)}%` }} className={`${item.qtt_schedules === highestTime ? "bg-info time-chart-bar" : 'time-chart-bar'}`}></div>
                                                 </Tooltip>
                                                 <span className="text-secondary text-center">{item.hour?.slice(0, 5)}</span>

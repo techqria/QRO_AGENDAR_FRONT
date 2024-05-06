@@ -60,7 +60,7 @@ const SpecialtyChart = () => {
         <div className="col-md-6 text-black mt-4">
             <div className="bg-white p-4 rounded">
 
-                <h5>Especialidades por semana</h5>
+                <h5>Especialidades mais atendidas</h5>
 
                 <div className="d-flex gap-3">
                     <div className="d-flex mt-3">

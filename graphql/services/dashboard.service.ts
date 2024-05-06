@@ -1,8 +1,11 @@
 import { gql } from '@apollo/client';
 
-export const GET_DASHBOARD_TIME = gql`query getDashboard {
-  getDashboard{
-      weekScheduleHours{
+export const GET_DASHBOARD_TIME = gql`query getDashboardTime($startDate: DateTime!, $finalDate: DateTime!) {
+  getDashboardTime(
+    startDate: $startDate
+    finalDate: $finalDate
+  ){
+    dateRangeScheduleHours{
           first{
             hour
             qtt_schedules
@@ -49,6 +52,18 @@ export const GET_DASH_FINANCE = gql`query getDashboardFinance($startDate: DateTi
       debit
       money
       credit
+    }
+  }
+}`
+
+export const GET_DASH_SPECIALTIES = gql`query getDashboardSpecialties($startDate: DateTime!, $finalDate: DateTime!) {
+  getDashboardSpecialties(
+    startDate: $startDate
+    finalDate: $finalDate
+  ){
+    specialities{
+      price
+      date
     }
   }
 }`
