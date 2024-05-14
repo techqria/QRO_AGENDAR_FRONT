@@ -44,7 +44,7 @@ export const MonthlyCalendar = () => {
 
     function checkSquareClick(e: any) {
         const { className }: { className: string } = e.target
-        if (className.includes('square-calendar')) document.querySelector(ModalsEnum.REGISTER_MODAL).click()
+        if (className.includes('square-calendar')) (document.querySelector(ModalsEnum.REGISTER_MODAL) as any).click()
     }
 
     function setScheduleIdToShowDetails(id: string) {

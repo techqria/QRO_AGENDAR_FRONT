@@ -62,7 +62,7 @@ export const WeekCalendar = () => {
 
     function checkSquareClick(e: any) {
         const { className }: { className: string } = e.target
-        if (className.includes('week-calendar')) document.querySelector(ModalsEnum.REGISTER_MODAL).click()
+        if (className.includes('week-calendar')) (document.querySelector(ModalsEnum.REGISTER_MODAL) as any).click()
     }
 
     function setScheduleIdToShowDetails(id: string) {
