@@ -61,9 +61,11 @@ export const GET_DASH_SPECIALTIES = gql`query getDashboardSpecialties($startDate
     startDate: $startDate
     finalDate: $finalDate
   ){
-    specialities{
-      price
-      date
+    specialties {
+        specialty
+        total_price
+        qtt_consultations
+        color
     }
   }
 }`

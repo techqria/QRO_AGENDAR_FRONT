@@ -31,7 +31,7 @@ const LoginForm = () => {
     }
 
     return (
-        <div className="mt-5 mt-md-0 pt-5 w-100 ps-md-5 pe-md-5">
+        <div className="mt-5 mt-md-0 pt-5 w-100 ps-md-5 pe-md-5 text-white">
             <h2 className="fw-bold text-start">Fazer login</h2>
 
             <div className="mt-5 mt-md-4">

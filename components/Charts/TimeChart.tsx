@@ -62,7 +62,7 @@ const TimeChart = () => {
 
                 <h5>Horários mais atendidos</h5>
 
-                {highestTime == 0 ? <p className="text-danger mt-5 ">Nenhum horário nessa semana</p>
+                {highestTime == 0 ? <p className="text-danger mt-5 ">Nenhum horário no périodo de tempo escolhido</p>
                     :
 
                     <div className="finance-chart d-flex flex-column mt-3 gap-3 h-90 align-items-center">

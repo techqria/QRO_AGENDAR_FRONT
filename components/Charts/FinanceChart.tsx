@@ -25,10 +25,10 @@ const FinanceChart = () => {
 
         if (financeValues) {
             let arr = Object.values(financeValues)
-            arr = arr.slice(0, arr.length - 1)
+            arr = arr.slice(0, arr.length)
 
             setFinanceValues(financeValues)
-            setHighestPrice(Object.values(arr).sort((a: any, b: any) => a - b).reverse()[0] as number)
+            setHighestPrice(arr.sort((a: any, b: any) => a - b).reverse()[0] as number)
         }
     }
 
@@ -90,11 +90,11 @@ const FinanceChart = () => {
 
 
                 <div className="finance-chart d-flex mt-3 gap-3">
-                    <div className="d-flex flex-column text-secondary gap-5">
+                    <div className="d-flex flex-column text-secondary gap-5 minh-260 justify-content-between">
                         <span>{highestPrice}</span>
-                        <span>{Math.round(highestPrice / 2)}</span>
+                        {/* <span>{Math.round(highestPrice / 2)}</span>
                         <span>{Math.round(highestPrice / 3)}</span>
-                        <span>{Math.round(highestPrice / 4)}</span>
+                        <span>{Math.round(highestPrice / 4)}</span> */}
                         <span>0</span>
                     </div>
                     {highestPrice > 0 &&

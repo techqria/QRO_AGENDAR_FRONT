@@ -332,6 +332,9 @@ ul {
 .minh-400 {
   min-height: 400px;
 }
+.minh-260 {
+  min-height: 260px;
+}
 
 .h-90 {
   height: 90%;
