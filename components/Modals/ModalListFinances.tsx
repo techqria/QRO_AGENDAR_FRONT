@@ -1,21 +1,22 @@
 import { useSelector } from "react-redux";
 import { IStore } from "../../store/types/types";
 import { useEffect, useState } from "react"
-import  { GET_FINANCE_BY_USER } from "../../graphql/services/finance.service";
+import { GET_FINANCE_BY_USER } from "../../graphql/services/finance.service";
 import { IFinanceListByUser } from "../../interfaces";
 import { useLazyQuery } from "@apollo/client";
 import { AuthHeader } from "../../hooks/AuthHeader";
 
 const ModalListFinances = () => {
 
-    const { id,name } = useSelector((store: IStore) => store.employee)
+    const { id, name } = useSelector((store: IStore) => store.employee)
+    const { startDate, finalDate } = useSelector((store: IStore) => store.dateFilter)
 
     const [financeData, setFinanceData] = useState<IFinanceListByUser[]>([])
-    const [getFinanceQuery] = useLazyQuery(GET_FINANCE_BY_USER,AuthHeader())
+    const [getFinanceQuery] = useLazyQuery(GET_FINANCE_BY_USER, AuthHeader())
 
     useEffect(() => {
         async function getData() {
-            const financeData = (await getFinanceQuery({ variables: { id } })).data.getFinanceListByUser
+            const financeData = (await getFinanceQuery({ variables: { id, startDate, finalDate } })).data.getFinanceListByUser
             setFinanceData(financeData)
         }
         getData()

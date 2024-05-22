@@ -1,7 +1,10 @@
 import { gql } from '@apollo/client';
 
-export const GET_FINANCES = gql`query getFinanceList {
-    getFinanceList {
+export const GET_FINANCES = gql`query getFinanceList($startDate: DateTime!, $finalDate: DateTime!) {
+    getFinanceList(
+      startDate: $startDate
+      finalDate: $finalDate
+  ) {
         employee_id
         employee_name
         qtt_schedules
@@ -9,8 +12,12 @@ export const GET_FINANCES = gql`query getFinanceList {
     }
   }`
 
-export const GET_FINANCE_BY_USER =gql`query getFinanceListByUser($id: String!) {
-    getFinanceListByUser(id: $id) {
+export const GET_FINANCE_BY_USER =gql`query getFinanceListByUser($id: String!,$startDate: DateTime!, $finalDate: DateTime!) {
+    getFinanceListByUser(
+      id: $id
+      startDate: $startDate
+      finalDate: $finalDate
+    ) {
         date
         payment{
           price

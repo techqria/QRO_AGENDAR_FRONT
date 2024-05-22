@@ -1,25 +1,36 @@
 import { GET_FINANCES } from "../graphql/services/finance.service";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeEmployeeId, changeEmployeeName } from "../store/slices/employee.slice";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { IEmployee, IFinanceList } from "../interfaces";
 import { ToastMessage } from "../hooks/ToastMessage";
 import { ToastEnum } from "../enum/toast.enum";
 import { AuthHeader } from "../hooks/AuthHeader";
+import { IStore } from "../store/types/types";
+import { useEffect } from "react";
 
 const ListFinance = () => {
 
     const dispatch = useDispatch()
 
-    const { data, loading } = useQuery(GET_FINANCES,AuthHeader())
+    const { startDate, finalDate } = useSelector((store: IStore) => store.dateFilter)
+
+    const [getFinanceQuery, { loading, data }] = useLazyQuery(GET_FINANCES, AuthHeader())
 
     const setEmployeeId = (employee: IFinanceList) => {
-        if(!employee.qtt_schedules) return ToastMessage(ToastEnum.warning, "Funcionário não possui consultas")
+        if (!employee.qtt_schedules) return ToastMessage(ToastEnum.warning, "Funcionário não possui consultas")
         dispatch(changeEmployeeId(employee.employee_id))
         dispatch(changeEmployeeName(employee.employee_name))
     }
 
-    if (loading) return <p>Carregando</p>
+    useEffect(() => {
+        async function getData() {
+            await getFinanceQuery({ variables: { startDate, finalDate } })
+        }
+        getData()
+    }, [startDate, finalDate]);
+
+    if (loading || !data) return <p>Carregando</p>
 
     return (
         <div className="w-100 d-flex flex-column gap-3 mt-5">
