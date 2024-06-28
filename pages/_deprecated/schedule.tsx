@@ -22,13 +22,13 @@ const Schedule = () => {
 
     return (
         <section className='container pt-5 bg-white-sec d-flex flex-column justify-content-center align-items-center'>
-            <h4 className="text-black mt-4 pt-5">{periodicityToShow}</h4>
-            <div className="d-flex justify-content-between align-items-center w-100 mx-5 px-5">
-                <button id="schedule-modal" data-bs-toggle="modal" data-bs-target="#registerScheduleModal" className="btn btn-orange mt-5 rounded fw-bold">+ Cadastrar Nova Agenda</button>
+            <div className="d-flex justify-content-between w-100 align-items-center px-5">
+                <h2 className="text-start mb-0">{periodicityToShow}</h2>
                 <SwitchSchedule periodicityToShow={periodicityToShow} />
+                <button id="schedule-modal" data-bs-toggle="modal" data-bs-target="#registerScheduleModal" className="btn btn-orange rounded fw-bold px-2">+ Nova Agenda</button>
             </div>
-            <EmployeesSchedule />
             {chooseCalendar()}
+            <EmployeesSchedule />
             <ModalRegisterSchedule />
             <ModalScheduleDetails />
         </section>

@@ -34,41 +34,41 @@ const ModalListFinances = () => {
                     <div className="modal-body">
                         {
                             financeData?.map((el, index) => (
-                                <div key={index} className="d-flex justify-content-between bg-white p-3">
+                                <div key={index} className="d-flex justify-content-between bg-white p-3 text-black">
                                     <div className="d-flex flex-column w-100">
-                                        <h5 className="text-black fw-bold mb-0">{el.customer_name}</h5>
-                                        <span className="text-black fw-light">Cliente</span>
+                                        <h5 className="fw-bold mb-0">Cliente</h5>
+                                        <span>{el.customer_name}</span>
                                     </div>
                                     <div className="d-flex flex-column w-100">
-                                        <h5 className="text-black fw-bold mb-0">{el.pet_name}</h5>
-                                        <span className="text-black fw-light">Nome do pet</span>
+                                        <h5 className="fw-bold mb-0">Nome do pet</h5>
+                                        <span>{el.pet_name}</span>
                                     </div>
                                     <div className="d-flex flex-column w-100">
-                                        <h5 className="text-black fw-bold mb-0">{el.pet_breed}</h5>
-                                        <span className="text-black fw-light">Raça do pet</span>
+                                        <h5 className="fw-bold mb-0">Raça do pet</h5>
+                                        <span>{el.pet_breed}</span>
                                     </div>
                                     <div className="d-flex flex-column w-100">
-                                        <h5 className="text-black fw-bold mb-0">{el.pet_type}</h5>
-                                        <span className="text-black fw-light">Tipo do pet</span>
-                                    </div>
-
-                                    <div className="d-flex flex-column w-100">
-                                        <h5 className="text-black fw-bold mb-0">{new Date(el.date).toLocaleDateString('pt-BR')}</h5>
-                                        <span className="text-black fw-light">Data</span>
+                                        <h5 className="fw-bold mb-0">Tipo do pet</h5>
+                                        <span>{el.pet_type}</span>
                                     </div>
 
                                     <div className="d-flex flex-column w-100">
-                                        <h5 className="text-black fw-bold mb-0">{new Date(el.date).toLocaleTimeString('pt-BR')}</h5>
-                                        <span className="text-black fw-light">Horário</span>
+                                        <h5 className="fw-bold mb-0">Data</h5>
+                                        <span>{new Date(el.date).toLocaleDateString('pt-BR')}</span>
                                     </div>
 
                                     <div className="d-flex flex-column w-100">
-                                        <h5 className="text-primary fw-bold mb-0">{el.payment.method}</h5>
-                                        <span className="text-black fw-light">Forma de pagamento</span>
+                                        <h5 className="fw-bold mb-0">Horário</h5>
+                                        <span>{new Date(el.date).toLocaleTimeString('pt-BR')}</span>
+                                    </div>
+
+                                    <div className="d-flex flex-column w-100">
+                                        <h5 className="fw-bold mb-0">Forma de pagamento</h5>
+                                        <span className="text-primary">{el.payment.method}</span>
                                     </div>
                                     <div className="d-flex flex-column w-100">
-                                        <h5 className="text-primary fw-bold mb-0">R${el.payment.price}</h5>
-                                        <span className="text-black fw-light">Valor da Consulta</span>
+                                        <h5 className="fw-bold mb-0">Valor da Consulta</h5>
+                                        <span className="text-primary">R${el.payment.price}</span>
                                     </div>
                                     {/* 
                                     <button className="d-flex align-items-center p-0 m-0 btn btn-transparent">

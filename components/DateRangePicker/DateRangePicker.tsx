@@ -25,10 +25,14 @@ const DateRangePicker = () => {
     }
 
     return (
-        <div className="d-flex gap-2 align-items-center">
-            <ReactDatePicker dateFormat="dd/MM/yyyy" showIcon icon={<CalendarIcon />} locale="pt-BR" selected={dateRange.startDate} onChange={value => setDateRange({ ...dateRange, startDate: value })} />
-            <ReactDatePicker dateFormat="dd/MM/yyyy" showIcon icon={<CalendarIcon />} locale="pt-BR" selected={dateRange.finalDate} onChange={value => setDateRange({ ...dateRange, finalDate: value })} />
-            <button onClick={filterDateRange} className="btn btn-orange">Filtrar</button>
+        <div className="d-flex flex-column gap-2">
+            <label>Selecione o período que deseja comparar:</label>
+
+            <div className="d-flex gap-2 align-items-center">
+                <ReactDatePicker dateFormat="dd/MM/yyyy" showIcon icon={<CalendarIcon />} locale="pt-BR" selected={dateRange.startDate} onChange={value => setDateRange({ ...dateRange, startDate: value })} />
+                <ReactDatePicker dateFormat="dd/MM/yyyy" showIcon icon={<CalendarIcon />} locale="pt-BR" selected={dateRange.finalDate} onChange={value => setDateRange({ ...dateRange, finalDate: value })} />
+                <button onClick={filterDateRange} className="btn btn-orange">Filtrar</button>
+            </div>
         </div>
     )
 }

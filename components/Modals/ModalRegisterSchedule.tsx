@@ -153,7 +153,7 @@ const ModalRegisterSchedule = () => {
                         <button id="close-register-schedule-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        <h1 className="modal-title fs-5 text-orange text-center" >Cadastrar Nova Agenda</h1>
+                        <h1 className="modal-title fs-5 text-orange text-start" >Cadastrar Nova Agenda</h1>
 
                         <form onSubmit={registerSchedule} className="mt-3">
                             <div className="mb-3 d-flex justify-content-evenly">

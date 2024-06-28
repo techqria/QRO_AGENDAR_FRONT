@@ -36,19 +36,20 @@ const ListFinance = () => {
         <div className="w-100 d-flex flex-column gap-3 mt-5">
             {
                 data.getFinanceList.map(el => (
-                    <div key={el.employee_id} className="d-flex justify-content-between bg-white p-3">
+                    <div key={el.employee_id} className="d-flex justify-content-between bg-white p-3 text-black">
                         <div className="d-flex flex-column">
-                            <h5 className="text-black fw-bold">{el.employee_name}</h5>
+                            <h5 className="fw-bold">Consultas</h5>
+                            <span>{el.employee_name}</span>
                         </div>
 
                         <div className="d-flex flex-column">
-                            <h5 className="text-black fw-bold">{el.qtt_schedules}</h5>
-                            <span className="text-black">Consultas</span>
+                            <h5 className="fw-bold">Consultas</h5>
+                            <span>{el.qtt_schedules}</span>
                         </div>
 
                         <div className="d-flex flex-column">
-                            <h5 className="text-primary fw-bold">R${el.revenue_generated}</h5>
-                            <span className="text-black">Valor total</span>
+                            <h5 className="fw-bold">Valor total</h5>
+                            <span className="text-primary">R${el.revenue_generated}</span>
                         </div>
 
                         <button onClick={_ => setEmployeeId(el)} data-bs-toggle="modal" data-bs-target={`${el.qtt_schedules ? '#listFinancesModal' : ''}`} className="d-flex align-items-center p-0 m-0 btn btn-transparent">

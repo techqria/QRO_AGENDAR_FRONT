@@ -4,9 +4,13 @@ import { IVerifyToken } from "../../interfaces";
 
 class AuthService {
   async verifyToken(token: string): Promise<IVerifyToken> {
-    const { data, loading }: any = await apolloClient.query({ query: VERIFY_TOKEN_QUERY, variables: { token } })
-    
-    return data.verifyToken
+    try {
+      const { data, loading }: any = await apolloClient.query({ query: VERIFY_TOKEN_QUERY, variables: { token } })
+
+      return data.verifyToken
+    } catch (error) {
+      
+    }
   }
 }
 

@@ -16,10 +16,11 @@ const LoginForm = () => {
 
     const [user, setUser] = useState<ILoginUser>();
 
-    const [loginQuery] = useLazyQuery(LOGIN_QUERY,AuthHeader());
+    const [loginQuery] = useLazyQuery(LOGIN_QUERY);
 
     async function callApi() {
         const { data } = await loginQuery({ variables: { email: user.email, password: user.password } })
+        
         if (data.login.success) {
             cookie.set("qro_agendar_token", data.login.token)
 

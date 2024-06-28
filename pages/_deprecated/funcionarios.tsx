@@ -12,12 +12,17 @@ const Employees = () => {
     return (
         <section className='container bg-white-sec pt-5'>
             <div className="pt-md-5 d-flex flex-column justify-content-center align-items-center">
-                <h4 className="text-black mt-4 pt-5 pt-md-0">Funcionários</h4>
-                <EmployeesList />
-                <div className="d-flex gap-4">
-                    <button data-bs-toggle="modal" data-bs-target="#registerEmployeeModal" className="btn btn-orange mt-5 rounded fw-bold">Cadastrar Novo Funcionário</button>
-                    <button data-bs-toggle="modal" data-bs-target="#registerSpecialtyModal" className="btn btn-orange mt-5 rounded fw-bold">Cadastrar Nova Especialidade</button>
+                <div className="d-flex justify-content-between w-100">
+                    <div className="text-start">
+                        <h2>Funcionários</h2>
+                        <p >Lista de informações de funcionários, tais como especialidade, email e telefone.</p>
+                    </div>
+                    <div className="d-flex gap-4">
+                        <button data-bs-toggle="modal" data-bs-target="#registerEmployeeModal" className="btn btn-orange rounded fw-bold">+ Novo Funcionário</button>
+                        <button data-bs-toggle="modal" data-bs-target="#registerSpecialtyModal" className="btn btn-orange rounded fw-bold">+ Nova Especialidade</button>
+                    </div>
                 </div>
+                <EmployeesList />
             </div>
             <ModalRegisterEmployee />
             <ModalRegisterSpecialty />
