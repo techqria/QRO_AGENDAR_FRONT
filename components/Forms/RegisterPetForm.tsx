@@ -65,11 +65,11 @@ const RegisterPetForm = () => {
                 <div className="mw-400 d-flex gap-3 form-control border-0">
                     <div className="mb-3 d-flex gap-1">
                         <label className="text-black" >Macho</label>
-                        <input checked={animal.gender == GenderEnum.male} onChange={(e) => setAnimal({ ...animal, gender: e.target.value })} required value={GenderEnum.male} name="gender" type="radio"/>
+                        <input checked={animal?.gender == GenderEnum.male} onChange={(e) => setAnimal({ ...animal, gender: e.target.value })} required value={GenderEnum.male} name="gender" type="radio"/>
                     </div>
                     <div className="mb-3 d-flex gap-1">
                         <label className="text-black" >Fêmea</label>
-                        <input checked={animal.gender == GenderEnum.female} onChange={(e) => setAnimal({ ...animal, gender: e.target.value })} required value={GenderEnum.female} name="gender" type="radio"/>
+                        <input checked={animal?.gender == GenderEnum.female} onChange={(e) => setAnimal({ ...animal, gender: e.target.value })} required value={GenderEnum.female} name="gender" type="radio"/>
                     </div>
                 </div>
             </div>
@@ -115,11 +115,11 @@ const RegisterPetForm = () => {
                 <div className="mw-400 d-flex gap-3 form-control border-0">
                     <div className="mb-3 d-flex gap-1">
                         <label className="text-black" >Sim</label>
-                        <input checked={animal.neutered} onChange={(e) => setAnimal({ ...animal, neutered: Boolean(e.target.value) })} required value={1} name="neutered" type="radio" />
+                        <input checked={animal?.neutered} onChange={(e) => setAnimal({ ...animal, neutered: Boolean(e.target.value) })} required value={1} name="neutered" type="radio" />
                     </div>
                     <div className="mb-3 d-flex gap-1">
                         <label className="text-black" >Não</label>
-                        <input checked={!animal.neutered} onChange={(e) => setAnimal({ ...animal, neutered: Boolean(e.target.value) })} required value={0} name="neutered" type="radio" />
+                        <input checked={!animal?.neutered} onChange={(e) => setAnimal({ ...animal, neutered: Boolean(e.target.value) })} required value={0} name="neutered" type="radio" />
                     </div>
                 </div>
             </div>

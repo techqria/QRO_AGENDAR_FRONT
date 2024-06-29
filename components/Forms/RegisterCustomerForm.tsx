@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import  { CREATE_CUSTOMER, GET_CUSTOMERS } from "../../graphql/services/user.service";
+import { CREATE_CUSTOMER, GET_CUSTOMERS } from "../../graphql/services/user.service";
 import { IAdress, IAnimal, ICustomer } from "../../interfaces";
 import { GenderEnum } from "../../enum/gender.enum";
 import Tooltip from "../Tooltip";
@@ -20,9 +20,9 @@ const RegisterCustomerForm = () => {
     const [NewAnimalType, setNewAnimalType] = useState("");
     const [showNewAnimalType, setShowNewAnimalType] = useState(false);
 
-    const [createAnimalTypeMutation] = useMutation(CREATE_ANIMAL_TYPE,AuthHeader())
-    const [createCustomerMutation] = useMutation(CREATE_CUSTOMER,AuthHeader())
-    const { data, loading } = useQuery(GET_ANIMAL_TYPES,AuthHeader())
+    const [createAnimalTypeMutation] = useMutation(CREATE_ANIMAL_TYPE, AuthHeader())
+    const [createCustomerMutation] = useMutation(CREATE_CUSTOMER, AuthHeader())
+    const { data, loading } = useQuery(GET_ANIMAL_TYPES, AuthHeader())
     const [birthdate, setBirthdate] = useState<string>('');
 
     async function registerCustomer(e) {
@@ -34,10 +34,9 @@ const RegisterCustomerForm = () => {
         if (cepResult.message) return alert(cepResult.message)
 
         const { service, street, ...adressFormatted } = cepResult
-        const adress: IAdress = {...adressFormatted, additionalInfo: ""}
+        const adress: IAdress = { ...adressFormatted, additionalInfo: "" }
 
         const birthDateFormatted = `${birthdate.slice(3, 5)}/${birthdate.slice(0, 2)}/${birthdate.slice(6, birthdate.length)}`
-
         await createCustomerMutation({
             variables: {
                 name: customer.name,
@@ -47,9 +46,10 @@ const RegisterCustomerForm = () => {
                 image_url: customer.image_url || "a",
                 birthdate: birthDateFormatted,
                 adress,
-                animals,
+                // @ts-ignore
+                animals: animals.map(animal => ({ ...animal, neutered: animal.neutered == "true" ? true : false })),
             },
-            refetchQueries: [{query: GET_CUSTOMERS, context: AuthHeaderRefetch()}]
+            refetchQueries: [{ query: GET_CUSTOMERS, context: AuthHeaderRefetch() }]
         })
         document.getElementById("close-register-customer-modal").click();
     }
@@ -84,7 +84,7 @@ const RegisterCustomerForm = () => {
     }
 
     async function createAnimalType() {
-        await createAnimalTypeMutation({ variables: { name: NewAnimalType }, refetchQueries: [{ query: GET_ANIMAL_TYPES,context: AuthHeaderRefetch() }] })
+        await createAnimalTypeMutation({ variables: { name: NewAnimalType }, refetchQueries: [{ query: GET_ANIMAL_TYPES, context: AuthHeaderRefetch() }] })
         setNewAnimalType("")
         setShowNewAnimalType(false)
         ToastMessage(ToastEnum.success, "Tipo criado com sucesso")
@@ -200,11 +200,11 @@ const RegisterCustomerForm = () => {
                             <div className="mw-400 d-flex gap-3 form-control border-0">
                                 <div className="mb-3 d-flex gap-1">
                                     <label className="text-black" >Sim</label>
-                                    <input onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value={true} name="neutered" type="radio" />
+                                    <input onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value="true" name="neutered" type="radio" />
                                 </div>
                                 <div className="mb-3 d-flex gap-1">
                                     <label className="text-black" >Não</label>
-                                    <input checked onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value={false} name="neutered" type="radio" />
+                                    <input checked onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value="false" name="neutered" type="radio" />
                                 </div>
                             </div>
                         </div>
