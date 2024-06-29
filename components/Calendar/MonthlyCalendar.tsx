@@ -26,7 +26,7 @@ export const MonthlyCalendar = () => {
     }, [data, monthDate]);
 
     async function getSchedules() {
-        setSchedules((await schedulesQuery()).data.getSchedulesCalendar)
+        setSchedules((await schedulesQuery()).data?.getSchedulesCalendar)
     }
 
     const handleTotalMonthDays = () => {
