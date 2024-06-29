@@ -27,7 +27,7 @@ const RegisterEmployeeForm = () => {
             refetchQueries: [{ query: GET_ALL_VETS, context: AuthHeaderRefetch() }]
         })
 
-        document.getElementById("close-register-modal").click();
+        document.getElementById("close-register-modal-employee").click();
     }
 
     const { data, loading } = useQuery(GET_ALL_SPECIALTIES,AuthHeader());
@@ -36,13 +36,15 @@ const RegisterEmployeeForm = () => {
     useEffect(() => {
         if (data) {
             const result = data.getAllSpecialties
+            console.log(result)
             setSpecialties(result)
-            setEmployee({ ...employee, specialty: result[0].id })
+            setEmployee({ ...employee, specialty: result[0]?.id })
         }
     }, [data]);
 
     if(loading) return <p>Carregando</p>
 
+    if(specialties.length == 0) return <p>Para cadastrar um novo colaborador, é necessário cadastrar uma especialidade</p>
 
     return (
         <form onSubmit={registerEmployee} className="mt-3">

@@ -13,9 +13,9 @@ const RegisterManagerForm = () => {
     async function registerManager(e) {
         e.preventDefault()
         await createManagerMutation({
-            variables: { name: manager.name, email: manager.email, phone: manager.phone, passwor: manager.password },
+            variables: { name: manager.name, email: manager.email, phone: manager.phone, password: manager.password },
         })
-        document.getElementById("close-register-modal").click()
+        document.getElementById("close-register-modal-employee").click()
     }
 
     return (

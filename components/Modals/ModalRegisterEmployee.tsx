@@ -26,7 +26,7 @@ const ModalRegisterEmployee = () => {
                                 <label className="text-dark" htmlFor="employee">Funcionário</label>
                             </div>
                         }
-                        <button id="close-register-modal" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button id="close-register-modal-employee" type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
                         <h1 className="modal-title fs-5 text-orange text-start" >Cadastrar Novo Funcionário</h1>

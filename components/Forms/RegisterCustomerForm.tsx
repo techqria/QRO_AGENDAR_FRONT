@@ -47,7 +47,7 @@ const RegisterCustomerForm = () => {
                 image_url: customer.image_url || "a",
                 birthdate: birthDateFormatted,
                 adress,
-                animals: animals,
+                animals,
             },
             refetchQueries: [{query: GET_CUSTOMERS, context: AuthHeaderRefetch()}]
         })
@@ -58,7 +58,7 @@ const RegisterCustomerForm = () => {
         const initialStateAnimal: IAnimal = {
             breed: "", color: "", gender: GenderEnum.male,
             name: "", neutered: false,
-            typeAnimalId: data.getAllAnimalTypes[0].id,
+            typeAnimalId: data.getAllAnimalTypes[0]?.id,
             userId: currentUserId, avatar: ""
         }
 
@@ -73,7 +73,7 @@ const RegisterCustomerForm = () => {
             : setAnimals(animals.slice(index, index + 1))
     }
 
-    function updateAnimal(field: string, index: number, value: string) {
+    function updateAnimal(field: string, index: number, value: any) {
         const arr = [...animals]
         const currentAnimal = { ...arr[index] }
 
@@ -200,11 +200,11 @@ const RegisterCustomerForm = () => {
                             <div className="mw-400 d-flex gap-3 form-control border-0">
                                 <div className="mb-3 d-flex gap-1">
                                     <label className="text-black" >Sim</label>
-                                    <input onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value="true" name="neutered" type="radio" />
+                                    <input onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value={true} name="neutered" type="radio" />
                                 </div>
                                 <div className="mb-3 d-flex gap-1">
                                     <label className="text-black" >Não</label>
-                                    <input checked onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value="false" name="neutered" type="radio" />
+                                    <input checked onChange={(e) => updateAnimal("neutered", index, e.target.value)} required value={false} name="neutered" type="radio" />
                                 </div>
                             </div>
                         </div>
@@ -229,7 +229,7 @@ const RegisterCustomerForm = () => {
                 )
             }
             <div className="mb-3 d-flex justify-content-center">
-                <button onClick={insertNewAnimal} className="btn btn-orange mt-5 rounded fw-bold">
+                <button type="button" onClick={insertNewAnimal} className="btn btn-orange mt-5 rounded fw-bold">
                     {
                         !animals || animals?.length == 0
                             ? 'Adicionar Animal'

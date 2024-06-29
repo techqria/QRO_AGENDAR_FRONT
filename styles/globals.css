@@ -31,7 +31,9 @@ ul {
   padding: unset !important;
   list-style: none !important;
 }
-
+.min-w-160{
+  min-width: 160px !important;
+}
 .bg-pix {
   background-color: var(--pix-stroke);
 }

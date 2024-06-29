@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
-import { AuthHeader } from "../../hooks/AuthHeader";
-import { CREATE_SPECIALTY } from "../../graphql/services/specialty.service";
+import { AuthHeader, AuthHeaderRefetch } from "../../hooks/AuthHeader";
+import { CREATE_SPECIALTY, GET_ALL_SPECIALTIES } from "../../graphql/services/specialty.service";
 
 const RegisterSpecialtyForm = () => {
 
@@ -11,8 +11,8 @@ const RegisterSpecialtyForm = () => {
 
     async function registerSpecialty(e) {
         e.preventDefault()
-        await createSpecialtyMutation({ variables: { title }})
-        document.getElementById("close-register-modal").click()
+        await createSpecialtyMutation({ variables: { title }, refetchQueries: [{ query: GET_ALL_SPECIALTIES, context: AuthHeaderRefetch() }] })
+        document.getElementById("close-register-modal-specialty").click()
     }
 
     return (

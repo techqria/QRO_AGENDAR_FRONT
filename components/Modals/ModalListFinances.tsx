@@ -16,7 +16,7 @@ const ModalListFinances = () => {
 
     useEffect(() => {
         async function getData() {
-            const financeData = (await getFinanceQuery({ variables: { id, startDate, finalDate } })).data.getFinanceListByUser
+            const financeData = (await getFinanceQuery({ variables: { id, startDate, finalDate } })).data?.getFinanceListByUser
             setFinanceData(financeData)
         }
         getData()

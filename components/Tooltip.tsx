@@ -9,7 +9,7 @@ const Tooltip = (
 
     return (
         <div className={`position-relative ${className}`} onMouseOver={_ => setShowDescription(true)} onMouseOut={_ => setShowDescription(false)}>
-            {showDescription && <span style={{ color }} className={`position-absolute ${direction}-0 mb-3`}>{description}</span>}
+            {showDescription && <span style={{ color }} className={`position-absolute ${direction}-0 mb-3 p-2 min-w-160 bg-white rounded-pill fs-14`}>{description}</span>}
             {children}
         </div>
     );

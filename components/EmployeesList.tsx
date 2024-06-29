@@ -25,7 +25,8 @@ const EmployeesList = () => {
     if (loadingVets || loadingSpecialties) return <p>Carregando</p>
 
     async function removeSpecialty(specialtyId: string) {
-        await removeSpecialtyMutation({ variables: { id: specialtyId } }).catch(e => ToastMessage(ToastEnum.info, e.message))
+        removeSpecialtyMutation({ variables: { id: specialtyId }, refetchQueries: [{ query: GET_ALL_SPECIALTIES, context: AuthHeaderRefetch() }] })
+            .catch(e => ToastMessage(ToastEnum.info, e.message))
     }
 
     const setEmployee = (employee: IVets) => dispatch(changeEmployee(employee))
@@ -67,7 +68,7 @@ const EmployeesList = () => {
                 <div className="d-flex gap-2 mb-2">
                     <p className="text-secondary mb-0 text-capitalize text-start">{specialty.title}</p>
                     <Tooltip description="Remover Especialidade" >
-                        <img onClick={_ => removeSpecialty(specialty.id)} role="button" width={16} src="/icons/trash.svg" alt="edit-orange.svg" />
+                        <img onClick={_ => removeSpecialty(specialty.id)} role="button" width={16} src="/icons/trash.svg" alt="Ícone para remover especialidade" />
                     </Tooltip>
                 </div>
                 {listEmployees(specialty.id)}
