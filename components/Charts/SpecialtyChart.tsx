@@ -23,7 +23,7 @@ const SpecialtyChart = () => {
     async function getDashSpecialties() {
         const { data } = await getDashSpecialtiesQuery({ variables: { startDate, finalDate } })
         const result = data?.getDashboardSpecialties.specialties
-    
+
         if (result.length) {
             setSpecialties(result)
             setHighestSpecialty(result.sort((a: any, b: any) => a?.total_price - b?.total_price).reverse()[0]?.total_price)
@@ -80,9 +80,10 @@ const SpecialtyChart = () => {
                                 {highestSpecialty > 0 &&
                                     <div className="d-flex gap-4 align-items-end">
                                         {specialties.map((el, index) =>
-                                            <Tooltip key={index} className="h-100 d-flex align-items-end " description={`R$ ${el.total_price}`}>
+                                            <div className="h-100 d-flex flex-column align-items-center justify-content-end">
                                                 <div role="button" style={{ height: `${getPercentage(el.total_price)}%`, backgroundColor: el.color }} className="finance-chart-bar"></div>
-                                            </Tooltip>
+                                                <span>{el.total_price}</span>
+                                            </div>
                                         )}
                                     </div>
                                 }

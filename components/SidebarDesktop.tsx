@@ -26,33 +26,33 @@ const SidebarDesktop = () => {
                 return <>
                     <div className="d-flex flex-column justify-content-center align-items-center">
                         <i onClick={() => dispatch(changePage(PagesEnum.dashboardPage))} role="button" className={`${currentPage === PagesEnum.dashboardPage && 'bg-dark'} dashboard-icon`}></i>
-                        <p className={`mb-0 fs-12 ${currentPage === PagesEnum.dashboardPage && 'fw-semibold'}`}>Dashboard</p>
+                        <p style={{color: "rgba(0, 0, 0, 0.25)"}} className={`mb-0 fs-12 ${currentPage === PagesEnum.dashboardPage && 'fw-semibold text-black'}`}>Dashboard</p>
                     </div>
                     <div className="d-flex flex-column justify-content-center align-items-center">
                         <i onClick={() => dispatch(changePage(PagesEnum.employeesPage))} role="button" className={`${currentPage === PagesEnum.employeesPage && 'bg-dark'} person-icon`}></i>
-                        <p className={`mb-0 fs-12 ${currentPage === PagesEnum.employeesPage && 'fw-semibold'}`}>Funcionários</p>
+                        <p style={{color: "rgba(0, 0, 0, 0.25)"}} className={`mb-0 fs-12 ${currentPage === PagesEnum.employeesPage && 'fw-semibold text-black'}`}>Funcionários</p>
                     </div>
                     <div className="d-flex flex-column justify-content-center align-items-center">
                         <i onClick={() => dispatch(changePage(PagesEnum.customerPage))} role="button" className={`${currentPage === PagesEnum.customerPage && 'bg-dark'} customer-icon`}></i>
-                        <p className={`mb-0 fs-12 ${currentPage === PagesEnum.customerPage && 'fw-semibold'}`}>Clientes</p>
+                        <p style={{color: "rgba(0, 0, 0, 0.25)"}} className={`mb-0 fs-12 ${currentPage === PagesEnum.customerPage && 'fw-semibold text-black'}`}>Clientes</p>
                     </div>
                     <div className="d-flex flex-column justify-content-center align-items-center">
                         <i onClick={() => dispatch(changePage(PagesEnum.schedulePage))} role="button" className={`${currentPage === PagesEnum.schedulePage && 'bg-dark'} calendar-icon`}></i>
-                        <p className={`mb-0 fs-12 ${currentPage === PagesEnum.schedulePage && 'fw-semibold'}`}>Agendamentos</p>
+                        <p style={{color: "rgba(0, 0, 0, 0.25)"}} className={`mb-0 fs-12 ${currentPage === PagesEnum.schedulePage && 'fw-semibold text-black'}`}>Agendamentos</p>
                     </div>
                     <div className="d-flex flex-column justify-content-center align-items-center">
                         <i onClick={() => dispatch(changePage(PagesEnum.financePage))} role="button" className={`${currentPage === PagesEnum.financePage && 'bg-dark'} chart-icon`}></i>
-                        <p className={`mb-0 fs-12 ${currentPage === PagesEnum.financePage && 'fw-semibold'}`}>Finanças</p>
+                        <p style={{color: "rgba(0, 0, 0, 0.25)"}} className={`mb-0 fs-12 ${currentPage === PagesEnum.financePage && 'fw-semibold text-black'}`}>Finanças</p>
                     </div>
                 </>
             case RoleEnum.manager: return <>
                 <div className="d-flex flex-column justify-content-center align-items-center"  >
                     <i onClick={() => dispatch(changePage(PagesEnum.employeesPage))} role="button" className={`${currentPage === PagesEnum.employeesPage && 'bg-dark'} person-icon`}></i>
-                    <p className={`mb-0 fs-12 ${currentPage === PagesEnum.employeesPage && 'fw-semibold'}`}>Funcionários</p>
+                    <p style={{color: "rgba(0, 0, 0, 0.25)"}} className={`mb-0 fs-12 ${currentPage === PagesEnum.employeesPage && 'fw-semibold text-black'}`}>Funcionários</p>
                 </div>
                 <div className="d-flex flex-column justify-content-center align-items-center"  >
                     <i onClick={() => dispatch(changePage(PagesEnum.schedulePage))} role="button" className={`${currentPage === PagesEnum.schedulePage && 'bg-dark'} calendar-icon`}></i>
-                    <p className={`mb-0 fs-12 ${currentPage === PagesEnum.schedulePage && 'fw-semibold'}`}>Agendamentos</p>
+                    <p style={{color: "rgba(0, 0, 0, 0.25)"}} className={`mb-0 fs-12 ${currentPage === PagesEnum.schedulePage && 'fw-semibold text-black'}`}>Agendamentos</p>
                 </div>
             </>
         }
@@ -66,7 +66,7 @@ const SidebarDesktop = () => {
             </div>
             <div className="d-flex flex-column justify-content-center align-items-center">
                 <i onClick={() => dispatch(changePage(PagesEnum.settingsPage))} role="button" className={`${currentPage === PagesEnum.settingsPage && 'scale-01'} settings-icon`}></i>
-                <p className={`mb-0 fs-12 ${currentPage === PagesEnum.settingsPage && 'fw-semibold'}`}>Configurações</p>
+                <p style={{color: "rgba(0, 0, 0, 0.25)"}} className={`mb-0 fs-12 ${currentPage === PagesEnum.settingsPage && 'fw-semibold text-black'}`}>Configurações</p>
             </div>
         </div>
     );

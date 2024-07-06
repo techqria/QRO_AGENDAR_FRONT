@@ -3,7 +3,7 @@ import EditPetForm from "../Forms/EditPetForm";
 const ModalEditPet = () => {
 
     return (
-        <div className="modal fade" id="editPetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal fade" id="editPetModal"  tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
             {/* @ts-ignore */}
             <div className="modal-dialog modal-dialog-centered" style={{ '--bs-modal-width': '60%' }} >
                 <div className="modal-content">

@@ -27,7 +27,7 @@ const EditCustomerForm = () => {
             setCustomer(data?.getUserById)
         }
 
-        getUserData()
+        customerId && getUserData()
 
     }, [customerId]);
 

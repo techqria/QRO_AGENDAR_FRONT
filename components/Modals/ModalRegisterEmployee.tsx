@@ -12,7 +12,7 @@ const ModalRegisterEmployee = () => {
     const [showEmployeeForm, setShowEmployeeForm] = useState(true);
 
     return (
-        <div className="modal fade" id="registerEmployeeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal fade"  id="registerEmployeeModal" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
             {/* @ts-ignore */}
             <div className="modal-dialog modal-dialog-centered" style={{ '--bs-modal-width': '60%' }} >
                 <div className="modal-content">

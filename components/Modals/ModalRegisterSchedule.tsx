@@ -145,7 +145,7 @@ const ModalRegisterSchedule = () => {
     if (loadingVets || loadingSpecialties || loadingCustomers) return <p className="text-black">Carregando</p>
 
     return (
-        <div className="modal fade" id="registerScheduleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal fade" id="registerScheduleModal"  tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
             {/* @ts-ignore */}
             <div className="modal-dialog modal-dialog-centered" style={{ '--bs-modal-width': '60%' }} >
                 <div className="modal-content">

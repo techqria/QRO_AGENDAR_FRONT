@@ -100,27 +100,31 @@ const FinanceChart = () => {
                     {highestPrice > 0 &&
                         <div className="d-flex gap-4 align-items-end">
                             {financeValues.money > 0 &&
-                                <Tooltip className="h-100 d-flex align-items-end " description={`R$ ${financeValues.money}`}>
+                                <div className="h-100 d-flex flex-column align-items-center justify-content-end">
                                     <div role="button" style={{ height: `${getPercentage(financeValues.money)}%` }} className="finance-chart-bar bg-money"></div>
-                                </Tooltip>
+                                    <span>{financeValues.money}</span>
+                                </div>
                             }
 
                             {financeValues.pix > 0 &&
-                                <Tooltip className="h-100 d-flex align-items-end " description={`R$ ${financeValues.pix}`}>
+                                <div className="h-100 d-flex flex-column align-items-center justify-content-end">
                                     <div role="button" style={{ height: `${getPercentage(financeValues.pix)}%` }} className="finance-chart-bar bg-pix"></div>
-                                </Tooltip>
+                                    <span>{financeValues.pix}</span>
+                                </div>
                             }
 
                             {financeValues.credit > 0 &&
-                                <Tooltip className="h-100 d-flex align-items-end " description={`R$ ${financeValues.credit}`}>
+                                <div className="h-100 d-flex flex-column align-items-center justify-content-end">
                                     <div role="button" style={{ height: `${getPercentage(financeValues.credit)}%` }} className="finance-chart-bar bg-credit"></div>
-                                </Tooltip>
+                                    <span>{financeValues.credit}</span>
+                                </div>
                             }
 
                             {financeValues.debit > 0 &&
-                                <Tooltip className="h-100 d-flex align-items-end " description={`R$ ${financeValues.debit}`}>
+                                <div className="h-100 d-flex flex-column align-items-center justify-content-end">
                                     <div role="button" style={{ height: `${getPercentage(financeValues.debit)}%` }} className="finance-chart-bar bg-debit"></div>
-                                </Tooltip>
+                                    <span>{financeValues.debit}</span>
+                                </div>
                             }
                         </div>
                     }

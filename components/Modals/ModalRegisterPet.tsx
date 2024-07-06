@@ -3,7 +3,7 @@ import RegisterPetForm from "../Forms/RegisterPetForm";
 const ModalRegisterPet = () => {
 
     return (
-        <div className="modal fade" id="registerPetModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal fade" id="registerPetModal"  tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
             {/* @ts-ignore */}
             <div className="modal-dialog modal-dialog-centered" style={{ '--bs-modal-width': '60%' }} >
                 <div className="modal-content">

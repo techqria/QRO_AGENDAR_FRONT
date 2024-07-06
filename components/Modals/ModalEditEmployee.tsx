@@ -31,7 +31,7 @@ const ModalEditEmployee = () => {
     if (loadingSpecialties) return <p>Carregando</p>
 
     return (
-        <div className="modal fade" id="editEmployeeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal fade" id="editEmployeeModal"  tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
             {/* @ts-ignore */}
             <div className="modal-dialog modal-dialog-centered" style={{ '--bs-modal-width': '60%' }} >
                 <div className="modal-content">

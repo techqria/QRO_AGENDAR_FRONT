@@ -74,7 +74,7 @@ export const MonthlyCalendar = () => {
             {
                 new Array(totalMonthDays).fill(0).map((el, index) => (
                     <div onClick={checkSquareClick} role="button" key={index} className="square-calendar border p-1 overflow-hidden">
-                        <p className="text-end mb-0 fs-5">{index + 1}</p>
+                        <p className="text-end mb-0 fs-14">{index + 1}</p>
                         {checkScheduleDate(index + 1)}
                     </div>
                 ))
